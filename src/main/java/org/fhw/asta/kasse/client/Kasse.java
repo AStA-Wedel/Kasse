@@ -1,38 +1,41 @@
 package org.fhw.asta.kasse.client;
 
-import org.fhw.asta.kasse.shared.service.UserService;
-import org.fhw.asta.kasse.shared.service.UserServiceAsync;
+import org.fhw.asta.kasse.client.inject.AppInjector;
+import org.fhw.asta.kasse.client.place.LoginPlace;
 
+import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.shared.GWT;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.place.shared.Place;
+import com.google.gwt.place.shared.PlaceHistoryHandler;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.user.client.ui.RootPanel;
 
 public class Kasse implements EntryPoint {
 
-  private UserServiceAsync userService = GWT.create(UserService.class);
-	 
+  private static final Place DEFAULT_PLACE = new LoginPlace();
+	
+  private final AppInjector injector = GWT.create(AppInjector.class);
+  
   public void onModuleLoad() {
 
-	  userService.login("alex", "daddeldu", new AsyncCallback<Boolean>() {
+	  ActivityManager activityManager = injector.getActivityManager();
 		
-		@Override
-		public void onSuccess(Boolean result) {
+	  activityManager.setDisplay(new AcceptsOneWidget() {
 			
-			if (result) {
-				Window.alert("hallo alex");
+			@Override
+			public void setWidget(IsWidget w) {
+				RootPanel.get().clear();
+				
+				if (w != null) {
+					RootPanel.get().add(w);					
+				}
 			}
-			
-		}
+	  });
 		
-		@Override
-		public void onFailure(Throwable caught) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-	});
-	  
-  
+	  PlaceHistoryHandler placeHistoryHandler = injector.getPlaceHistoryHandler();
+	  placeHistoryHandler.register(injector.getPlaceController(), injector.getEventBus(), DEFAULT_PLACE);
+	  placeHistoryHandler.handleCurrentHistory();
   }
 }

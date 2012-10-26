@@ -1,0 +1,21 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.important {
+			font-weight: bold;
+		}
+	</ui:style>
+	<g:HTMLPanel>
+	    
+	    <div>
+		    Email: <g:TextBox ui:field="emailTextBox"  />	        
+	    </div>
+	
+	    <div>
+		    Password: <g:TextBox ui:field="passwordTextBox" />
+	    </div>
+	    
+		<g:Button styleName="{style.important}" ui:field="submitButton" />
+	</g:HTMLPanel>
+</ui:UiBinder> 

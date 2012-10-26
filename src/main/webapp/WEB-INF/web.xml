@@ -5,8 +5,13 @@
          version="2.5"
          xmlns="http://java.sun.com/xml/ns/javaee">
 
+  <context-param>
+	<param-name>log4jFileName</param-name>
+	<param-value>/WEB-INF/log4j.properties</param-value>
+  </context-param>
+    
   <listener>
-  	<listener-class>org.fhw.asta.kasse.server.servlet.ServletContextListener</listener-class>
+  	<listener-class>org.fhw.asta.kasse.server.inject.RootInjector</listener-class>
   </listener>
 
   <filter>

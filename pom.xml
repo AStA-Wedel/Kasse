@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+	<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
@@ -18,7 +18,12 @@
     <maven.compiler.target>1.6</maven.compiler.target>
   </properties>
 
-  <dependencies>
+  <dependencies>      
+ 	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-log4j12</artifactId> 
+		<version>1.5.2</version>
+	</dependency>
     <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-servlet</artifactId>
@@ -84,8 +89,31 @@
     	<artifactId>guava-gwt</artifactId>
     	<version>13.0.1</version>
 	</dependency>
-  </dependencies>
+
+	<dependency>
+		<groupId>commons-dbcp</groupId>
+		<artifactId>commons-dbcp</artifactId>
+		<version>20030825.184428</version>
+  </dependency>
   
+  <dependency>
+   <groupId>org.springframework</groupId>
+   <artifactId>spring-jdbc</artifactId>
+   <version>3.1.2.RELEASE</version>
+  </dependency>
+  
+  <dependency>
+	<groupId>mysql</groupId>
+	<artifactId>mysql-connector-java</artifactId>
+	<version>5.1.21</version>
+  </dependency>
+ 
+  <dependency>
+	<groupId>commons-pool</groupId>
+	<artifactId>commons-pool</artifactId>
+	<version>20030825.183949</version>
+  </dependency>
+  </dependencies>
   
   
   <build>

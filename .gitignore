@@ -7,3 +7,7 @@
 
 .DS_Store
 target
+gwt-unitCache
+/.settings
+/.classpath
+/.project

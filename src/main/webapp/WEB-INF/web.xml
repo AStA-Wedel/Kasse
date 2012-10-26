@@ -5,16 +5,19 @@
          version="2.5"
          xmlns="http://java.sun.com/xml/ns/javaee">
 
-  <!-- Servlets -->
-  <servlet>
-    <servlet-name>greetServlet</servlet-name>
-    <servlet-class>org.fhw.asta.kasse.server.GreetingServiceImpl</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
-    <url-pattern>/kasse/greet</url-pattern>
-  </servlet-mapping>
+  <listener>
+  	<listener-class>org.fhw.asta.kasse.server.servlet.ServletContextListener</listener-class>
+  </listener>
+
+  <filter>
+    <filter-name>guiceFilter</filter-name>
+    <filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>guiceFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>

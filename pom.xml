@@ -113,6 +113,14 @@
 	<artifactId>commons-pool</artifactId>
 	<version>20030825.183949</version>
   </dependency>
+ 
+  
+  <dependency>
+	<groupId>org.hibernate</groupId>
+	<artifactId>hibernate-core</artifactId>
+	<version>4.1.7.Final</version>
+  </dependency>
+  
   </dependencies>
   
   

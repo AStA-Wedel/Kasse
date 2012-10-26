@@ -7,6 +7,14 @@ public class AuthenticationResult implements Serializable {
 
 	private static final long serialVersionUID = -3053536034936040454L;
 
+	public static enum AuthenticationStatus {
+		
+		AUTHENTICATED,
+		
+		NOT_AUTHENTICATED
+		
+	}
+	
 	private AuthenticationStatus authenticationStatus;
 
 	public AuthenticationResult() {

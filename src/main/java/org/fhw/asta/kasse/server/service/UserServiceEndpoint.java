@@ -1,9 +1,7 @@
 package org.fhw.asta.kasse.server.service;
 
-import org.fhw.asta.kasse.server.component.config.ConfigProvider;
 import org.fhw.asta.kasse.server.component.user.UserComponent;
 import org.fhw.asta.kasse.shared.authentication.AuthenticationResult;
-import org.fhw.asta.kasse.shared.authentication.AuthenticationStatus;
 import org.fhw.asta.kasse.shared.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +23,7 @@ public class UserServiceEndpoint extends RemoteServiceServlet implements UserSer
 	@Override
 	public AuthenticationResult authenticate(String email, String password) {
 		LOGGER.info("authenticate called");
-		return new AuthenticationResult(AuthenticationStatus.AUTHENTICATED);
+		return new AuthenticationResult(AuthenticationResult.AuthenticationStatus.AUTHENTICATED);
 	}
 
 

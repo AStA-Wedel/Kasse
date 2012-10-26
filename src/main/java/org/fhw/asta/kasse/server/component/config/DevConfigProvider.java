@@ -4,42 +4,53 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.io.Closeables;
 import com.google.common.io.Resources;
 
-// FIXME: In externe Conf-File auslagern!!!! (Java Properties oder so)
+// TODO: bisschen weniger hack bitte
 public class DevConfigProvider implements ConfigProvider {
 
-	private static final String envFilename = "env-dev.properties";
+	private static final Logger LOGGER = LoggerFactory.getLogger(DevConfigProvider.class);
+	
+	private static final String ENV_PROPERTIES_FILENAME = "env-dev.properties";
 	
 	private final Properties properties;
 	
 	public DevConfigProvider() {
-		properties = new Properties();
+		this.properties = loadProperties();
+	}
+
+	private Properties loadProperties() {
+	
+		LOGGER.info("Loading " + ENV_PROPERTIES_FILENAME);
 		
+		Properties properties = new Properties();
 		BufferedInputStream is = null;
 		
 		try {
-			is = new BufferedInputStream(Resources.getResource(this.getClass(), envFilename).openStream());
+			is = new BufferedInputStream(Resources.getResource(this.getClass(), ENV_PROPERTIES_FILENAME).openStream());
 			properties.load(is);
 		} catch (IOException e) {
-			throw new RuntimeException("Could not load env.properties");
+			LOGGER.error("Could not load " + ENV_PROPERTIES_FILENAME);
+			throw new RuntimeException(e);
 		} finally {
 			Closeables.closeQuietly(is);
-		}
+		}		
 		
+		return properties;
 	}
-
+	
 	@Override
 	public String get(String configKey, String defaltResult) {
-		// TODO Auto-generated method stub
-		return null;
+		return properties.getProperty(configKey, defaltResult);
 	}
 
 	@Override
 	public String get(String configKey) {
-		// TODO Auto-generated method stub
-		return null;
+		return properties.getProperty(configKey);
 	}
 
 }

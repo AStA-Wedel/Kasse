@@ -4,8 +4,8 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.fhw.asta.kasse.server.component.config.ConfigProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Strings;
 import com.google.inject.Inject;
@@ -13,7 +13,7 @@ import com.google.inject.Provider;
 
 public class MysqlDBCPDataSourceProvider implements Provider<DataSource> {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(MysqlDBCPDataSourceProvider.class);
+	//private static final Logger LOGGER = LoggerFactory.getLogger(MysqlDBCPDataSourceProvider.class);
 
 	private static final String DATABASE_URL = "db.url";
 	
@@ -36,7 +36,7 @@ public class MysqlDBCPDataSourceProvider implements Provider<DataSource> {
 		final int maxActiveConnectionsN = Integer.parseInt(dbMaxActiveConnections);
 		
 		if (Strings.isNullOrEmpty(dbUrl) || Strings.isNullOrEmpty(dbUser) || Strings.isNullOrEmpty(dbPassword)) {
-			LOGGER.error("Check env.properties for database parameters (db.url, db.user, db.password)");
+			//LOGGER.error("Check env.properties for database parameters (db.url, db.user, db.password)");
 			throw new RuntimeException();
 		}
 		

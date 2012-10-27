@@ -27,6 +27,10 @@ public class Lecturer implements Serializable
     this.scripts = scripts;
   }
 
+  public Lecturer()
+  {
+  }
+
   public int getId()
   {
     return this.id;

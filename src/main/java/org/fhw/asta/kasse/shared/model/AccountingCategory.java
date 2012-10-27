@@ -16,6 +16,10 @@ public class AccountingCategory implements Serializable
     this.name = name;
   }
 
+  public AccountingCategory()
+  {
+  }
+
   public int getId()
   {
     return this.id;

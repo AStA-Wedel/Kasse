@@ -30,6 +30,10 @@ public class Address implements Serializable
     this.streetnumber = streetnumber;
   }
 
+  public Address()
+  {
+  }
+
   public String getOwnerLdapName()
   {
     return this.ownerLdapName;

@@ -33,6 +33,10 @@ public class Article implements Serializable
     this.enabled = enabled;
   }
 
+  public Article()
+  {
+  }
+
   public int getId()
   {
     return this.id;

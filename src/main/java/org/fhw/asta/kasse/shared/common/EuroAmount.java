@@ -1,8 +1,17 @@
 package org.fhw.asta.kasse.shared.common;
 
-public final class EuroAmount
+import java.io.Serializable;
+
+public class EuroAmount implements Serializable
 {
-  private final int cents;
+  private static final long serialVersionUID = 1L;
+
+  private int cents;
+
+  public EuroAmount()
+  {
+    this.cents = 0;
+  };
 
   public EuroAmount(final int cents)
   {

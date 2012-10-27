@@ -33,6 +33,10 @@ public class Person implements Serializable
     this.groupId = groupId;
   }
 
+  public Person()
+  {
+  }
+
   public String getLdapName()
   {
     return this.ldapName;

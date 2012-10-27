@@ -1,6 +1,5 @@
 package org.fhw.asta.kasse.shared.model;
 
-
 public class Stuff extends Article
 {
   private static final long serialVersionUID = 1L;
@@ -10,5 +9,9 @@ public class Stuff extends Article
       final boolean enabled)
   {
     super(id, revision, name, centPrice, taxCategoryName, taxRevision, enabled);
+  }
+
+  public Stuff()
+  {
   }
 }

@@ -40,6 +40,10 @@ public class Receipt implements Serializable
     this.cancelled = cancelled;
   }
 
+  public Receipt()
+  {
+  }
+
   public int getReceiptId()
   {
     return this.receiptId;

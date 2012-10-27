@@ -20,6 +20,10 @@ public class TaxCategory implements Serializable
     this.taxRatePercent = taxRatePercent;
   }
 
+  public TaxCategory()
+  {
+  }
+
   public String getName()
   {
     return this.name;

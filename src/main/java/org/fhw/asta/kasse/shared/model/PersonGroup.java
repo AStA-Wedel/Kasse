@@ -23,6 +23,10 @@ public class PersonGroup implements Serializable
     this.addressMandatory = addressMandatory;
   }
 
+  public PersonGroup()
+  {
+  }
+
   public int getId()
   {
     return this.id;

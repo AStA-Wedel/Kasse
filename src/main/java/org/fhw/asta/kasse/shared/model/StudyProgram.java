@@ -28,6 +28,10 @@ public class StudyProgram implements Serializable
     this.scripts = scripts;
   }
 
+  public StudyProgram()
+  {
+  }
+
   public int getId()
   {
     return this.id;

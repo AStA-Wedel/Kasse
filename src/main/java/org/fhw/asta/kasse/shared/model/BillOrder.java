@@ -38,6 +38,10 @@ public class BillOrder implements Serializable
     this.articles = articles;
   }
 
+  public BillOrder()
+  {
+  }
+
   public int getId()
   {
     return this.id;

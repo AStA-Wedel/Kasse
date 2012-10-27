@@ -1,6 +1,5 @@
 package org.fhw.asta.kasse.shared.model;
 
-
 public class Script extends Article
 {
   private static final long serialVersionUID = 1L;
@@ -14,6 +13,10 @@ public class Script extends Article
     super(id, revision, name, centPrice, taxCategoryName, taxRevision, enabled);
 
     this.lecturerId = lecturerId;
+  }
+
+  public Script()
+  {
   }
 
   public int getLecturerId()

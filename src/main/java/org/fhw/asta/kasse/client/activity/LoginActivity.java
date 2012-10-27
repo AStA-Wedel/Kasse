@@ -5,6 +5,7 @@ import java.util.List;
 import org.fhw.asta.kasse.client.place.LoginPlace;
 import org.fhw.asta.kasse.client.widget.basket.BasketWidget;
 import org.fhw.asta.kasse.client.widget.login.LoginWidget;
+import org.fhw.asta.kasse.client.widget.sidebar.SidebarWidget;
 import org.fhw.asta.kasse.shared.authentication.AuthenticationResult;
 import org.fhw.asta.kasse.shared.basket.BasketItem;
 import org.fhw.asta.kasse.shared.service.UserServiceAsync;
@@ -45,6 +46,9 @@ public class LoginActivity extends AbstractActivity {
 	private BasketWidget basketWidget;
 	
 	@Inject
+	private SidebarWidget sidebarWidget;
+	
+	@Inject
 	public LoginActivity(@Assisted LoginPlace loginPlace) {
 		this.loginPlace = loginPlace;
 	}
@@ -72,7 +76,8 @@ public class LoginActivity extends AbstractActivity {
 		switch (authenticationResult.getAuthenticationStatus()) {
 			
 		case AUTHENTICATED:
-			
+			sidebarWidget.addCat("Category");
+			sidebarWidget.addLink("#","Link");
 			basketService.getBasket(new AsyncCallback<List<BasketItem>>() {
 				
 				@Override
@@ -102,7 +107,7 @@ public class LoginActivity extends AbstractActivity {
 			break;
 			
 		case NOT_AUTHENTICATED:
-			// Show error!
+			//TODO
 			break;
 		}
 	}

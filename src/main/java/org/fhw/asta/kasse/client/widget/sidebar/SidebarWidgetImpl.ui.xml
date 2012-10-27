@@ -7,8 +7,6 @@
 		}
 	</ui:style>
 	<g:HTMLPanel>
-		<g:HTML wordWrap="true" ui:field="htmlWidget" width="100%" height="100%"></g:HTML>
-		Hello,
-		
+		<g:HTML wordWrap="true" ui:field="htmlWidget"></g:HTML>
 	</g:HTMLPanel>
 </ui:UiBinder> 

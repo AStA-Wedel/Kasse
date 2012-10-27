@@ -4,6 +4,7 @@ import org.fhw.asta.kasse.client.inject.AppInjector;
 import org.fhw.asta.kasse.client.place.LoginPlace;
 import org.fhw.asta.kasse.client.widget.basket.BasketWidget;
 import org.fhw.asta.kasse.client.widget.main.MainWidget;
+import org.fhw.asta.kasse.client.widget.sidebar.SidebarWidget;
 
 import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.core.client.EntryPoint;
@@ -22,7 +23,7 @@ public class Kasse implements EntryPoint {
 
 		MainWidget mainWidget = injector.getMainWidget();
 		BasketWidget basketWidget = injector.getBasketWidget();
-		
+		SidebarWidget sidebarWidget = injector.getSidebarWidget();
 		
 		ActivityManager activityManager = injector.getActivityManager();
 		activityManager.setDisplay(mainWidget);
@@ -34,6 +35,7 @@ public class Kasse implements EntryPoint {
 		placeHistoryHandler.handleCurrentHistory();
 
 		mainWidget.setBasketWidget(basketWidget);
+		mainWidget.setSidebarWidget(sidebarWidget);
 		RootPanel.get().add(mainWidget);
 	}
 }

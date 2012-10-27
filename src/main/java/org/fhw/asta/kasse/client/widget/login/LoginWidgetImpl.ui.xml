@@ -7,15 +7,30 @@
 		}
 	</ui:style>
 	<g:HTMLPanel>
-	    
-	    <div>
-		    Email: <g:TextBox ui:field="emailTextBox"  />	        
-	    </div>
-	
-	    <div>
-		    Password: <g:TextBox ui:field="passwordTextBox" />
-	    </div>
-	    
-		<g:Button styleName="{style.important}" ui:field="submitButton" />
+	    <table>
+	    <tr>
+	    <td>
+		    Email:	        
+	    </td>
+		<td>
+			<g:TextBox ui:field="emailTextBox"  />
+		</td>
+		</tr>
+		<tr>
+		<td>
+			Password:
+		</td>
+		<td>
+			<g:TextBox ui:field="passwordTextBox" />
+		</td>
+		</tr>
+		<tr>
+		<td>
+		</td>
+		<td style="text-align:right;">
+			<g:Button styleName="{style.important}" ui:field="submitButton" text="Login" />
+		</td>
+		</tr>
+	    </table>
 	</g:HTMLPanel>
 </ui:UiBinder> 

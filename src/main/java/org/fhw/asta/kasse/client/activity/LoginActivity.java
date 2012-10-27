@@ -1,9 +1,13 @@
 package org.fhw.asta.kasse.client.activity;
 
+import java.util.List;
+
 import org.fhw.asta.kasse.client.place.LoginPlace;
 import org.fhw.asta.kasse.client.widget.basket.BasketWidget;
 import org.fhw.asta.kasse.client.widget.login.LoginWidget;
+import org.fhw.asta.kasse.client.widget.sidebar.SidebarWidget;
 import org.fhw.asta.kasse.shared.authentication.AuthenticationResult;
+import org.fhw.asta.kasse.shared.basket.BasketItem;
 import org.fhw.asta.kasse.shared.service.UserServiceAsync;
 import org.fhw.asta.kasse.shared.service.basket.BasketServiceAsync;
 
@@ -16,6 +20,7 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.google.gwt.view.client.ListDataProvider;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
@@ -33,6 +38,15 @@ public class LoginActivity extends AbstractActivity {
 	
 	@Inject
 	private UserServiceAsync userService;
+	
+	@Inject
+	private BasketServiceAsync basketService;
+	
+	@Inject
+	private BasketWidget basketWidget;
+	
+	@Inject
+	private SidebarWidget sidebarWidget;
 	
 	@Inject
 	public LoginActivity(@Assisted LoginPlace loginPlace) {
@@ -62,11 +76,38 @@ public class LoginActivity extends AbstractActivity {
 		switch (authenticationResult.getAuthenticationStatus()) {
 			
 		case AUTHENTICATED:
+			sidebarWidget.addCat("Category");
+			sidebarWidget.addLink("#","Link");
+			basketService.getBasket(new AsyncCallback<List<BasketItem>>() {
+				
+				@Override
+				public void onSuccess(List<BasketItem> result) {
+				
+					ListDataProvider<BasketItem> basketDataProvider = new ListDataProvider<BasketItem>();
+					
+					basketDataProvider.addDataDisplay(basketWidget.getBasketTable());
+					basketDataProvider.setList(result);
+					
+				}
+				
+				@Override
+				public void onFailure(Throwable caught) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			
+			
+			
+			
+			
+			
+			
 			placeController.goTo(/* TODO */ null);
 			break;
 			
 		case NOT_AUTHENTICATED:
-			// Show error!
+			//TODO
 			break;
 		}
 	}

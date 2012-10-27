@@ -12,7 +12,8 @@ public class SidebarWidgetImpl extends Composite implements SidebarWidget {
 	private static SidebarImplementationUiBinder uiBinder = GWT
 			.create(SidebarImplementationUiBinder.class);
 	
-	@UiField HTML htmlWidget;
+	
+	@UiField HTML htmlWidget;	
 
 	interface SidebarImplementationUiBinder extends
 			UiBinder<Widget, SidebarWidgetImpl> {
@@ -20,6 +21,7 @@ public class SidebarWidgetImpl extends Composite implements SidebarWidget {
 
 	public SidebarWidgetImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
+		clear();
 	}
 
 	@Override
@@ -29,16 +31,20 @@ public class SidebarWidgetImpl extends Composite implements SidebarWidget {
 	}
 
 	@Override
-	public void addHtmlLink(String htmlLink) {
-		htmlWidget.setHTML(htmlWidget.getHTML()+"<br />"+htmlLink);		
+	public void addHtml(String html) {
+		htmlWidget.setHTML(htmlWidget.getHTML()+html);
+		
 	}
 
 	@Override
 	public void addLink(String link, String name) {
-		addHtmlLink("<a href=\""+link+"\">"+name+"</a>");
+		addHtml("<li><a href=\""+link+"\">"+name+"</a></li>");
 		
 	}
 
-
-
+	@Override
+	public void addCat(String cat) {
+		addHtml("<li class=\"nav-header\">"+cat+"</li>");
+		
+	}
 }

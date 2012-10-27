@@ -11,3 +11,4 @@ gwt-unitCache
 /.settings
 /.classpath
 /.project
+/bin

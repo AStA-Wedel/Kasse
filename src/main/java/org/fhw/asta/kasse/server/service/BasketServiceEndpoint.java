@@ -1,13 +1,16 @@
 package org.fhw.asta.kasse.server.service;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.fhw.asta.kasse.shared.basket.BasketItem;
+import org.fhw.asta.kasse.shared.common.EuroAmount;
 import org.fhw.asta.kasse.shared.service.basket.BasketService;
 
+import com.google.common.collect.Lists;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.google.inject.Singleton;
 
+@Singleton
 public class BasketServiceEndpoint extends RemoteServiceServlet implements BasketService {
 
 	/**
@@ -17,7 +20,7 @@ public class BasketServiceEndpoint extends RemoteServiceServlet implements Baske
 
 	@Override
 	public List<BasketItem> getBasket() {
-		List<BasketItem> basket = new LinkedList<BasketItem>();
+		List<BasketItem> basket = Lists.newArrayList(new BasketItem("Stift", new EuroAmount(123), 1234));
 		return basket;
 	}
 

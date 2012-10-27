@@ -9,5 +9,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 @RemoteServiceRelativePath("basket")
 public interface BasketService extends RemoteService{
+	
 	List<BasketItem> getBasket();
+	
 }

@@ -3,6 +3,7 @@ package org.fhw.asta.kasse.client.inject;
 import org.fhw.asta.kasse.client.inject.module.ActivityModule;
 import org.fhw.asta.kasse.client.inject.module.AppModule;
 import org.fhw.asta.kasse.client.inject.module.WidgetModule;
+import org.fhw.asta.kasse.client.widget.basket.BasketWidget;
 import org.fhw.asta.kasse.client.widget.main.MainWidget;
 
 import com.google.gwt.activity.shared.ActivityManager;
@@ -24,5 +25,7 @@ public interface AppInjector extends Ginjector {
 		EventBus getEventBus();
 	
 		MainWidget getMainWidget();
+		
+		BasketWidget getBasketWidget();
 		
 }

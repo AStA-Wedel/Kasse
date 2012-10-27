@@ -2,6 +2,8 @@ package org.fhw.asta.kasse.shared.model;
 
 import java.io.Serializable;
 
+import org.fhw.asta.kasse.shared.common.EuroAmount;
+
 public class Article implements Serializable
 {
   private static final long serialVersionUID = 1L;
@@ -12,7 +14,7 @@ public class Article implements Serializable
 
   private String name;
 
-  private int centPrice;
+  private EuroAmount price;
 
   private String taxCategoryName;
 
@@ -21,13 +23,13 @@ public class Article implements Serializable
   private boolean enabled;
 
   public Article(final int id, final int revision, final String name,
-      final int centPrice, final String taxCategoryName, final int taxRevision,
+      final EuroAmount price, final String taxCategoryName, final int taxRevision,
       final boolean enabled)
   {
     this.id = id;
     this.revision = revision;
     this.name = name;
-    this.centPrice = centPrice;
+    this.price = price;
     this.taxCategoryName = taxCategoryName;
     this.taxRevision = taxRevision;
     this.enabled = enabled;
@@ -54,9 +56,14 @@ public class Article implements Serializable
 
   public int getCentPrice()
   {
-    return this.centPrice;
+    return price.getCentAmount();
   }
 
+  public String getPriceString()
+  {
+	  return price.toString();
+  }
+  
   public String getTaxCategoryName()
   {
     return this.taxCategoryName;

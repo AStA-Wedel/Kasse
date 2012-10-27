@@ -3,9 +3,16 @@ package org.fhw.asta.kasse.shared.basket;
 import org.fhw.asta.kasse.shared.common.EuroAmount;
 
 public class BasketItem {
-	private final String itemName;
-	private final EuroAmount itemPrice;
-	private final int articleId;
+	private String itemName;
+	private EuroAmount itemPrice;
+	private int articleId;
+	
+	public BasketItem()
+	{
+		this.itemName = "";
+		this.itemPrice = new EuroAmount();
+		this.articleId = 0;
+	}
 	
 	public BasketItem(String itemName, EuroAmount itemPrice, int articleId)
 	{

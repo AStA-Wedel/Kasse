@@ -12,7 +12,6 @@ import com.google.inject.Inject;
 
 public class UserDao
 {
-
   @Inject
   private JdbcTemplate template;
 
@@ -24,7 +23,9 @@ public class UserDao
       public Person mapRow(final ResultSet arg0, final int arg1)
           throws SQLException
       {
-        return null;
+        return new Person(arg0.getString(0), arg0.getInt(1), arg0.getString(2),
+            arg0.getString(3), arg0.getInt(4), arg0.getBoolean(5), arg0
+                .getInt(6));
       }
 
     });

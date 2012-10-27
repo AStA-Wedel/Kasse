@@ -10,7 +10,7 @@ public class EuroAmount implements Serializable
 
   public EuroAmount()
   {
-    this.cents = 0;
+	  this(0);
   };
 
   public EuroAmount(final int cents)

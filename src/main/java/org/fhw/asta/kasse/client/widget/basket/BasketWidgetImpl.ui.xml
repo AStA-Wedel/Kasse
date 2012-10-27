@@ -7,6 +7,6 @@
 		}
 	</ui:style>
 	<g:HTMLPanel>
-		<p1:CellTable ui:field="basketTable" pageSize="8"/>		
+		<p1:CellTable ui:field="basketTable"/>		
 	</g:HTMLPanel>
 </ui:UiBinder> 

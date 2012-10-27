@@ -1,17 +1,20 @@
 package org.fhw.asta.kasse.shared.basket;
 
+import java.io.Serializable;
+
 import org.fhw.asta.kasse.shared.common.EuroAmount;
 
-public class BasketItem {
+public class BasketItem implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
 	private String itemName;
 	private EuroAmount itemPrice;
 	private int articleId;
 	
 	public BasketItem()
 	{
-		this.itemName = "";
-		this.itemPrice = new EuroAmount();
-		this.articleId = 0;
+		this("", new EuroAmount(), 0);
 	}
 	
 	public BasketItem(String itemName, EuroAmount itemPrice, int articleId)

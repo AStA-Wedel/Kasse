@@ -21,6 +21,9 @@ public class UserServiceEndpoint extends RemoteServiceServlet implements UserSer
 	@Override
 	public AuthenticationResult authenticate(String email, String password) {
 		//LOGGER.info("authenticate called");
+		
+		userComponent.show();
+		
 		return new AuthenticationResult(AuthenticationResult.AuthenticationStatus.AUTHENTICATED);
 	}
 

@@ -11,6 +11,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
@@ -24,6 +25,9 @@ public class LoginActivity extends AbstractActivity {
 	
 	@Inject 
 	private LoginWidget loginWidget; 
+	
+	@Inject
+	private PlaceController placeController;
 	
 	@Inject
 	private UserServiceAsync userService;
@@ -52,7 +56,17 @@ public class LoginActivity extends AbstractActivity {
 	}
 	
 	private void handleAuthenticationResult(AuthenticationResult authenticationResult) {
-		
+	
+		switch (authenticationResult.getAuthenticationStatus()) {
+			
+		case AUTHENTICATED:
+			placeController.goTo(/* TODO */ null);
+			break;
+			
+		case NOT_AUTHENTICATED:
+			// Show error!
+			break;
+		}
 	}
 	
 	private void handleAuthenticationError() {

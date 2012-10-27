@@ -12,7 +12,7 @@ import com.google.inject.Singleton;
 public class UserServiceEndpoint extends RemoteServiceServlet implements UserService {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	//private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceEndpoint.class);
 	
 	@Inject
@@ -20,9 +20,7 @@ public class UserServiceEndpoint extends RemoteServiceServlet implements UserSer
 	
 	@Override
 	public AuthenticationResult authenticate(String email, String password) {
-		//LOGGER.info("authenticate called");
-		
-		userComponent.show();
+		//LOGGER.info("authenticate called");		
 		
 		return new AuthenticationResult(AuthenticationResult.AuthenticationStatus.AUTHENTICATED);
 	}

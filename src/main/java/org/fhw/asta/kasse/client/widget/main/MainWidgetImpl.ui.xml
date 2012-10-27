@@ -2,11 +2,9 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
-		
 		.topPadding {
-			padding-top : 60px;
+			padding-top: 60px;
 		}
-		
 	</ui:style>
 	<g:HTMLPanel styleName="{style.topPadding}">
 		<div class="navbar navbar-inverse navbar-fixed-top">
@@ -66,74 +64,74 @@
 
 		<div class="container-fluid">
 			<div class="row-fluid">
-				<div class="span3">
+				<div class="span2">
 					<div class="well sidebar-nav">
-           <ul class="nav nav-list">
-              <li class="nav-header">Sidebar
-              </li>
-              <li class="active">
-                <a href="#">Link</a>
-              </li>
-              <li>
-                <a href="#">Link</a>
-              </li>
-              <li>
-                <a href="#">Link</a>
-              </li>
-              <li>
-                <a href="#">Link</a>
-              </li>
-              <li class="nav-header">Sidebar
-              </li>
-              <li>
-                <a href="#">Link</a>
-              </li>
-              <li>
-                <a href="#">Link</a>
-              </li>
-              <li>
-                <a href="#">Link</a>
-              </li>
-              <li>
-                <a href="#">Link</a>
-              </li>
-              <li>
-                <a href="#">Link</a>
-              </li>
-              <li>
-                <a href="#">Link</a>
-              </li>
-              <li class="nav-header">Sidebar
-              </li>
-              <li>
-                <a href="#">Link</a>
-              </li>
-              <li>
-                <a href="#">Link</a>
-              </li>
-              <li>
-                <a href="#">Link</a>
-              </li>
-            </ul>
- 
+						<ul class="nav nav-list">
+							<li class="nav-header">Sidebar
+							</li>
+							<li class="active">
+								<a href="#">Link</a>
+							</li>
+							<li>
+								<a href="#">Link</a>
+							</li>
+							<li>
+								<a href="#">Link</a>
+							</li>
+							<li>
+								<a href="#">Link</a>
+							</li>
+							<li class="nav-header">Sidebar
+							</li>
+							<li>
+								<a href="#">Link</a>
+							</li>
+							<li>
+								<a href="#">Link</a>
+							</li>
+							<li>
+								<a href="#">Link</a>
+							</li>
+							<li>
+								<a href="#">Link</a>
+							</li>
+							<li>
+								<a href="#">Link</a>
+							</li>
+							<li>
+								<a href="#">Link</a>
+							</li>
+							<li class="nav-header">Sidebar
+							</li>
+							<li>
+								<a href="#">Link</a>
+							</li>
+							<li>
+								<a href="#">Link</a>
+							</li>
+							<li>
+								<a href="#">Link</a>
+							</li>
+						</ul>
+
 						<g:HTMLPanel ui:field="sidebarContainer" />
 					</div>
 				</div>
-		<div class="span6">
-			<div class="hero-unit">
-				<g:SimplePanel ui:field="mainContainer" />
-			</div>
-		</div>
+				<div class="span7">
+					<div class="">
+						<g:SimplePanel ui:field="mainContainer" />
+					</div>
+				</div>
 
-		<div class="span3">
-			<div class="well sidebar-nav">
-				<g:HTMLPanel ui:field="basketContainer" />
-			</div>
+				<div class="span3">
+					<div class="well sidebar-nav">
+						<g:HTMLPanel ui:field="basketContainer" />
+					</div>
 
-			<div class="well sidebar-nav">
-				bla
-			</div>
-		</div>
+					<div class="well sidebar-nav">
+						bla
+					</div>
+				</div>
 			</div>
 
 		</div>

@@ -45,7 +45,7 @@ public class EuroAmount implements Serializable
 
   @Override
   public String toString()
-  {
+  {  
     return Integer.toString(this.cents / 100) + ','
         + Integer.toString(this.cents % 100);
   }

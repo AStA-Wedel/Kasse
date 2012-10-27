@@ -30,8 +30,7 @@ public class SidebarWidgetImpl extends Composite implements SidebarWidget {
 
 	@Override
 	public void addHtmlLink(String htmlLink) {
-		htmlWidget.setHTML(htmlWidget.getHTML()+"<br />"+htmlLink);
-		
+		htmlWidget.setHTML(htmlWidget.getHTML()+"<br />"+htmlLink);		
 	}
 
 	@Override

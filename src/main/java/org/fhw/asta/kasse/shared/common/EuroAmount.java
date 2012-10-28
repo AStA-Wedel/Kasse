@@ -48,8 +48,6 @@ public class EuroAmount implements Serializable
   @Override
   public String toString()
   {
-    final NumberFormat formatter = NumberFormat.getCurrencyFormat();
-    return formatter.format(this.cents / 100);
-
+    return NumberFormat.getCurrencyFormat().format(this.cents / 100.0);
   }
 }

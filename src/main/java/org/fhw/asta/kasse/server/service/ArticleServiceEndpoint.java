@@ -7,6 +7,7 @@ import org.fhw.asta.kasse.shared.model.Article;
 import org.fhw.asta.kasse.shared.service.article.ArticleService;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 @Singleton
@@ -15,10 +16,13 @@ public class ArticleServiceEndpoint extends RemoteServiceServlet implements
 {
   private static final long serialVersionUID = 1L;
 
+  @Inject
+  private ArticleDao dao;
+
   @Override
   public List<Article> getArticles()
   {
-    return new ArticleDao().getAllArticles();
+    return this.dao.getAllArticles();
   }
 
 }

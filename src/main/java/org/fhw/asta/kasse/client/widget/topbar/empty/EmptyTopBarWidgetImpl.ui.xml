@@ -1,0 +1,18 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+	<g:HTMLPanel width="100%" height="60px">
+		<g:HTML wordWrap="true" ui:field="htmlWidget" width="100%"
+			height="60px">
+			<div class="navbar navbar-inverse navbar-fixed-top">
+				<div class="navbar-inner">
+					<div class="mycontainer">
+						<strong>AStA</strong>
+					</div>
+				</div>
+			</div>
+		</g:HTML>
+	</g:HTMLPanel>
+
+</ui:UiBinder> 

@@ -1,5 +1,6 @@
 package org.fhw.asta.kasse.client.widget.basket;
 
+import org.fhw.asta.kasse.client.common.EuroFormatter;
 import org.fhw.asta.kasse.shared.basket.BasketItem;
 import org.fhw.asta.kasse.shared.model.Article;
 
@@ -68,7 +69,7 @@ public class BasketWidgetImpl extends Composite implements BasketWidget {
 		
 		@Override
 		public String getValue(BasketItem object) {
-			return object.getItemPrice().toString();
+			return EuroFormatter.format(object.getItemPrice());
 		}
 	}
 

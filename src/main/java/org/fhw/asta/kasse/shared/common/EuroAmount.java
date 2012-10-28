@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class EuroAmount implements Serializable
 {
   private static final long serialVersionUID = 1L;
-  
+
   private int cents;
 
   public EuroAmount()

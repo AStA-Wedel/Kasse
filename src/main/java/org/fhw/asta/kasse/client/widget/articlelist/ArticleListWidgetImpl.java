@@ -1,5 +1,6 @@
 package org.fhw.asta.kasse.client.widget.articlelist;
 
+import org.fhw.asta.kasse.client.common.EuroFormatter;
 import org.fhw.asta.kasse.shared.model.Article;
 
 import com.google.gwt.core.client.GWT;
@@ -67,7 +68,7 @@ public class ArticleListWidgetImpl extends Composite implements ArticleListWidge
 		
 		@Override
 		public String getValue(Article object) {
-			return object.getPriceString();
+			return EuroFormatter.format(object.getPrice());
 		}
 	}
 	

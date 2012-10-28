@@ -13,7 +13,6 @@ import com.google.inject.Singleton;
 public class ArticleServiceEndpoint extends RemoteServiceServlet implements
     ArticleService
 {
-
   private static final long serialVersionUID = 1L;
 
   @Override

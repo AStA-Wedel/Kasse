@@ -14,7 +14,7 @@ import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
-import com.google.web.bindery.event.shared.SimpleEventBus;
+import com.google.web.bindery.event.shared.EventBus;
 
 @GinModules({AppModule.class, WidgetModule.class, ActivityModule.class, ControllerModule.class})
 public interface AppInjector extends Ginjector {
@@ -25,7 +25,7 @@ public interface AppInjector extends Ginjector {
 		
 		PlaceController getPlaceController();
 		
-		SimpleEventBus getEventBus();
+		EventBus getEventBus();
 	
 		MainWidget getMainWidget();
 		

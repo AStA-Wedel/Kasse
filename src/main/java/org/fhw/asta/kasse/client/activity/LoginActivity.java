@@ -10,35 +10,37 @@ import com.google.common.base.Strings;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import com.google.web.bindery.event.shared.SimpleEventBus;
+import com.google.web.bindery.event.shared.EventBus;
+
 
 public class LoginActivity extends AbstractActivity {
 
 	private final LoginPlace loginPlace; 
 		
 	private HandlerRegistration submitHandlerRegistration;
-	
+
 	@Inject 
 	private LoginWidget loginWidget; 
 
 	@Inject
 	private UserServiceAsync userService;
-	
+
 	@Inject
-	private SimpleEventBus eventBus;
+	private EventBus eventBus;
 	
 	@Inject
 	public LoginActivity(@Assisted LoginPlace loginPlace) {
 		this.loginPlace = loginPlace;
 	}
 	
-	public void start(AcceptsOneWidget panel, EventBus eventBus) {		
+	public void start(AcceptsOneWidget panel, com.google.gwt.event.shared.EventBus eventBus) {		
+		
+		this.eventBus = eventBus;
 		
 		submitHandlerRegistration = loginWidget.getSubmitButton().addClickHandler(new LoginClickHandler());	
 		

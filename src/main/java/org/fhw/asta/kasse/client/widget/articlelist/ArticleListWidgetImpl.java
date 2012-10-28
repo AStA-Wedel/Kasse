@@ -10,7 +10,6 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.HasData;
-import com.google.gwt.view.client.ProvidesKey;
 
 public class ArticleListWidgetImpl extends Composite implements ArticleListWidget {
 
@@ -43,13 +42,7 @@ public class ArticleListWidgetImpl extends Composite implements ArticleListWidge
 			}
 		},"Name");
 		
-		cellTable.addColumn(new TextColumn<Article>() {
-
-			@Override
-			public String getValue(Article object) {
-				return object.getPriceString();
-			}
-		},"Preis");
+		cellTable.addColumn(new PriceTextColumn(),"Preis");
 			
 	}
 	
@@ -63,4 +56,18 @@ public class ArticleListWidgetImpl extends Composite implements ArticleListWidge
 		return cellTable;
 	}
 
+	
+	static private class PriceTextColumn extends TextColumn<Article> {
+		public PriceTextColumn()
+		{
+			super();
+			this.setHorizontalAlignment(ALIGN_RIGHT);
+		}
+		
+		@Override
+		public String getValue(Article object) {
+			return object.getPriceString();
+		}
+	}
+	
 }

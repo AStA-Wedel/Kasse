@@ -6,10 +6,9 @@ import java.util.List;
 import org.fhw.asta.kasse.client.controller.BasketController;
 import org.fhw.asta.kasse.client.widget.articlelist.ArticleListWidget;
 import org.fhw.asta.kasse.client.widget.basket.BasketWidget;
-import org.fhw.asta.kasse.shared.basket.BasketItem;
 import org.fhw.asta.kasse.shared.common.EuroAmount;
 import org.fhw.asta.kasse.shared.model.Article;
-import org.fhw.asta.kasse.shared.service.basket.BasketServiceAsync;
+import org.fhw.asta.kasse.shared.service.article.ArticleServiceAsync;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
@@ -34,12 +33,10 @@ public class ArticleListActivity extends AbstractActivity {
 	@Inject
 	private BasketWidget basketWidget;
 	
+	@Inject 
+	private ArticleServiceAsync articleService;
+	
 	private ListDataProvider<Article> articleDataProvider;
-	
-	private ListDataProvider<BasketItem> basketDataProvider;
-	
-	@Inject
-	private BasketServiceAsync basketService;
 	
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
@@ -48,12 +45,8 @@ public class ArticleListActivity extends AbstractActivity {
 		
 		articleDataProvider = new ListDataProvider<Article>(new ArticleIdProvider());
 		articleDataProvider.addDataDisplay(articleListWidget.getArticleList());		
-
-		List<Article> articles = Arrays.asList(new Article(123, 0, "Strift", new EuroAmount(100), "BLAH", 0, true));
+		articleService.getArticles(new ArticleDataHandler());
 		
-		basketService.getBasket(new BasketDataHandler());
-		
-		articleDataProvider.setList(articles);
 		
 	}
 	
@@ -70,8 +63,9 @@ public class ArticleListActivity extends AbstractActivity {
 		}
 		
 	}
-
-	private final class BasketDataHandler implements AsyncCallback<List<BasketItem>> {
+	
+	private final class ArticleDataHandler implements AsyncCallback<List<Article>> 
+	{
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -80,10 +74,11 @@ public class ArticleListActivity extends AbstractActivity {
 		}
 
 		@Override
-		public void onSuccess(List<BasketItem> result) {
-			basketController.loadBasket(result);
-			
+		public void onSuccess(List<Article> result) {
+			articleDataProvider.setList(result);		
 		}
+		
 	}
+
 	
 }

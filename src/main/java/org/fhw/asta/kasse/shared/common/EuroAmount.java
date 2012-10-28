@@ -2,6 +2,8 @@ package org.fhw.asta.kasse.shared.common;
 
 import java.io.Serializable;
 
+import com.google.gwt.i18n.client.NumberFormat;
+
 public class EuroAmount implements Serializable
 {
   private static final long serialVersionUID = 1L;
@@ -46,6 +48,8 @@ public class EuroAmount implements Serializable
   @Override
   public String toString()
   {
-    return String.format(".2f", (float)(this.cents / 100.0));
+    final NumberFormat formatter = NumberFormat.getCurrencyFormat();
+    return formatter.format(this.cents / 100);
+
   }
 }

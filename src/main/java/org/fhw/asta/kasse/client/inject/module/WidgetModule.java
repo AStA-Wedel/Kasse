@@ -18,8 +18,9 @@ public class WidgetModule extends AbstractGinModule {
 
 	@Override
 	protected void configure() {
-		bind(MainWidget.class).to(MainWidgetImpl.class).in(Singleton.class);
-		bind(LoginWidget.class).to(LoginWidgetImpl.class).in(Singleton.class);
+		bind(LoginWidget.class).to(LoginWidgetImpl.class);
+		
+		bind(MainWidget.class).to(MainWidgetImpl.class).in(Singleton.class);		
 		bind(BasketWidget.class).to(BasketWidgetImpl.class).in(Singleton.class);
 		bind(SidebarWidget.class).to(SidebarWidgetImpl.class).in(Singleton.class);
 		bind(ArticleListWidget.class).to(ArticleListWidgetImpl.class).in(Singleton.class);

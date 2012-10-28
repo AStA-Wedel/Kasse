@@ -4,11 +4,12 @@ import com.google.gwt.place.shared.PlaceController;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
 public class PlaceControllerProvider implements Provider<PlaceController> {
 
 	@Inject
-	private EventBus eventBus;
+	private SimpleEventBus eventBus;
 	
 	@Override
 	public PlaceController get() {

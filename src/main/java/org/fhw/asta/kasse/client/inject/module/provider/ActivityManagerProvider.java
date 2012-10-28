@@ -4,7 +4,7 @@ import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
 public class ActivityManagerProvider implements Provider<ActivityManager> {
 
@@ -12,7 +12,7 @@ public class ActivityManagerProvider implements Provider<ActivityManager> {
 	private ActivityMapper activityMapper;
 	
 	@Inject
-	private EventBus eventBus;
+	private SimpleEventBus eventBus;
 	
 	@Override
 	public ActivityManager get() {

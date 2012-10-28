@@ -1,13 +1,11 @@
 package org.fhw.asta.kasse.client.activity;
 
+import org.fhw.asta.kasse.client.event.LoginEvent;
 import org.fhw.asta.kasse.client.place.ArticleListPlace;
 import org.fhw.asta.kasse.client.place.LoginPlace;
-import org.fhw.asta.kasse.client.widget.basket.BasketWidget;
 import org.fhw.asta.kasse.client.widget.login.LoginWidget;
-import org.fhw.asta.kasse.client.widget.sidebar.SidebarWidget;
 import org.fhw.asta.kasse.shared.authentication.AuthenticationResult;
 import org.fhw.asta.kasse.shared.service.UserServiceAsync;
-import org.fhw.asta.kasse.shared.service.basket.BasketServiceAsync;
 
 import com.google.common.base.Strings;
 import com.google.gwt.activity.shared.AbstractActivity;
@@ -20,6 +18,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
 public class LoginActivity extends AbstractActivity {
 
@@ -29,21 +28,12 @@ public class LoginActivity extends AbstractActivity {
 	
 	@Inject 
 	private LoginWidget loginWidget; 
-	
-	@Inject
-	private PlaceController placeController;
-	
+
 	@Inject
 	private UserServiceAsync userService;
 	
 	@Inject
-	private BasketServiceAsync basketService;
-	
-	@Inject
-	private BasketWidget basketWidget;
-	
-	@Inject
-	private SidebarWidget sidebarWidget;
+	private SimpleEventBus eventBus;
 	
 	@Inject
 	public LoginActivity(@Assisted LoginPlace loginPlace) {
@@ -64,8 +54,7 @@ public class LoginActivity extends AbstractActivity {
 			userService.authenticate(email, password, new AuthenticationCallback());
 		} else {
 			//TODO loginWidget.showError("Email and password need to be provided");
-		}
-		
+		}		
 	}
 	
 	private void handleAuthenticationResult(AuthenticationResult authenticationResult) {
@@ -73,7 +62,7 @@ public class LoginActivity extends AbstractActivity {
 		switch (authenticationResult.getAuthenticationStatus()) {
 			
 		case AUTHENTICATED:		
-			placeController.goTo(new ArticleListPlace());
+			eventBus.fireEvent(new LoginEvent(/* TODO */ "User"));
 			break;
 			
 		case NOT_AUTHENTICATED:

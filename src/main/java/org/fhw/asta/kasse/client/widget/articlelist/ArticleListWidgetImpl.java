@@ -16,23 +16,16 @@ public class ArticleListWidgetImpl extends Composite implements ArticleListWidge
 
 	private static ArticleListWidgetImplUiBinder uiBinder = GWT
 			.create(ArticleListWidgetImplUiBinder.class);
-	@UiField(provided=true) CellTable<Article> cellTable = new CellTable<Article>();
+	
+	@UiField(provided=true) CellTable<Article> cellTable;
 
 	interface ArticleListWidgetImplUiBinder extends
 			UiBinder<Widget, ArticleListWidgetImpl> {
 	}
 
-	
 	private void initializeCellTable()
 	{
-		cellTable = new CellTable<Article>(new ProvidesKey<Article>() {
-
-			@Override
-			public Object getKey(Article arg0) {
-				return arg0.getId();
-			}
-			
-		});
+		cellTable = new CellTable<Article>();
 		
 		cellTable.addColumn(new TextColumn<Article>() {
 
@@ -57,8 +50,7 @@ public class ArticleListWidgetImpl extends Composite implements ArticleListWidge
 				return object.getPriceString();
 			}
 		},"Preis");
-		
-				
+			
 	}
 	
 	public ArticleListWidgetImpl() {

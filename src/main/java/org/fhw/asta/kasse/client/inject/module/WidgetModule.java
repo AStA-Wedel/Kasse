@@ -1,5 +1,7 @@
 package org.fhw.asta.kasse.client.inject.module;
 
+import org.fhw.asta.kasse.client.widget.articlelist.ArticleListWidget;
+import org.fhw.asta.kasse.client.widget.articlelist.ArticleListWidgetImpl;
 import org.fhw.asta.kasse.client.widget.basket.BasketWidget;
 import org.fhw.asta.kasse.client.widget.basket.BasketWidgetImpl;
 import org.fhw.asta.kasse.client.widget.login.LoginWidget;
@@ -20,6 +22,7 @@ public class WidgetModule extends AbstractGinModule {
 		bind(LoginWidget.class).to(LoginWidgetImpl.class).in(Singleton.class);
 		bind(BasketWidget.class).to(BasketWidgetImpl.class).in(Singleton.class);
 		bind(SidebarWidget.class).to(SidebarWidgetImpl.class).in(Singleton.class);
+		bind(ArticleListWidget.class).to(ArticleListWidgetImpl.class).in(Singleton.class);
 	}
 	
 }

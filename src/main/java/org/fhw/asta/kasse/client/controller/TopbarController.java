@@ -6,7 +6,7 @@ import org.fhw.asta.kasse.client.widget.topbar.TopBarWidget;
 import org.fhw.asta.kasse.client.widget.topbar.ready.ReadyTopBarWidget;
 
 import com.google.inject.Inject;
-import com.google.web.bindery.event.shared.SimpleEventBus;
+import com.google.web.bindery.event.shared.EventBus;
 
 public class TopbarController {
 
@@ -17,7 +17,7 @@ public class TopbarController {
 	private TopBarWidget topbarWidget;
 	
 	@Inject
-	public void init(SimpleEventBus eventBus) {
+	public void init(EventBus eventBus) {
 		eventBus.addHandler(LoginEvent.TYPE, new LoginHandler());
 	}
 	

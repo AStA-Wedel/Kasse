@@ -42,13 +42,7 @@ public class ArticleListWidgetImpl extends Composite implements ArticleListWidge
 			}
 		},"Name");
 		
-		cellTable.addColumn(new TextColumn<Article>() {
-
-			@Override
-			public String getValue(Article object) {
-				return object.getPriceString();
-			}
-		},"Preis");
+		cellTable.addColumn(new PriceTextColumn(),"Preis");
 			
 	}
 	
@@ -62,4 +56,18 @@ public class ArticleListWidgetImpl extends Composite implements ArticleListWidge
 		return cellTable;
 	}
 
+	
+	static private class PriceTextColumn extends TextColumn<Article> {
+		public PriceTextColumn()
+		{
+			super();
+			this.setHorizontalAlignment(ALIGN_RIGHT);
+		}
+		
+		@Override
+		public String getValue(Article object) {
+			return object.getPriceString();
+		}
+	}
+	
 }

@@ -46,6 +46,6 @@ public class EuroAmount implements Serializable
   @Override
   public String toString()
   {
-    return String.format(".2f", this.cents / 100.0);
+    return String.format(".2f", (float)(this.cents / 100.0));
   }
 }

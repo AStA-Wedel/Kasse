@@ -7,61 +7,7 @@
 		}
 	</ui:style>
 	<g:HTMLPanel styleName="{style.topPadding}">
-		<div class="navbar navbar-inverse navbar-fixed-top">
-			<div class="navbar-inner">
-				<div class="mycontainer">
-					<ul class="nav pull-left">
-						<li>
-							<div class="navbar-text">
-								<strong>Search:</strong>
-							</div>
-						</li>
-						<li>
-							<form class="navbar-form">
-								<input type="text" class="span3" />
-							</form>
-						</li>
-					</ul>
-
-					<ul class="nav pull-right">
-						<li>
-							<div class="navbar-text">
-								<strong>Quick:</strong>
-							</div>
-						</li>
-						<li>
-							<form class="navbar-form">
-								<input type="text" class="span3" />
-							</form>
-						</li>
-					</ul>
-					<ul class="nav mynav">
-						<li>
-							<a> Haddedu </a>
-						</li>
-
-						<li>
-							<a> Haddedu </a>
-						</li>
-						<li>
-							<a> Haddedu </a>
-						</li>
-						<li>
-							<a> Haddedu </a>
-						</li>
-						<li>
-							<a> Haddedu </a>
-						</li>
-						<li>
-							<a> Haddedu </a>
-						</li>
-					</ul>
-
-				</div>
-			</div>
-		</div>
-
-
+		
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div class="span2">

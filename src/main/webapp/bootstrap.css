@@ -560,6 +560,10 @@ a:hover {
   *zoom: 1;
 }
 
+.mycontainer2 {
+  float:left;
+}
+
 .mynav {
   margin-left:auto;
   margin-right:auto;

@@ -29,13 +29,15 @@ public class Kasse implements EntryPoint {
 	private SimplePanel initialRootPanel = new SimplePanel();
 	
 	public void onModuleLoad() {
-
+		
+		final RootPanel rootPanel = RootPanel.get();
 		final SimpleEventBus eventBus = injector.getEventBus();
 		final ActivityManager activityManager = injector.getActivityManager();
 		final PlaceController placeController = injector.getPlaceController();
 		
 		activityManager.setDisplay(initialRootPanel);
-		RootPanel.get().add(initialRootPanel);
+		rootPanel.add(injector.getTopbarWidget());
+		rootPanel.add(initialRootPanel);
 		
 		PlaceHistoryHandler placeHistoryHandler = injector
 				.getPlaceHistoryHandler();

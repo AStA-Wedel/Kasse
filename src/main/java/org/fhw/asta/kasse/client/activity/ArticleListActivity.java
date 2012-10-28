@@ -8,10 +8,12 @@ import org.fhw.asta.kasse.client.widget.articlelist.ArticleListWidget;
 import org.fhw.asta.kasse.client.widget.basket.BasketWidget;
 import org.fhw.asta.kasse.shared.common.EuroAmount;
 import org.fhw.asta.kasse.shared.model.Article;
+import org.fhw.asta.kasse.shared.service.article.ArticleServiceAsync;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
@@ -31,6 +33,9 @@ public class ArticleListActivity extends AbstractActivity {
 	@Inject
 	private BasketWidget basketWidget;
 	
+	@Inject 
+	private ArticleServiceAsync articleService;
+	
 	private ListDataProvider<Article> articleDataProvider;
 	
 	@Override
@@ -40,10 +45,8 @@ public class ArticleListActivity extends AbstractActivity {
 		
 		articleDataProvider = new ListDataProvider<Article>(new ArticleIdProvider());
 		articleDataProvider.addDataDisplay(articleListWidget.getArticleList());		
-
-		List<Article> articles = Arrays.asList(new Article(123, 0, "Strift", new EuroAmount(100), "BLAH", 0, true));
+		articleService.getArticles(new ArticleDataHandler());
 		
-		articleDataProvider.setList(articles);
 		
 	}
 	
@@ -60,7 +63,22 @@ public class ArticleListActivity extends AbstractActivity {
 		}
 		
 	}
+	
+	private final class ArticleDataHandler implements AsyncCallback<List<Article>> 
+	{
 
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(List<Article> result) {
+			articleDataProvider.setList(result);		
+		}
+		
+	}
 
 	
 }

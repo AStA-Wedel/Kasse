@@ -1,5 +1,7 @@
 package org.fhw.asta.kasse.client.controller;
 
+import java.util.List;
+
 import org.fhw.asta.kasse.client.widget.basket.BasketWidget;
 import org.fhw.asta.kasse.shared.basket.BasketItem;
 
@@ -30,6 +32,11 @@ public class BasketController {
 		//TODO: position an server für session
 	
 		basketDataProvider.getList().add(basketItem); //FIXME
+	}
+
+	public void loadBasket(List<BasketItem> basket)
+	{
+		basketDataProvider.getList().addAll(basket);
 	}
 	
 	private static final class BasketItemKeyProvider implements ProvidesKey<BasketItem> {

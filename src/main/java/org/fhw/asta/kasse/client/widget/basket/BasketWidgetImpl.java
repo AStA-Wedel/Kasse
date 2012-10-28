@@ -1,6 +1,7 @@
 package org.fhw.asta.kasse.client.widget.basket;
 
 import org.fhw.asta.kasse.shared.basket.BasketItem;
+import org.fhw.asta.kasse.shared.model.Article;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -40,14 +41,9 @@ public class BasketWidgetImpl extends Composite implements BasketWidget {
 
 		},"Name");
 		
-		basketTable.addColumn(new TextColumn<BasketItem>() {
-
-			@Override
-			public String getValue(BasketItem object) {
-				return object.getItemPrice().toString();
-			}
-		},"Preis");
-				
+		basketTable.addColumn(new PriceTextColumn(),"Preis");
+		
+		basketTable.getHeader(2).setHeaderStyleNames(basketTable.getHeader(2).getHeaderStyleNames()+" tblleft");
 	}
 	
 	interface BasketWidgetUiBinder extends UiBinder<Widget, BasketWidgetImpl> {
@@ -61,6 +57,19 @@ public class BasketWidgetImpl extends Composite implements BasketWidget {
 	@Override
 	public HasData<BasketItem> getBasketTable() {
 		return basketTable;
+	}
+	
+	static private class PriceTextColumn extends TextColumn<BasketItem> {
+		public PriceTextColumn()
+		{
+			super();
+			this.setHorizontalAlignment(ALIGN_RIGHT);
+		}
+		
+		@Override
+		public String getValue(BasketItem object) {
+			return object.getItemPrice().toString();
+		}
 	}
 
 	

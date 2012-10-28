@@ -776,6 +776,11 @@ dd {
   content: "";
 }
 
+.tblleft
+{
+	text-align: right !important;
+}
+
 .dl-horizontal:after {
   clear: both;
 }

@@ -43,7 +43,8 @@ public class ArticleListWidgetImpl extends Composite implements ArticleListWidge
 		},"Name");
 		
 		cellTable.addColumn(new PriceTextColumn(),"Preis");
-			
+		
+		cellTable.getHeader(2).setHeaderStyleNames(cellTable.getHeader(2).getHeaderStyleNames()+" tblleft");
 	}
 	
 	public ArticleListWidgetImpl() {

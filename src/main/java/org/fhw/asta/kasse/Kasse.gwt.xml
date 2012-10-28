@@ -31,8 +31,6 @@
     <inherits name="com.google.common.base.Base" />
 
 	<!-- Properties -->
-	<!--   <extend-property name="locale" values="de_DE" /> -->
-
     <!-- Specify the app entry point class. -->
 
     <entry-point class="org.fhw.asta.kasse.client.Kasse" />

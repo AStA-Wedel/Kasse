@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
 
 public class Validator<T> {
 
@@ -11,6 +12,10 @@ public class Validator<T> {
 	
 	static public <E> Validator<E> start() {
 		return new Validator<E>();
+	}
+	
+	public Validator() {
+		this.predicates = Lists.newLinkedList();
 	}
 	
 	public Validator<T> add(Predicate<T> predicate) {

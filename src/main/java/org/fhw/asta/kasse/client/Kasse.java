@@ -18,7 +18,7 @@ import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.web.bindery.event.shared.SimpleEventBus;
+import com.google.web.bindery.event.shared.EventBus;
 
 public class Kasse implements EntryPoint {
 
@@ -31,7 +31,7 @@ public class Kasse implements EntryPoint {
 	public void onModuleLoad() {
 		
 		final RootPanel rootPanel = RootPanel.get();
-		final SimpleEventBus eventBus = injector.getEventBus();
+		final EventBus eventBus = injector.getEventBus();
 		final ActivityManager activityManager = injector.getActivityManager();
 		final PlaceController placeController = injector.getPlaceController();
 		

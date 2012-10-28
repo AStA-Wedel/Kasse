@@ -16,13 +16,15 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import com.google.web.bindery.event.shared.SimpleEventBus;
+
 
 public class LoginActivity extends AbstractActivity {
 
 	private final LoginPlace loginPlace; 
 		
 	private HandlerRegistration submitHandlerRegistration;
+	
+	private EventBus eventBus;
 	
 	@Inject 
 	private LoginWidget loginWidget; 
@@ -31,14 +33,13 @@ public class LoginActivity extends AbstractActivity {
 	private UserServiceAsync userService;
 	
 	@Inject
-	private SimpleEventBus eventBus;
-	
-	@Inject
 	public LoginActivity(@Assisted LoginPlace loginPlace) {
 		this.loginPlace = loginPlace;
 	}
 	
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {		
+		
+		this.eventBus = eventBus;
 		
 		submitHandlerRegistration = loginWidget.getSubmitButton().addClickHandler(new LoginClickHandler());	
 		

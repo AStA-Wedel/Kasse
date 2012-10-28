@@ -13,13 +13,14 @@ import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
 import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.inject.Singleton;
+import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 
 public class AppModule extends AbstractGinModule {
 
 	@Override
 	protected void configure() {
-		bind(SimpleEventBus.class).in(Singleton.class);
+		bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
 		bind(ActivityMapper.class).to(AppActivityMapper.class).in(Singleton.class);
 
 		bind(ActivityManager.class).toProvider(ActivityManagerProvider.class).in(Singleton.class);

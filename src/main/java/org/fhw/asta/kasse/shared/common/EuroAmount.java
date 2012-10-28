@@ -1,6 +1,8 @@
 package org.fhw.asta.kasse.shared.common;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.util.Currency;
 
 public class EuroAmount implements Serializable
 {
@@ -46,6 +48,8 @@ public class EuroAmount implements Serializable
   @Override
   public String toString()
   {
-    return String.format("%.2d", this.cents / 100);
+    final NumberFormat format = NumberFormat.getCurrencyInstance();
+    format.setCurrency(Currency.getInstance("EUR"));
+    return format.format(this.cents / 100.0);
   }
 }

@@ -27,42 +27,33 @@ public class BasketWidgetImpl extends Composite implements BasketWidget {
 	CellTable<BasketItem> basketTable;
 
 	private Column<BasketItem,String> deleteColumn;
+	private Column<BasketItem,String> priceColumn;
+	private Column<BasketItem,String> amountColumn;
+	private Column<BasketItem,String> nameColumn;
 	
 	private void initializeCellTable() {
 		basketTable = new CellTable<BasketItem>();
 
 		EditTextCell amountCell = new EditTextCell();
+		amountColumn = new AmountColumn(amountCell);
+		basketTable.addColumn(amountColumn, "Menge");
 
-		basketTable.addColumn(new Column<BasketItem, String>(amountCell) {
+		nameColumn = new NameColumn();
+		basketTable.addColumn(nameColumn, "Name");
 
-			@Override
-			public String getValue(BasketItem object) {
-				return Integer.toString(object.getAmount());
-			}
-		}, "Menge");
-
-		basketTable.addColumn(new TextColumn<BasketItem>() {
-
-			@Override
-			public String getValue(BasketItem object) {
-				return object.getItemName();
-			}
-
-		}, "Name");
-
-		basketTable.addColumn(new PriceTextColumn(), "Preis");
-
+		priceColumn = new PriceTextColumn();
+		basketTable.addColumn(priceColumn, "Preis");
 		basketTable.getHeader(2).setHeaderStyleNames(
 				basketTable.getHeader(2).getHeaderStyleNames() + " tblleft");
 
 		ButtonCell deleteButton = new DeleteButtonCell();
 		deleteColumn = new DeleteColumn(deleteButton);
-		
 		basketTable.addColumn(deleteColumn);
-		basketTable.setColumnWidth(basketTable.getColumn(0),"10%");
-		basketTable.setColumnWidth(basketTable.getColumn(1),"60%");
-		basketTable.setColumnWidth(basketTable.getColumn(2),"20%");
-		basketTable.setColumnWidth(basketTable.getColumn(3),"10%");
+		
+		basketTable.setColumnWidth(amountColumn,"10%");
+		basketTable.setColumnWidth(nameColumn,"60%");
+		basketTable.setColumnWidth(priceColumn,"20%");
+		basketTable.setColumnWidth(deleteColumn,"10%");
 
 	}
 
@@ -77,6 +68,16 @@ public class BasketWidgetImpl extends Composite implements BasketWidget {
 	@Override
 	public HasData<BasketItem> getBasketTable() {
 		return basketTable;
+	}
+	
+	@Override
+	public Column<BasketItem, String> getDeleteColumn() {
+		return deleteColumn;
+	}
+	
+	@Override
+	public Column<BasketItem, String> getAmountColumn() {
+		return amountColumn;
 	}
 	
 	static private class DeleteColumn extends Column<BasketItem,String>
@@ -102,7 +103,29 @@ public class BasketWidgetImpl extends Composite implements BasketWidget {
 			return EuroFormatter.format(object.getItemPrice());
 		}
 	}
+	
+	static private class NameColumn extends TextColumn<BasketItem> {
+		public NameColumn() {
+			super();
+		}
 
+		@Override
+		public String getValue(BasketItem object) {
+			return object.getItemName();
+		}
+	}
+
+	static private class AmountColumn extends Column<BasketItem,String> {
+		public AmountColumn(Cell<String> cell) {
+			super(cell);
+		}
+
+		@Override
+		public String getValue(BasketItem object) {
+			return Integer.toString(object.getAmount());
+		}
+	}
+	
 	static private class DeleteButtonCell extends ButtonCell {
 		/**
 		 * Constructor.
@@ -129,9 +152,8 @@ public class BasketWidgetImpl extends Composite implements BasketWidget {
 
 	}
 
-	@Override
-	public Column<BasketItem, String> getDeleteColumn() {
-		return deleteColumn;
-	}
+
+
+
 
 }

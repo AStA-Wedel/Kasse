@@ -11,4 +11,6 @@ public interface BasketWidget extends IsWidget {
 	HasData<BasketItem> getBasketTable();
 	
 	Column<BasketItem, String> getDeleteColumn();
+	
+	Column<BasketItem, String> getAmountColumn();
 }

@@ -12,4 +12,6 @@ public interface BasketService extends RemoteService{
 	
 	List<BasketItem> getBasket();
 	
+	void removeItem(BasketItem item);
+	
 }

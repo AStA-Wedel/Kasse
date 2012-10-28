@@ -21,7 +21,14 @@ public class BasketServiceEndpoint extends RemoteServiceServlet implements Baske
 	@Override
 	public List<BasketItem> getBasket() {
 		List<BasketItem> basket = Lists.newArrayList(new BasketItem("Stift", new EuroAmount(123), 1234,12));
+		// TODO fill content
 		return basket;
+	}
+
+	@Override
+	public void removeItem(BasketItem item) {
+		// TODO fill content
+		
 	}
 
 }

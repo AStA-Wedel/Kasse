@@ -6,6 +6,7 @@ import org.fhw.asta.kasse.client.widget.basket.BasketWidget;
 import org.fhw.asta.kasse.shared.basket.BasketItem;
 import org.fhw.asta.kasse.shared.service.basket.BasketServiceAsync;
 
+import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
@@ -19,19 +20,44 @@ public class BasketController {
 	
 	private BasketWidget basketWidget; 
 	
+	private FieldUpdater<BasketItem, String> deleteUpdater;
+	
 	public BasketController() {
 		this.basketDataProvider = new ListDataProvider<BasketItem>(new BasketItemKeyProvider());
 	}
 	
 	@Inject
-	public void init(BasketWidget basketWidget,BasketServiceAsync basketService ) {
+	public void init(BasketWidget basketWidget,final BasketServiceAsync basketService ) {
 		
 		this.basketWidget = basketWidget;
 		this.basketService = basketService;
 		
-		basketDataProvider.addDataDisplay(basketWidget.getBasketTable());
+		basketDataProvider.addDataDisplay(this.basketWidget.getBasketTable());
 		
 		loadBasket();
+		
+		deleteUpdater = new FieldUpdater<BasketItem, String>() {
+
+			@Override
+			public void update(int index, BasketItem object, String value) {
+				basketDataProvider.getList().remove(object);
+				basketService.removeItem(object, new AsyncCallback<Void>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void onSuccess(Void result) {
+						// TODO Auto-generated method stub
+						
+					}
+				});				
+			}
+		};
+		basketWidget.getDeleteColumn().setFieldUpdater(deleteUpdater);
 	}
 	
 	public void addBasketPosition(BasketItem basketItem) {

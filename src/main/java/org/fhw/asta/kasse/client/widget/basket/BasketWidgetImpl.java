@@ -4,6 +4,7 @@ import org.fhw.asta.kasse.client.common.EuroFormatter;
 import org.fhw.asta.kasse.shared.basket.BasketItem;
 
 import com.google.gwt.cell.client.ButtonCell;
+import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.EditTextCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.safehtml.shared.SafeHtml;
@@ -25,6 +26,8 @@ public class BasketWidgetImpl extends Composite implements BasketWidget {
 	@UiField(provided = true)
 	CellTable<BasketItem> basketTable;
 
+	private Column<BasketItem,String> deleteColumn;
+	
 	private void initializeCellTable() {
 		basketTable = new CellTable<BasketItem>();
 
@@ -53,14 +56,9 @@ public class BasketWidgetImpl extends Composite implements BasketWidget {
 				basketTable.getHeader(2).getHeaderStyleNames() + " tblleft");
 
 		ButtonCell deleteButton = new DeleteButtonCell();
-
-		basketTable.addColumn(new Column<BasketItem, String>(deleteButton) {
-
-			@Override
-			public String getValue(BasketItem object) {
-				return "";
-			}
-		});
+		deleteColumn = new DeleteColumn(deleteButton);
+		
+		basketTable.addColumn(deleteColumn);
 		basketTable.setColumnWidth(basketTable.getColumn(0),"10%");
 		basketTable.setColumnWidth(basketTable.getColumn(1),"60%");
 		basketTable.setColumnWidth(basketTable.getColumn(2),"20%");
@@ -80,7 +78,19 @@ public class BasketWidgetImpl extends Composite implements BasketWidget {
 	public HasData<BasketItem> getBasketTable() {
 		return basketTable;
 	}
+	
+	static private class DeleteColumn extends Column<BasketItem,String>
+	{
+		public DeleteColumn(Cell<String> cell) {
+			super(cell);
+		}
 
+		@Override
+		public String getValue(BasketItem object) {
+			return "";
+		}
+	}
+	
 	static private class PriceTextColumn extends TextColumn<BasketItem> {
 		public PriceTextColumn() {
 			super();
@@ -117,6 +127,11 @@ public class BasketWidgetImpl extends Composite implements BasketWidget {
 			sb.appendHtmlConstant("</button>");
 		}
 
+	}
+
+	@Override
+	public Column<BasketItem, String> getDeleteColumn() {
+		return deleteColumn;
 	}
 
 }

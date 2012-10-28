@@ -10,4 +10,6 @@ public interface BasketServiceAsync {
 
 	void getBasket(AsyncCallback<List<BasketItem>> callback);
 
+	void removeItem(BasketItem item, AsyncCallback<Void> callback);
+
 }

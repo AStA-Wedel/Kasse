@@ -1,12 +1,10 @@
 package org.fhw.asta.kasse.client.activity;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.fhw.asta.kasse.client.controller.BasketController;
 import org.fhw.asta.kasse.client.widget.articlelist.ArticleListWidget;
 import org.fhw.asta.kasse.client.widget.basket.BasketWidget;
-import org.fhw.asta.kasse.shared.common.EuroAmount;
 import org.fhw.asta.kasse.shared.model.Article;
 import org.fhw.asta.kasse.shared.service.article.ArticleServiceAsync;
 

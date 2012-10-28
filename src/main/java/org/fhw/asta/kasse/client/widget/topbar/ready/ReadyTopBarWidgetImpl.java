@@ -8,6 +8,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HasAnimation;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -37,13 +38,13 @@ public class ReadyTopBarWidgetImpl extends Composite implements ReadyTopBarWidge
 	SearchBoxWidget searchBox;
 	
 	@UiField
-	SimplePanel quickBoxPanel;
+	HTMLPanel quickBoxPanel;
 	
 	@UiField
-	SimplePanel navBarPanel;
+	HTMLPanel navBarPanel;
 	
 	@UiField
-	SimplePanel searchBoxPanel;
+	HTMLPanel searchBoxPanel;
 	
 	@Inject
 	public void init(NavBarWidget navBar, QuickBoxWidget quickBox, SearchBoxWidget searchBox)
@@ -52,11 +53,10 @@ public class ReadyTopBarWidgetImpl extends Composite implements ReadyTopBarWidge
 		this.quickBox = quickBox;
 		this.searchBox = searchBox;
 		
-		searchBoxPanel.setWidget(searchBox);
-		quickBoxPanel.setWidget(quickBox);
-		navBarPanel.setWidget(navBar);
+		searchBoxPanel.add(searchBox);
+		quickBoxPanel.add(quickBox);
+		navBarPanel.add(navBar);		
 	}
-
 	
 	@Override
 	public HasAnimation getNavBar() {

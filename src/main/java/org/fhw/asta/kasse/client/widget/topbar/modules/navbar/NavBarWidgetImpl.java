@@ -2,7 +2,6 @@ package org.fhw.asta.kasse.client.widget.topbar.modules.navbar;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasAnimation;
 import com.google.gwt.user.client.ui.MenuBar;
@@ -21,7 +20,7 @@ public class NavBarWidgetImpl extends Composite implements NavBarWidget {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 	
-	@UiField
+	//@UiField
 	MenuBar menuBar;
 
 	@Override

@@ -19,6 +19,8 @@ public class SearchBoxWidgetImpl extends Composite implements SearchBoxWidget {
 
 	public SearchBoxWidgetImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
+
+		suggestBox.getElement().setAttribute("placeholder", "Suche");
 	}
 	
 	@UiField

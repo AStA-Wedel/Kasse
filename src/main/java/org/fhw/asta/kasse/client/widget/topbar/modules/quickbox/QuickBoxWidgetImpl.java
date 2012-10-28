@@ -19,6 +19,7 @@ public class QuickBoxWidgetImpl extends Composite implements QuickBoxWidget {
 
 	public QuickBoxWidgetImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
+		textBox.getElement().setAttribute("placeholder", "Quickbox");
 	}
 
 	@UiField

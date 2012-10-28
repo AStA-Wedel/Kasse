@@ -1,17 +1,23 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	
 	<ui:style>
+		.paddingTop {
+			padding-top: 60px;
+		}
 	</ui:style>
-	<g:HTMLPanel styleName="container">
-		<form class="form-horizontal">
+	
+	<g:HTMLPanel styleName="container {style.paddingTop}">
+	
+		<form class="form-horizontal" onsubmit="return false;">
 		
 			<legend>Login</legend>
 		
   			<div class="control-group">
     			<label class="control-label" for="inputEmail">Email</label>
     			<div class="controls">
-	    			<g:TextBox ui:field="emailTextBox" styleName="" />
+	    			<g:TextBox ui:field="emailTextBox" styleName="" focus="true"/>
     			</div>
   			</div>
   
@@ -24,7 +30,7 @@
   			
  			<div class="control-group">
     			<div class="controls">
-	    			<g:Button styleName="btn btn-primary" ui:field="submitButton" text="Sign in" />
+    				<g:SubmitButton styleName="btn btn-primary" ui:field="submitButton" text="Sign in" />
     			</div>
   			</div>
 		</form>

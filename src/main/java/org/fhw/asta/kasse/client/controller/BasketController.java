@@ -21,6 +21,7 @@ public class BasketController {
 	private BasketWidget basketWidget; 
 	
 	private FieldUpdater<BasketItem, String> deleteUpdater;
+	private FieldUpdater<BasketItem, String> amountUpdater;
 	
 	public BasketController() {
 		this.basketDataProvider = new ListDataProvider<BasketItem>(new BasketItemKeyProvider());
@@ -33,36 +34,18 @@ public class BasketController {
 		this.basketService = basketService;
 		
 		basketDataProvider.addDataDisplay(this.basketWidget.getBasketTable());
-		
 		loadBasket();
 		
-		deleteUpdater = new FieldUpdater<BasketItem, String>() {
-
-			@Override
-			public void update(int index, BasketItem object, String value) {
-				basketDataProvider.getList().remove(object);
-				basketService.removeItem(object, new AsyncCallback<Void>() {
-
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void onSuccess(Void result) {
-						// TODO Auto-generated method stub
-						
-					}
-				});				
-			}
-		};
+		deleteUpdater = new DeleteUpdater();
 		basketWidget.getDeleteColumn().setFieldUpdater(deleteUpdater);
+		
+		amountUpdater = new AmountUpdater();
+		basketWidget.getAmountColumn().setFieldUpdater(amountUpdater);
 	}
 	
 	public void addBasketPosition(BasketItem basketItem) {
  		
-		//TODO: position an server für session
+		basketService.addItem(basketItem, new BasketVoidHandler());
 	
 		basketDataProvider.getList().add(basketItem); //FIXME
 	}
@@ -70,6 +53,34 @@ public class BasketController {
 	public void loadBasket()
 	{		
 		basketService.getBasket(new BasketDataHandler());	
+	}
+	
+	private class AmountUpdater implements FieldUpdater<BasketItem,String>
+	{
+
+		@Override
+		public void update(int index, BasketItem object, String value) {
+			if (value.matches("[1-9]+")) {
+				BasketItem toUpdate = new BasketItem(object.getItemName(), object.getItemPrice(), object.getArticleId(), Integer.valueOf(value));
+				basketService.updateItem(toUpdate, new BasketVoidHandler());
+				basketDataProvider.getList().remove(object);
+				basketDataProvider.getList().add(toUpdate);
+			} else {
+				basketDataProvider.getList().clear();
+				loadBasket();
+			}
+			
+		}
+	}
+	
+	private class DeleteUpdater implements FieldUpdater<BasketItem,String>
+	{
+
+		@Override
+		public void update(int index, BasketItem object, String value) {
+			basketDataProvider.getList().remove(object);
+			basketService.removeItem(object, new BasketVoidHandler());	
+		}
 	}
 	
 	private static final class BasketItemKeyProvider implements ProvidesKey<BasketItem> {
@@ -92,6 +103,21 @@ public class BasketController {
 		@Override
 		public void onSuccess(List<BasketItem> result) {
 			basketDataProvider.getList().addAll(result);
+			
+		}
+	}
+	
+	private final class BasketVoidHandler implements AsyncCallback<Void> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Void result) {
+			// TODO Auto-generated method stub
 			
 		}
 	}

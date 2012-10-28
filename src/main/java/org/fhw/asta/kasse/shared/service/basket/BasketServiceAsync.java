@@ -12,4 +12,8 @@ public interface BasketServiceAsync {
 
 	void removeItem(BasketItem item, AsyncCallback<Void> callback);
 
+	void updateItem(BasketItem item, AsyncCallback<Void> callback);
+
+	void addItem(BasketItem item, AsyncCallback<Void> callback);
+
 }

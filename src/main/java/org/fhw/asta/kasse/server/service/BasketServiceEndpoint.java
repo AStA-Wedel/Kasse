@@ -31,4 +31,16 @@ public class BasketServiceEndpoint extends RemoteServiceServlet implements Baske
 		
 	}
 
+	@Override
+	public void updateItem(BasketItem item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addItem(BasketItem item) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -10,7 +10,7 @@ public class EuroAmount implements Serializable
 
   public EuroAmount()
   {
-	  this(0);
+    this(0);
   };
 
   public EuroAmount(final int cents)
@@ -45,8 +45,7 @@ public class EuroAmount implements Serializable
 
   @Override
   public String toString()
-  {  
-    return Integer.toString(this.cents / 100) + ','
-        + Integer.toString(this.cents % 100);
+  {
+    return String.format("%.2d", this.cents / 100);
   }
 }

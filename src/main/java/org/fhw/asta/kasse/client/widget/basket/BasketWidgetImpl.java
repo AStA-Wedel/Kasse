@@ -19,6 +19,7 @@ import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.TextBox;
 
 public class BasketWidgetImpl extends Composite implements BasketWidget {
 
@@ -28,34 +29,41 @@ public class BasketWidgetImpl extends Composite implements BasketWidget {
 	@UiField(provided = true)
 	CellTable<BasketItem> basketTable;
 	@UiField Label sum;
+	@UiField TextBox discountBox;
 
 	private Column<BasketItem,String> deleteColumn;
 	private Column<BasketItem,String> priceColumn;
 	private Column<BasketItem,String> amountColumn;
 	private Column<BasketItem,String> nameColumn;
+	private Column<BasketItem,String> discountColumn;
 	
 	private void initializeCellTable() {
 		basketTable = new CellTable<BasketItem>();
 
-		EditTextCell amountCell = new EditTextCell();
-		amountColumn = new AmountColumn(amountCell);
+		EditTextCell editCell = new EditTextCell();
+		
+		amountColumn = new AmountColumn(editCell);
 		basketTable.addColumn(amountColumn, "Menge");
 
 		nameColumn = new NameColumn();
 		basketTable.addColumn(nameColumn, "Name");
-
+		
+		discountColumn = new DiscountColumn(editCell);
+		basketTable.addColumn(discountColumn, "%");
+		
 		priceColumn = new PriceTextColumn();
 		basketTable.addColumn(priceColumn, "Preis");
-		basketTable.getHeader(2).setHeaderStyleNames(
-				basketTable.getHeader(2).getHeaderStyleNames() + " tblleft");
+		basketTable.getHeader(3).setHeaderStyleNames(
+				basketTable.getHeader(3).getHeaderStyleNames() + " tblleft");
 
 		ButtonCell deleteButton = new DeleteButtonCell();
 		deleteColumn = new DeleteColumn(deleteButton);
 		basketTable.addColumn(deleteColumn);
 		
 		basketTable.setColumnWidth(amountColumn,"10%");
-		basketTable.setColumnWidth(nameColumn,"60%");
-		basketTable.setColumnWidth(priceColumn,"20%");
+		basketTable.setColumnWidth(nameColumn,"50%");
+		basketTable.setColumnWidth(discountColumn, "15%");
+		basketTable.setColumnWidth(priceColumn,"15%");
 		basketTable.setColumnWidth(deleteColumn,"10%");
 
 	}
@@ -84,8 +92,18 @@ public class BasketWidgetImpl extends Composite implements BasketWidget {
 	}
 	
 	@Override
+	public Column<BasketItem, String> getDiscountColumn() {
+		return discountColumn;
+	}
+	
+	@Override
 	public HasText getSumLabel() {
 		return sum;
+	}
+	
+	@Override
+	public TextBox getDiscountBox() {
+		return discountBox;
 	}
 	
 	static private class DeleteColumn extends Column<BasketItem,String>
@@ -108,7 +126,7 @@ public class BasketWidgetImpl extends Composite implements BasketWidget {
 
 		@Override
 		public String getValue(BasketItem object) {
-			return EuroFormatter.format(object.getItemPrice());
+			return EuroFormatter.formatWithDiscount(object.getItemPrice().getCentAmount() * object.getAmount(),object.getDiscount());
 		}
 	}
 	
@@ -131,6 +149,17 @@ public class BasketWidgetImpl extends Composite implements BasketWidget {
 		@Override
 		public String getValue(BasketItem object) {
 			return Integer.toString(object.getAmount());
+		}
+	}
+	
+	static private class DiscountColumn extends Column<BasketItem,String> {
+		public DiscountColumn(Cell<String> cell) {
+			super(cell);
+		}
+
+		@Override
+		public String getValue(BasketItem object) {
+			return Integer.toString(object.getDiscount());
 		}
 	}
 	

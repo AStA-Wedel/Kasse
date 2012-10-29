@@ -6,9 +6,16 @@
 		<br/>
 		<table class="sumTbl">
 			<tbody>
+			<tr>
+			<td><strong>Rabatt: </strong></td>
+			<td><g:TextBox ui:field="discountBox" maxLength="2"/></td>
+			</tr>
+			<tr>
 			<td><strong>Gesamt: </strong></td>
-			<td><g:Label ui:field="sum" text="€0.00"></g:Label></td>
+			<td><g:Label ui:field="sum" text="€0.00"/></td>
+			</tr>
 			</tbody>
 		</table>
+		
 	</g:HTMLPanel>
 </ui:UiBinder> 

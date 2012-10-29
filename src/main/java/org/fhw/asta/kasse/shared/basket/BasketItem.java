@@ -12,6 +12,8 @@ public class BasketItem implements Serializable {
 	private EuroAmount itemPrice;
 	private int articleId;
 	private int amount;
+	private int discount;
+	
 	public BasketItem()
 	{
 		this("", new EuroAmount(), 0, 0);
@@ -23,6 +25,16 @@ public class BasketItem implements Serializable {
 		this.itemPrice = itemPrice;
 		this.articleId = articleId;
 		this.amount = amount;
+		this.discount = 0;
+	}
+	
+	public BasketItem(String itemName, EuroAmount itemPrice, int articleId, int amount, int discount)
+	{
+		this.itemName = itemName;
+		this.itemPrice = itemPrice;
+		this.articleId = articleId;
+		this.amount = amount;
+		this.discount = discount;
 	}
 	
 	public int getArticleId()
@@ -33,6 +45,11 @@ public class BasketItem implements Serializable {
 	public String getItemName()
 	{
 		return itemName;
+	}
+	
+	public int getDiscount()
+	{
+		return discount;
 	}
 	
 	public EuroAmount getItemPrice()

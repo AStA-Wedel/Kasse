@@ -12,6 +12,8 @@ import org.fhw.asta.kasse.shared.model.Article;
 import org.fhw.asta.kasse.shared.service.basket.BasketServiceAsync;
 
 import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
@@ -27,9 +29,11 @@ public class BasketController {
 
 	private FieldUpdater<BasketItem, String> deleteUpdater;
 	private FieldUpdater<BasketItem, String> amountUpdater;
+	private FieldUpdater<BasketItem, String> discountUpdater;
+	private ValueChangeHandler<String> masterDiscountUpdater;
 
 	private BasketComparator basketComparator = new BasketComparator();
-	
+
 	public BasketController() {
 		this.basketDataProvider = new ListDataProvider<BasketItem>(
 				new BasketItemKeyProvider());
@@ -50,6 +54,13 @@ public class BasketController {
 
 		amountUpdater = new AmountUpdater();
 		basketWidget.getAmountColumn().setFieldUpdater(amountUpdater);
+
+		discountUpdater = new DiscountUpdater();
+		basketWidget.getDiscountColumn().setFieldUpdater(discountUpdater);
+
+		masterDiscountUpdater = new MasterDiscountUpdater();
+		basketWidget.getDiscountBox().addValueChangeHandler(
+				masterDiscountUpdater);
 	}
 
 	public void addBasketPosition(BasketItem basketItem) {
@@ -61,12 +72,12 @@ public class BasketController {
 			if (next.getArticleId() == basketItem.getArticleId()) {
 				basketItem = new BasketItem(basketItem.getItemName(),
 						basketItem.getItemPrice(), basketItem.getArticleId(),
-						basketItem.getAmount() + next.getAmount());
+						basketItem.getAmount() + next.getAmount(), next.getDiscount());
 				basketDataProvider.getList().remove(next);
 				basketService.removeItem(next, new BasketVoidHandler());
 			}
 		}
-		
+
 		basketService.addItem(basketItem, new BasketVoidHandler());
 		basketDataProvider.getList().add(basketItem);
 		flush();
@@ -81,27 +92,36 @@ public class BasketController {
 
 	public void loadBasket() {
 		basketService.getBasket(new BasketDataHandler());
+		basketService.getDiscount(new BasketDiscountHandler());
 	}
 
-	private void flush()
-	{
-		Collections.sort(basketDataProvider.getList(),basketComparator);
-		
+	private void flush() {
+		Collections.sort(basketDataProvider.getList(), basketComparator);
+
 		int sum = 0;
-		
+
 		Iterator<BasketItem> basketIterator = basketDataProvider.getList()
 				.iterator();
-		while (basketIterator.hasNext())
-		{
+		while (basketIterator.hasNext()) {
 			BasketItem next = basketIterator.next();
-			sum += next.getItemPrice().getCentAmount()*next.getAmount();
-			
+			sum += Math.round((next.getItemPrice().getCentAmount() * next.getAmount()) * ((100-next.getDiscount()) / 100.0 ));
+
 		}
 		
-		basketWidget.getSumLabel().setText(EuroFormatter.format(sum));
+		int discount = 0;
 		
+		try {
+			discount = Integer.valueOf(basketWidget.getDiscountBox().getText());
+		} catch (NumberFormatException e){
+			discount = 0;
+		}
+		
+		basketWidget.getSumLabel().setText(
+				EuroFormatter.format((int) Math.round(sum
+						* ((100 - discount) / 100.0))));
+
 	}
-	
+
 	private class AmountUpdater implements FieldUpdater<BasketItem, String> {
 
 		@Override
@@ -132,6 +152,43 @@ public class BasketController {
 		}
 	}
 
+	private class DiscountUpdater implements FieldUpdater<BasketItem, String> {
+
+		@Override
+		public void update(int index, BasketItem object, String value) {
+			if (value.matches("[0-9]+")) {
+				BasketItem toUpdate = new BasketItem(object.getItemName(),
+						object.getItemPrice(), object.getArticleId(),
+						object.getAmount(), Integer.valueOf(value));
+				basketService.updateItem(toUpdate, new BasketVoidHandler());
+				basketDataProvider.getList().remove(object);
+				basketDataProvider.getList().add(toUpdate);
+				flush();
+			} else {
+				basketDataProvider.getList().clear();
+				loadBasket();
+			}
+
+		}
+
+	}
+
+	private class MasterDiscountUpdater implements ValueChangeHandler<String> {
+
+		@Override
+		public void onValueChange(ValueChangeEvent<String> event) {
+			if (event.getValue().matches("[0-9]+")) {
+				basketService.setDiscount(Integer.valueOf(event.getValue()),
+						new BasketVoidHandler());
+				flush();
+			} else {
+				loadBasket();
+			}
+
+		}
+
+	}
+
 	private static final class BasketItemKeyProvider implements
 			ProvidesKey<BasketItem> {
 
@@ -159,6 +216,23 @@ public class BasketController {
 		}
 	}
 
+	private final class BasketDiscountHandler implements
+			AsyncCallback<Integer>{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onSuccess(Integer result) {
+			basketWidget.getDiscountBox().setText(result.toString());
+			flush();
+
+		}
+	}
+
 	private final class BasketVoidHandler implements AsyncCallback<Void> {
 
 		@Override
@@ -173,7 +247,7 @@ public class BasketController {
 
 		}
 	}
-	
+
 	private class BasketComparator implements Comparator<BasketItem> {
 
 		@Override
@@ -182,11 +256,10 @@ public class BasketController {
 				return -1;
 			if (o1.getArticleId() > o2.getArticleId())
 				return 1;
-						
+
 			return 0;
 		}
-	
+
 	}
-	
 
 }

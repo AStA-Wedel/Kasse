@@ -16,4 +16,8 @@ public interface BasketServiceAsync {
 
 	void addItem(BasketItem item, AsyncCallback<Void> callback);
 
+	void setDiscount(int discount, AsyncCallback<Void> callback);
+
+	void getDiscount(AsyncCallback<Integer> callback);
+
 }

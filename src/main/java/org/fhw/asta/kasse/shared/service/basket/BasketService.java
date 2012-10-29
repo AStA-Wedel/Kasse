@@ -18,4 +18,8 @@ public interface BasketService extends RemoteService{
 	
 	void addItem(BasketItem item);
 	
+	Integer getDiscount();
+	
+	void setDiscount(int discount);
+	
 }

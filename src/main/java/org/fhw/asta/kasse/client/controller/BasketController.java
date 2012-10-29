@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.fhw.asta.kasse.client.widget.basket.BasketWidget;
 import org.fhw.asta.kasse.shared.basket.BasketItem;
+import org.fhw.asta.kasse.shared.model.Article;
 import org.fhw.asta.kasse.shared.service.basket.BasketServiceAsync;
 
 import com.google.gwt.cell.client.FieldUpdater;
@@ -46,8 +47,13 @@ public class BasketController {
 	public void addBasketPosition(BasketItem basketItem) {
  		
 		basketService.addItem(basketItem, new BasketVoidHandler());
-	
+		
 		basketDataProvider.getList().add(basketItem); //FIXME
+	}
+	
+	public void addBasketPosition(Article article) {
+ 		
+		addBasketPosition(new BasketItem(article.getName(), article.getPrice(), article.getId(), 1));	
 	}
 
 	public void loadBasket()

@@ -9,6 +9,7 @@ import org.fhw.asta.kasse.shared.model.Article;
 import org.fhw.asta.kasse.shared.service.article.ArticleServiceAsync;
 
 import com.google.gwt.activity.shared.AbstractActivity;
+import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -39,8 +40,7 @@ public class ArticleListActivity extends AbstractActivity {
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		panel.setWidget(articleListWidget);
-		
-		
+		articleListWidget.getToBasketColumn().setFieldUpdater(new ToBasketUpdater());
 		articleDataProvider = new ListDataProvider<Article>(new ArticleIdProvider());
 		articleDataProvider.addDataDisplay(articleListWidget.getArticleList());		
 		articleService.getArticles(new ArticleDataHandler());
@@ -76,6 +76,15 @@ public class ArticleListActivity extends AbstractActivity {
 			articleDataProvider.setList(result);		
 		}
 		
+	}
+	
+	private class ToBasketUpdater implements FieldUpdater<Article,String>
+	{
+
+		@Override
+		public void update(int index, Article object, String value) {
+			basketController.addBasketPosition(object);	
+		}
 	}
 
 	

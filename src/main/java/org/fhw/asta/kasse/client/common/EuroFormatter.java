@@ -9,7 +9,11 @@ public class EuroFormatter {
 	private static final NumberFormat EURO_NUMBER_FORMAT = NumberFormat.getCurrencyFormat("EUR");
 	
 	public static String format(EuroAmount euroAmount) {
-		return EURO_NUMBER_FORMAT.format(euroAmount.getCentAmount() / 100.0);
+		return format(euroAmount.getCentAmount());
+	}
+	
+	public static String format(int euroAmount){
+		return EURO_NUMBER_FORMAT.format(euroAmount / 100.0);
 	}
 	
 }

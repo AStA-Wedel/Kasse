@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import org.fhw.asta.kasse.client.common.EuroFormatter;
 import org.fhw.asta.kasse.client.widget.basket.BasketWidget;
 import org.fhw.asta.kasse.shared.basket.BasketItem;
 import org.fhw.asta.kasse.shared.model.Article;
@@ -68,7 +69,7 @@ public class BasketController {
 		
 		basketService.addItem(basketItem, new BasketVoidHandler());
 		basketDataProvider.getList().add(basketItem);
-		Collections.sort(basketDataProvider.getList(),basketComparator);
+		flush();
 
 	}
 
@@ -82,17 +83,37 @@ public class BasketController {
 		basketService.getBasket(new BasketDataHandler());
 	}
 
+	private void flush()
+	{
+		Collections.sort(basketDataProvider.getList(),basketComparator);
+		
+		int sum = 0;
+		
+		Iterator<BasketItem> basketIterator = basketDataProvider.getList()
+				.iterator();
+		while (basketIterator.hasNext())
+		{
+			BasketItem next = basketIterator.next();
+			sum += next.getItemPrice().getCentAmount()*next.getAmount();
+			
+		}
+		
+		basketWidget.getSumLabel().setText(EuroFormatter.format(sum));
+		
+	}
+	
 	private class AmountUpdater implements FieldUpdater<BasketItem, String> {
 
 		@Override
 		public void update(int index, BasketItem object, String value) {
-			if (value.matches("[1-9]+")) {
+			if (value.matches("[1-9][0-9]*")) {
 				BasketItem toUpdate = new BasketItem(object.getItemName(),
 						object.getItemPrice(), object.getArticleId(),
 						Integer.valueOf(value));
 				basketService.updateItem(toUpdate, new BasketVoidHandler());
 				basketDataProvider.getList().remove(object);
 				basketDataProvider.getList().add(toUpdate);
+				flush();
 			} else {
 				basketDataProvider.getList().clear();
 				loadBasket();
@@ -107,6 +128,7 @@ public class BasketController {
 		public void update(int index, BasketItem object, String value) {
 			basketDataProvider.getList().remove(object);
 			basketService.removeItem(object, new BasketVoidHandler());
+			flush();
 		}
 	}
 
@@ -132,7 +154,7 @@ public class BasketController {
 		@Override
 		public void onSuccess(List<BasketItem> result) {
 			basketDataProvider.getList().addAll(result);
-			Collections.sort(basketDataProvider.getList(),basketComparator);
+			flush();
 
 		}
 	}

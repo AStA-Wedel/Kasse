@@ -5835,7 +5835,7 @@ a.badge:hover {
 	text-align: left;
 }
 
-.lightBoxArticleView table > tbody > tr > td
+.lightBoxArticleView > table > tbody > tr > td
 {
 	margin-top: 15px;
 	padding: 8px;
@@ -5844,4 +5844,15 @@ a.badge:hover {
 .ButtonRightFloat
 {
 	float:right;
+}
+
+.sumTbl
+{
+	text-align: left;
+}
+
+.sumTbl > tbody > tr > td
+{
+	margin-top: 15px;
+	padding: 8px;
 }

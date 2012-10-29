@@ -15,8 +15,10 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.HasData;
+import com.google.gwt.user.client.ui.Label;
 
 public class BasketWidgetImpl extends Composite implements BasketWidget {
 
@@ -25,6 +27,7 @@ public class BasketWidgetImpl extends Composite implements BasketWidget {
 
 	@UiField(provided = true)
 	CellTable<BasketItem> basketTable;
+	@UiField Label sum;
 
 	private Column<BasketItem,String> deleteColumn;
 	private Column<BasketItem,String> priceColumn;
@@ -78,6 +81,11 @@ public class BasketWidgetImpl extends Composite implements BasketWidget {
 	@Override
 	public Column<BasketItem, String> getAmountColumn() {
 		return amountColumn;
+	}
+	
+	@Override
+	public HasText getSumLabel() {
+		return sum;
 	}
 	
 	static private class DeleteColumn extends Column<BasketItem,String>
@@ -151,6 +159,8 @@ public class BasketWidgetImpl extends Composite implements BasketWidget {
 		}
 
 	}
+
+	
 
 
 

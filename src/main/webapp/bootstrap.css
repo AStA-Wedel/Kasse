@@ -5801,3 +5801,47 @@ a.badge:hover {
   position: fixed;
 }
 
+
+.overlay {
+   position: fixed;
+   z-index:199;
+   top: 0px;
+   left: 0px;
+   height:100%;
+   width:100%;
+	background-color:#000;
+   -ms-filter: "Alpha(Opacity=75)";
+   filter:alpha(opacity=75);
+   -moz-opacity: 0.75;
+   opacity: 0.75;
+}
+
+.lightBoxArticleView {
+   position:fixed;
+   top:50%;
+   left:50%;
+   margin-left:-200px;
+   margin-top:-200px;
+   z-index:200;
+   padding: 30px;
+   width:400px;
+   height:400px;
+   background-color:#fff;
+   text-align:center;
+}
+
+.lightBoxArticleView > table
+{
+	text-align: left;
+}
+
+.lightBoxArticleView table > tbody > tr > td
+{
+	margin-top: 15px;
+	padding: 8px;
+}
+
+.ButtonRightFloat
+{
+	float:right;
+}

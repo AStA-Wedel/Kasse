@@ -1,5 +1,8 @@
 package org.fhw.asta.kasse.client.controller;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 import org.fhw.asta.kasse.client.widget.basket.BasketWidget;
@@ -14,60 +17,79 @@ import com.google.gwt.view.client.ProvidesKey;
 import com.google.inject.Inject;
 
 public class BasketController {
-	
+
 	private BasketServiceAsync basketService;
-	
+
 	private final ListDataProvider<BasketItem> basketDataProvider;
-	
-	private BasketWidget basketWidget; 
-	
+
+	private BasketWidget basketWidget;
+
 	private FieldUpdater<BasketItem, String> deleteUpdater;
 	private FieldUpdater<BasketItem, String> amountUpdater;
+
+	private BasketComparator basketComparator = new BasketComparator();
 	
 	public BasketController() {
-		this.basketDataProvider = new ListDataProvider<BasketItem>(new BasketItemKeyProvider());
+		this.basketDataProvider = new ListDataProvider<BasketItem>(
+				new BasketItemKeyProvider());
 	}
-	
+
 	@Inject
-	public void init(BasketWidget basketWidget,final BasketServiceAsync basketService ) {
-		
+	public void init(BasketWidget basketWidget,
+			final BasketServiceAsync basketService) {
+
 		this.basketWidget = basketWidget;
 		this.basketService = basketService;
-		
+
 		basketDataProvider.addDataDisplay(this.basketWidget.getBasketTable());
 		loadBasket();
-		
+
 		deleteUpdater = new DeleteUpdater();
 		basketWidget.getDeleteColumn().setFieldUpdater(deleteUpdater);
-		
+
 		amountUpdater = new AmountUpdater();
 		basketWidget.getAmountColumn().setFieldUpdater(amountUpdater);
 	}
-	
+
 	public void addBasketPosition(BasketItem basketItem) {
- 		
-		basketService.addItem(basketItem, new BasketVoidHandler());
+
+		Iterator<BasketItem> basketIterator = basketDataProvider.getList()
+				.iterator();
+		while (basketIterator.hasNext()) {
+			BasketItem next = basketIterator.next();
+			if (next.getArticleId() == basketItem.getArticleId()) {
+				basketItem = new BasketItem(basketItem.getItemName(),
+						basketItem.getItemPrice(), basketItem.getArticleId(),
+						basketItem.getAmount() + next.getAmount());
+				basketDataProvider.getList().remove(next);
+				basketService.removeItem(next, new BasketVoidHandler());
+			}
+		}
 		
-		basketDataProvider.getList().add(basketItem); //FIXME
-	}
-	
-	public void addBasketPosition(Article article) {
- 		
-		addBasketPosition(new BasketItem(article.getName(), article.getPrice(), article.getId(), 1));	
+		basketService.addItem(basketItem, new BasketVoidHandler());
+		basketDataProvider.getList().add(basketItem);
+		Collections.sort(basketDataProvider.getList(),basketComparator);
+
 	}
 
-	public void loadBasket()
-	{		
-		basketService.getBasket(new BasketDataHandler());	
+	public void addBasketPosition(Article article) {
+
+		addBasketPosition(new BasketItem(article.getName(), article.getPrice(),
+				article.getId(), 1));
 	}
-	
-	private class AmountUpdater implements FieldUpdater<BasketItem,String>
-	{
+
+	public void loadBasket() {
+		basketService.getBasket(new BasketDataHandler());
+	}
+
+	private class AmountUpdater implements FieldUpdater<BasketItem, String> {
 
 		@Override
 		public void update(int index, BasketItem object, String value) {
 			if (value.matches("[1-9]+")) {
-				BasketItem toUpdate = new BasketItem(object.getItemName(), object.getItemPrice(), object.getArticleId(), Integer.valueOf(value));
+				BasketItem toUpdate = new BasketItem(object.getItemName(),
+						object.getItemPrice(), object.getArticleId(),
+						Integer.valueOf(value));
 				basketService.updateItem(toUpdate, new BasketVoidHandler());
 				basketDataProvider.getList().remove(object);
 				basketDataProvider.getList().add(toUpdate);
@@ -75,57 +97,74 @@ public class BasketController {
 				basketDataProvider.getList().clear();
 				loadBasket();
 			}
-			
+
 		}
 	}
-	
-	private class DeleteUpdater implements FieldUpdater<BasketItem,String>
-	{
+
+	private class DeleteUpdater implements FieldUpdater<BasketItem, String> {
 
 		@Override
 		public void update(int index, BasketItem object, String value) {
 			basketDataProvider.getList().remove(object);
-			basketService.removeItem(object, new BasketVoidHandler());	
+			basketService.removeItem(object, new BasketVoidHandler());
 		}
 	}
-	
-	private static final class BasketItemKeyProvider implements ProvidesKey<BasketItem> {
+
+	private static final class BasketItemKeyProvider implements
+			ProvidesKey<BasketItem> {
 
 		@Override
 		public Object getKey(BasketItem item) {
 			return item.getArticleId();
 		}
-	
+
 	}
-	
-	private final class BasketDataHandler implements AsyncCallback<List<BasketItem>> {
+
+	private final class BasketDataHandler implements
+			AsyncCallback<List<BasketItem>> {
 
 		@Override
 		public void onFailure(Throwable caught) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void onSuccess(List<BasketItem> result) {
 			basketDataProvider.getList().addAll(result);
-			
+			Collections.sort(basketDataProvider.getList(),basketComparator);
+
 		}
 	}
-	
+
 	private final class BasketVoidHandler implements AsyncCallback<Void> {
 
 		@Override
 		public void onFailure(Throwable caught) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void onSuccess(Void result) {
 			// TODO Auto-generated method stub
-			
+
 		}
 	}
 	
+	private class BasketComparator implements Comparator<BasketItem> {
+
+		@Override
+		public int compare(BasketItem o1, BasketItem o2) {
+			if (o1.getArticleId() < o2.getArticleId())
+				return -1;
+			if (o1.getArticleId() > o2.getArticleId())
+				return 1;
+						
+			return 0;
+		}
+	
+	}
+	
+
 }

@@ -30,7 +30,7 @@ CREATE  TABLE IF NOT EXISTS `kasse`.`article` (
   `article_id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `article_revision` SMALLINT UNSIGNED NOT NULL ,
   `article_name` VARCHAR(100) NOT NULL ,
-  `price` INT UNSIGNED NOT NULL ,
+  `price` INT UNSIGNED NULL ,
   `tax_category_name` CHAR(4) NOT NULL ,
   `tax_revision` SMALLINT UNSIGNED NOT NULL ,
   `enabled` TINYINT(1) NOT NULL DEFAULT true ,

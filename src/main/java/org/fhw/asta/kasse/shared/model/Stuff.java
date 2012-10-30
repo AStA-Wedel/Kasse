@@ -7,10 +7,11 @@ public class Stuff extends Article
   private static final long serialVersionUID = 1L;
 
   public Stuff(final int id, final int revision, final String name,
-      EuroAmount price, final String taxCategoryName, final int taxRevision,
-      final boolean enabled)
+      final String description, final EuroAmount price,
+      final String taxCategoryName, final int taxRevision, final boolean enabled)
   {
-    super(id, revision, name, price, taxCategoryName, taxRevision, enabled);
+    super(id, revision, name, description, price, taxCategoryName, taxRevision,
+        enabled);
   }
 
   public Stuff()

@@ -9,96 +9,114 @@ import org.fhw.asta.kasse.shared.common.EuroAmount;
  * 
  * @author julian
  */
-public class Article implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class Article implements Serializable
+{
+  private static final long serialVersionUID = 1L;
 
-	private int id;
+  private int id;
 
-	private int revision;
+  private int revision;
 
-	private String name;
+  private String name;
 
-	private EuroAmount price;
+  private EuroAmount price;
 
-	/**
-	 * Tax category name, determines, if an article has reduced/full/no tax
-	 * rate.
-	 */
-	private String taxCategoryName;
+  private String description;
 
-	/** Tax category revision, stored to track tax rate changes */
-	private int taxRevision;
+  /**
+   * Tax category name, determines, if an article has reduced/full/no tax rate.
+   */
+  private String taxCategoryName;
 
-	/** Article can be disabled in the sense that it is not available for sell */
-	private boolean enabled;
+  /** Tax category revision, stored to track tax rate changes */
+  private int taxRevision;
 
-	/**
-	 * Creates an Object representation of a specfifc article stored in DB.
-	 * 
-	 * @param id
-	 * @param revision
-	 * @param name
-	 * @param price
-	 * @param taxCategoryName
-	 * @param taxRevision
-	 * @param enabled
-	 */
-	public Article(final int id, final int revision, final String name,
-			final EuroAmount price, final String taxCategoryName,
-			final int taxRevision, final boolean enabled) {
-		this.id = id;
-		this.revision = revision;
-		this.name = name;
-		this.price = price;
-		this.taxCategoryName = taxCategoryName;
-		this.taxRevision = taxRevision;
-		this.enabled = enabled;
-	}
+  /** Article can be disabled in the sense that it is not available for sell */
+  private boolean enabled;
 
-	/**
-	 * Default constructor, only exists because of Serialization. Will create an
-	 * empty article. Don't use.
-	 */
-	public Article() {
-	}
+  /**
+   * Creates an Object representation of a specfifc article stored in DB.
+   * 
+   * @param id
+   * @param revision
+   * @param name
+   * @param price
+   * @param taxCategoryName
+   * @param taxRevision
+   * @param enabled
+   */
+  public Article(final int id, final int revision, final String name,
+      final String description, final EuroAmount price,
+      final String taxCategoryName, final int taxRevision, final boolean enabled)
+  {
+    this.id = id;
+    this.revision = revision;
+    this.name = name;
+    this.description = description;
+    this.price = price;
+    this.taxCategoryName = taxCategoryName;
+    this.taxRevision = taxRevision;
+    this.enabled = enabled;
+  }
 
-	public int getId() {
-		return this.id;
-	}
+  /**
+   * Default constructor, only exists because of Serialization. Will create an
+   * empty article. Don't use.
+   */
+  public Article()
+  {
+  }
 
-	public int getRevision() {
-		return this.revision;
-	}
+  public int getId()
+  {
+    return this.id;
+  }
 
-	public String getName() {
-		return this.name;
-	}
+  public int getRevision()
+  {
+    return this.revision;
+  }
 
-	public String getTaxCategoryName() {
-		return this.taxCategoryName;
-	}
+  public String getName()
+  {
+    return this.name;
+  }
 
-	public int getTaxRevision() {
-		return this.taxRevision;
-	}
+  public String getDescription()
+  {
+    return this.description;
+  }
 
-	public boolean isEnabled() {
-		return this.enabled;
-	}
+  public String getTaxCategoryName()
+  {
+    return this.taxCategoryName;
+  }
 
-	/**
-	 * Enable or disable an article (in the sense that it is not avaiable for
-	 * purchase/selling.
-	 * 
-	 * @param enabled
-	 *            true to enable an article, false to disable it
-	 */
-	public void setEnabled(final boolean enabled) {
-		this.enabled = enabled;
-	}
+  public int getTaxRevision()
+  {
+    return this.taxRevision;
+  }
 
-	public EuroAmount getPrice() {
-		return price;
-	}
+  public boolean isEnabled()
+  {
+    return this.enabled;
+  }
+
+  /**
+   * Enable or disable an article (in the sense that it is not avaiable for
+   * purchase/selling.
+   * 
+   * @param enabled
+   *          true to enable an article, false to disable it
+   */
+  public void setEnabled(final boolean enabled)
+  {
+    this.enabled = enabled;
+  }
+
+  public EuroAmount getPrice()
+  {
+    return this.price;
+  }
 
 }

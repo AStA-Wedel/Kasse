@@ -9,10 +9,12 @@ public class Script extends Article
   private int lecturerId;
 
   public Script(final int id, final int revision, final String name,
-      final EuroAmount price, final String taxCategoryName, final int taxRevision,
+      final String description, final EuroAmount price,
+      final String taxCategoryName, final int taxRevision,
       final boolean enabled, final int lecturerId)
   {
-    super(id, revision, name, price, taxCategoryName, taxRevision, enabled);
+    super(id, revision, name, description, price, taxCategoryName, taxRevision,
+        enabled);
 
     this.lecturerId = lecturerId;
   }

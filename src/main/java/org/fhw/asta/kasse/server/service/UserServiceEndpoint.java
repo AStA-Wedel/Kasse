@@ -1,5 +1,6 @@
 package org.fhw.asta.kasse.server.service;
 
+import org.fhw.asta.kasse.server.common.User;
 import org.fhw.asta.kasse.server.component.user.UserComponent;
 import org.fhw.asta.kasse.shared.authentication.AuthenticationResult;
 import org.fhw.asta.kasse.shared.service.UserService;
@@ -20,10 +21,10 @@ public class UserServiceEndpoint extends RemoteServiceServlet implements UserSer
 	
 	@Override
 	public AuthenticationResult authenticate(String email, String password) {
-		//LOGGER.info("authenticate called");		
-		
-		return new AuthenticationResult(AuthenticationResult.AuthenticationStatus.AUTHENTICATED);
-	}
 
+		User user = userComponent.authenticate(email, password);
+		
+		return new AuthenticationResult(user.getAuthenticationStatus());
+	}
 
 }

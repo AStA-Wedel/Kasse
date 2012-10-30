@@ -1,12 +1,14 @@
 package org.fhw.asta.kasse.client.widget.articlelist;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.fhw.asta.kasse.client.common.EuroFormatter;
 import org.fhw.asta.kasse.shared.model.Article;
 
 import com.google.gwt.cell.client.ButtonCell;
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.ClickableTextCell;
-import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -56,15 +58,10 @@ public class ArticleListWidgetImpl extends Composite implements ArticleListWidge
 		ClickableTextCell openOverlayCell = new ClickableTextCell();
 		ToBasketButtonCell toBasketCell = new ToBasketButtonCell();
 		
-		OverlayOpenFieldUpdater openOverlayFieldUpdater = new OverlayOpenFieldUpdater();
-		
 		idColumn = new IdColumn(openOverlayCell);
 		nameColumn = new NameColumn(openOverlayCell);
 		toBasketColumn = new ToBasketColumn(toBasketCell);
 		priceTextColumn = new PriceTextColumn();
-		
-		idColumn.setFieldUpdater(openOverlayFieldUpdater);
-		nameColumn.setFieldUpdater(openOverlayFieldUpdater);
 		
 		cellTable.addColumn(idColumn,"ID");
 		cellTable.addColumn(nameColumn,"Name");
@@ -105,15 +102,30 @@ public class ArticleListWidgetImpl extends Composite implements ArticleListWidge
 	public Column<Article, String> getToBasketColumn() {
 		return toBasketColumn;
 	}
+	
+	@Override
+	public Column<Article, String> getIdColumn() {
+		return idColumn;
+	}
 
-	public void showOverlay(Article article)
+	@Override
+	public Column<Article, String> getNameColumn() {
+		return nameColumn;
+	}
+
+	public void showOverlay(Article article, List<Article> bundle)
 	{
 		articleID.setText(Integer.toString(article.getId()));
 		articleName.setText(article.getName());
 		articlePrice.setText(EuroFormatter.format(article.getPrice()));
 		articleTax.setText(article.getTaxCategoryName());
+		articleBundle.setHTML("");
 		
-		//TODO: Implement Bundleview!
+		Iterator<Article> iterator = bundle.iterator();
+		while(iterator.hasNext())
+		{
+			articleBundle.setHTML(articleBundle.getHTML() + "<br />" + iterator.next().getName());
+		}
 		
 		articleOverlay.setVisible(true);
 		articleOverlayBG.setVisible(true);
@@ -171,14 +183,7 @@ public class ArticleListWidgetImpl extends Composite implements ArticleListWidge
 		
 	}
 	
-	private class OverlayOpenFieldUpdater implements FieldUpdater<Article, String>{
-
-		@Override
-		public void update(int index, Article object, String value) {
-			showOverlay(object);
-		}
-		
-	}
+	
 	
 	static private class ToBasketButtonCell extends ButtonCell {
 		/**
@@ -205,4 +210,6 @@ public class ArticleListWidgetImpl extends Composite implements ArticleListWidge
 		}
 
 	}
+
+	
 }

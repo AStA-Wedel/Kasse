@@ -1,3 +1,4 @@
+USE kasse;
 DELETE FROM stuff;
 DELETE FROM packet_part;
 DELETE FROM packet;

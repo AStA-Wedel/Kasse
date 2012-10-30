@@ -129,7 +129,7 @@ public class BasketController {
 			if (value.matches("[1-9][0-9]*")) {
 				BasketItem toUpdate = new BasketItem(object.getItemName(),
 						object.getItemPrice(), object.getArticleId(),
-						Integer.valueOf(value));
+						Integer.valueOf(value),object.getDiscount());
 				basketService.updateItem(toUpdate, new BasketVoidHandler());
 				basketDataProvider.getList().remove(object);
 				basketDataProvider.getList().add(toUpdate);

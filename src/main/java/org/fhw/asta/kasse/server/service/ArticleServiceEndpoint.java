@@ -24,5 +24,11 @@ public class ArticleServiceEndpoint extends RemoteServiceServlet implements
   {
     return this.dao.getAllArticles();
   }
+  
+  @Override
+  public List<Article> getArticleComponents(Article article)
+  {
+	  return this.dao.getArticleComponents(article);
+  }
 
 }

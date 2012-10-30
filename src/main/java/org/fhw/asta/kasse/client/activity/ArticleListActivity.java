@@ -37,10 +37,18 @@ public class ArticleListActivity extends AbstractActivity {
 	
 	private ListDataProvider<Article> articleDataProvider;
 	
+	private Article currentOverlayObject; 
+	
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		panel.setWidget(articleListWidget);
+		
 		articleListWidget.getToBasketColumn().setFieldUpdater(new ToBasketUpdater());
+		
+		OverlayOpenFieldUpdater openOverlayFieldUpdater = new OverlayOpenFieldUpdater();
+		articleListWidget.getIdColumn().setFieldUpdater(openOverlayFieldUpdater);
+		articleListWidget.getNameColumn().setFieldUpdater(openOverlayFieldUpdater);
+		
 		articleDataProvider = new ListDataProvider<Article>(new ArticleIdProvider());
 		articleDataProvider.addDataDisplay(articleListWidget.getArticleList());		
 		articleService.getArticles(new ArticleDataHandler());
@@ -74,6 +82,32 @@ public class ArticleListActivity extends AbstractActivity {
 		@Override
 		public void onSuccess(List<Article> result) {
 			articleDataProvider.setList(result);		
+		}
+		
+	}
+	
+	private final class ArticleBundleHandler implements AsyncCallback<List<Article>> 
+	{
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(List<Article> result) {
+			articleListWidget.showOverlay(currentOverlayObject,result);
+		}
+		
+	}
+	
+	private class OverlayOpenFieldUpdater implements FieldUpdater<Article, String>{
+
+		@Override
+		public void update(int index, Article object, String value) {
+			currentOverlayObject = object;
+			articleService.getArticleComponents(object, new ArticleBundleHandler());
 		}
 		
 	}

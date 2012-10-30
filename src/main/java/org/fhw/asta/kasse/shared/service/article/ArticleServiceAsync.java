@@ -10,4 +10,7 @@ public interface ArticleServiceAsync {
 
 	void getArticles(AsyncCallback<List<Article>> callback);
 
+	void getArticleComponents(Article article,
+			AsyncCallback<List<Article>> callback);
+
 }

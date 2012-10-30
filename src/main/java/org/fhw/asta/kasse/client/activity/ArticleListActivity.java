@@ -1,6 +1,7 @@
 package org.fhw.asta.kasse.client.activity;
 
 import java.util.List;
+import java.util.Set;
 
 import org.fhw.asta.kasse.client.controller.BasketController;
 import org.fhw.asta.kasse.client.widget.articlelist.ArticleListWidget;
@@ -8,11 +9,13 @@ import org.fhw.asta.kasse.client.widget.basket.BasketWidget;
 import org.fhw.asta.kasse.shared.model.Article;
 import org.fhw.asta.kasse.shared.service.article.ArticleServiceAsync;
 
+import com.google.common.collect.Sets;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -41,6 +44,8 @@ public class ArticleListActivity extends AbstractActivity {
 	
 	private Article currentOverlayObject; 
 	
+	private Set<HandlerRegistration> handlerRegistrations = Sets.newHashSet();
+	
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		panel.setWidget(articleListWidget);
@@ -50,7 +55,8 @@ public class ArticleListActivity extends AbstractActivity {
 		OverlayOpenFieldUpdater openOverlayFieldUpdater = new OverlayOpenFieldUpdater();
 		articleListWidget.getIdColumn().setFieldUpdater(openOverlayFieldUpdater);
 		articleListWidget.getNameColumn().setFieldUpdater(openOverlayFieldUpdater);
-		articleListWidget.getOverlayToBasketButton().addClickHandler(new ToBasketClickHandler());
+		
+		handlerRegistrations.add(articleListWidget.getOverlayToBasketButton().addClickHandler(new ToBasketClickHandler()));
 		
 		articleDataProvider = new ListDataProvider<Article>(new ArticleIdProvider());
 		articleDataProvider.addDataDisplay(articleListWidget.getArticleList());		
@@ -61,6 +67,9 @@ public class ArticleListActivity extends AbstractActivity {
 	public void onStop() {
 		articleDataProvider.removeDataDisplay(articleListWidget.getArticleList());
 		
+		for (HandlerRegistration handlerRegistration : handlerRegistrations) {
+			handlerRegistration.removeHandler();
+		}
 	}
 	
 	private static final class ArticleIdProvider implements ProvidesKey<Article> {

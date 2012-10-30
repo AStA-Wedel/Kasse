@@ -83,9 +83,9 @@ INSERT INTO packet_part( packet_id, packet_revision, article_id, article_revisio
 	SELECT p.packet_id, p.packet_revision, a2.article_id, a2.article_revision
 	FROM packet p, article a1, article a2
 	WHERE p.packet_id = a1.article_id
-	AND a1.name = 'Erkenntnistheorie 1'
+	AND a1.name = 'Religion Starterpaket'
 	AND a1.article_revision = 0
-	AND a2.name = 'Religion Starterpaket'
+	AND a2.name = 'Erkenntnistheorie 1'
 	AND a2.article_revision = 0;
 
 INSERT INTO article(article_revision, name, price, tax_category_name, tax_revision, enabled)
@@ -98,9 +98,9 @@ INSERT INTO packet_part( packet_id, packet_revision, article_id, article_revisio
 	SELECT p.packet_id, p.packet_revision, a2.article_id, a2.article_revision
 	FROM packet p, article a1, article a2
 	WHERE p.packet_id = a1.article_id
-	AND a1.name = 'Ev. Religion'
+	AND a1.name = 'Religion Starterpaket'
 	AND a1.article_revision = 0
-	AND a2.name = 'Religion Starterpaket'
+	AND a2.name = 'Ev. Religion'
 	AND a2.article_revision = 0;
 
 

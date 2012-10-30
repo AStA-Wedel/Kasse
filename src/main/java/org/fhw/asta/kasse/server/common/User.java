@@ -16,13 +16,9 @@ public class User implements Serializable {
 
 	private String email;
 
-	private AuthenticationStatus authenticationStatus;
+	private AuthenticationStatus authenticationStatus = AuthenticationStatus.NOT_AUTHENTICATED;
 
-	private List<BasketItem> basket;
-	
-	public User() {
-		basket = Lists.newArrayList();
-	}
+	private List<BasketItem> basket = Lists.newArrayList();
 	
 	public String getEmail() {
 		return email;

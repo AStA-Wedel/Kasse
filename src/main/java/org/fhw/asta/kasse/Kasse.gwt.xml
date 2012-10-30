@@ -30,6 +30,9 @@
 
     <inherits name="com.google.common.base.Base" />
 
+    <inherits name="com.google.common.collect.Collect" />
+
+
 	<!-- Properties -->
     <!-- Specify the app entry point class. -->
 

@@ -31,4 +31,17 @@ public class ArticleDao extends GenericDao
     return this.template.query(this.getAllArticlesQueryString,
         new ArticleRowMapper());
   }
+
+  public List<Article> getArticleComponents(final Article article)
+  {
+    return this.template
+        .query(
+            "SELECT a.article_id, a.article_revision,"
+                + "a.article_name, a.price, a.tax_category_name, a.tax_revision, a.enabled"
+                + "FROM packet_part pp, article a" + "WHERE pp.packet_id ="
+                + article.getId() + "AND pp.packet_revision ="
+                + article.getRevision() + "AND pp.article_id = a.article_id"
+                + "AND pp.article_revision = a.article_revision",
+            new ArticleRowMapper());
+  }
 }

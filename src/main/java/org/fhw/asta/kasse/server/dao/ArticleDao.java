@@ -38,10 +38,11 @@ public class ArticleDao extends GenericDao
         .query(
             "SELECT a.article_id, a.article_revision, "
                 + "a.name, a.description, a.price, a.tax_category_name, a.tax_revision, a.enabled "
-                + "FROM packet_part pp, article a " + "WHERE pp.packet_id = "
-                + article.getId() + " AND pp.packet_revision = "
-                + article.getRevision() + " AND pp.article_id = a.article_id "
-                + "AND pp.article_revision = a.article_revision",
+                + "FROM packet_part pp, article a WHERE pp.packet_id = ? "
+                + "AND pp.packet_revision = ? "
+                + "AND pp.article_id = a.article_id "
+                + "AND pp.article_revision = a.article_revision", new Object[] {
+                article.getId(), article.getRevision() },
             new ArticleRowMapper());
   }
 }

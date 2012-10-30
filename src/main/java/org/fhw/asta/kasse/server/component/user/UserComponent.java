@@ -3,8 +3,6 @@ package org.fhw.asta.kasse.server.component.user;
 import org.fhw.asta.kasse.server.common.User;
 import org.fhw.asta.kasse.shared.authentication.AuthenticationResult.AuthenticationStatus;
 
-import com.google.common.hash.HashCode;
-import com.google.common.hash.Hashing;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
@@ -22,7 +20,7 @@ public class UserComponent {
 	//TODO
 	public User authenticate(String email, String password) {
 		
-		HashCode passwordHash = Hashing.md5().hashString(password); // FIXME
+		//HashCode passwordHash = Hashing.md5().hashString(password); // FIXME
 		
 		User user = userProvider.get();
 		user.setEmail(email);

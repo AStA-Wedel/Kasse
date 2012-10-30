@@ -11,6 +11,7 @@ import org.fhw.asta.kasse.shared.basket.BasketItem;
 import org.fhw.asta.kasse.shared.model.Article;
 import org.fhw.asta.kasse.shared.service.basket.BasketServiceAsync;
 
+import com.google.common.collect.ComparisonChain;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -119,7 +120,6 @@ public class BasketController {
 		basketWidget.getSumLabel().setText(
 				EuroFormatter.format((int) Math.round(sum
 						* ((100 - discount) / 100.0))));
-
 	}
 
 	private class AmountUpdater implements FieldUpdater<BasketItem, String> {
@@ -248,16 +248,11 @@ public class BasketController {
 		}
 	}
 
-	private class BasketComparator implements Comparator<BasketItem> {
+	private final class BasketComparator implements Comparator<BasketItem> {
 
 		@Override
-		public int compare(BasketItem o1, BasketItem o2) {
-			if (o1.getArticleId() < o2.getArticleId())
-				return -1;
-			if (o1.getArticleId() > o2.getArticleId())
-				return 1;
-
-			return 0;
+		public int compare(BasketItem o1, BasketItem o2) {	
+			return ComparisonChain.start().compare(o1.getArticleId(), o2.getArticleId()).result();			
 		}
 
 	}

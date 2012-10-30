@@ -68,7 +68,7 @@ INSERT INTO script( script_id, script_revision, lecturer_id )
 
 /* Paket Religion (lol) */
 INSERT INTO article(article_revision, name, price, tax_category_name, tax_revision, enabled)
-	VALUES(0, 'Religion Starterpaket', NULL, 'NONE', 0, true);
+	VALUES(0, 'Religion Starterpaket', 330, 'NONE', 0, true);
 INSERT INTO packet( packet_id, packet_revision )
 	SELECT article_id, article_revision 
 	FROM article

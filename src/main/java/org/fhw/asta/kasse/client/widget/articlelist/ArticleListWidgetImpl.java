@@ -36,6 +36,8 @@ public class ArticleListWidgetImpl extends Composite implements ArticleListWidge
 	@UiField HTMLPanel articleOverlay;
 	@UiField HTML articleOverlayBG;
 	@UiField Button closeOverlayButton;
+	@UiField Button closeOverlayButton2;
+	@UiField Button overlayToBasketButton;
 	@UiField Label articleID;
 	@UiField Label articleName;
 	@UiField Label articlePrice;
@@ -80,17 +82,20 @@ public class ArticleListWidgetImpl extends Composite implements ArticleListWidge
 	public ArticleListWidgetImpl() {
 		initializeCellTable();
 		initWidget(uiBinder.createAndBindUi(this));
-		articleOverlay.setVisible(false);
-		articleOverlayBG.setVisible(false);
+		closeOverlay();
+
 		
-		closeOverlayButton.addClickHandler(new ClickHandler() {
+		ClickHandler closeOverlayHandler = new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				articleOverlay.setVisible(false);
-				articleOverlayBG.setVisible(false);
+				closeOverlay();
 			}
-		});
+		};
+		
+		closeOverlayButton.addClickHandler(closeOverlayHandler);
+		closeOverlayButton2.addClickHandler(closeOverlayHandler);
+		articleOverlayBG.addClickHandler(closeOverlayHandler);
 	}
 	
 	@Override
@@ -111,6 +116,11 @@ public class ArticleListWidgetImpl extends Composite implements ArticleListWidge
 	@Override
 	public Column<Article, String> getNameColumn() {
 		return nameColumn;
+	}
+	
+	@Override
+	public Button getOverlayToBasketButton() {
+		return overlayToBasketButton;
 	}
 
 	public void showOverlay(Article article, List<Article> bundle)
@@ -210,6 +220,13 @@ public class ArticleListWidgetImpl extends Composite implements ArticleListWidge
 		}
 
 	}
+
+	@Override
+	public void closeOverlay() {
+		articleOverlay.setVisible(false);
+		articleOverlayBG.setVisible(false);		
+	}
+
 
 	
 }

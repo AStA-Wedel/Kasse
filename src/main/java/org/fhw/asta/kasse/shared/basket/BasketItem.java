@@ -61,4 +61,9 @@ public class BasketItem implements Serializable {
 	{
 		return this.amount;
 	}
+	
+	public EuroAmount getTotal()  {
+		return getItemPrice().times(amount);
+	}
+	
 }

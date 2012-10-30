@@ -6,19 +6,19 @@
 		<p1:CellTable ui:field="cellTable" width="100%" height="100%" pageSize="25" />		
 		<g:HTML ui:field="articleOverlayBG" styleName="overlay">	
 		</g:HTML>
-		<g:HTMLPanel ui:field="articleOverlay" styleName="lightBoxArticleView">
-			<g:Button ui:field="closeOverlayButton" styleName="ButtonRightFloat btn btn-info btn-mini">
+		<g:HTMLPanel ui:field="articleOverlay" styleName="modal">
+			<div class="modal-header">
+			<h4><g:Label ui:field="articleName"/></h4>
+			<g:Button ui:field="closeOverlayButton" styleName="alignTRight btn btn-primary btn-small">
 				<i class="icon-white icon-remove"></i>
-			</g:Button>				
-			<table>
+			</g:Button>	
+			</div>
+			<div class="modal-body">			
+			<table class="sumTbl">
 				<tbody>
 					<tr>
 						<td><strong>ArtikelID: </strong></td>
 						<td><g:Label ui:field="articleID"/></td>
-					</tr>
-					<tr>
-						<td><strong>ArtikelName: </strong></td>
-						<td><g:Label ui:field="articleName"/></td>
 					</tr>
 					<tr>
 						<td><strong>ArtikelPreis: </strong></td>
@@ -34,6 +34,15 @@
 					</tr>
 				</tbody>
 			</table>
+			</div>
+			 <div class="modal-footer">
+			 <g:Button ui:field="closeOverlayButton2" styleName="btn">
+				<i class="icon-remove"></i> Schließen
+			</g:Button>	
+			<g:Button ui:field="overlayToBasketButton" styleName="btn btn-success">
+				<i class="icon-white icon-shopping-cart"></i> Warenkorb
+			</g:Button>	
+		</div>
 		</g:HTMLPanel>
 	 </g:HTMLPanel>
 </ui:UiBinder> 

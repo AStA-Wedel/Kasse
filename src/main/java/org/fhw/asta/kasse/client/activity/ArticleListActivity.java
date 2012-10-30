@@ -10,6 +10,8 @@ import org.fhw.asta.kasse.shared.service.article.ArticleServiceAsync;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -48,17 +50,17 @@ public class ArticleListActivity extends AbstractActivity {
 		OverlayOpenFieldUpdater openOverlayFieldUpdater = new OverlayOpenFieldUpdater();
 		articleListWidget.getIdColumn().setFieldUpdater(openOverlayFieldUpdater);
 		articleListWidget.getNameColumn().setFieldUpdater(openOverlayFieldUpdater);
+		articleListWidget.getOverlayToBasketButton().addClickHandler(new ToBasketClickHandler());
 		
 		articleDataProvider = new ListDataProvider<Article>(new ArticleIdProvider());
 		articleDataProvider.addDataDisplay(articleListWidget.getArticleList());		
 		articleService.getArticles(new ArticleDataHandler());
-		
-		
 	}
 	
 	@Override
 	public void onStop() {
 		articleDataProvider.removeDataDisplay(articleListWidget.getArticleList());
+		
 	}
 	
 	private static final class ArticleIdProvider implements ProvidesKey<Article> {
@@ -119,6 +121,17 @@ public class ArticleListActivity extends AbstractActivity {
 		public void update(int index, Article object, String value) {
 			basketController.addBasketPosition(object);	
 		}
+	}
+	
+	private class ToBasketClickHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			basketController.addBasketPosition(currentOverlayObject);
+			articleListWidget.closeOverlay();
+		}
+		
+		
 	}
 
 	

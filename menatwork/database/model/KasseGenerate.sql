@@ -34,6 +34,7 @@ CREATE  TABLE IF NOT EXISTS `kasse`.`article` (
   `tax_category_name` CHAR(4) NOT NULL ,
   `tax_revision` SMALLINT UNSIGNED NOT NULL ,
   `enabled` TINYINT(1) NOT NULL DEFAULT true ,
+  `description` TEXT NULL ,
   PRIMARY KEY (`article_id`, `article_revision`) ,
   CONSTRAINT `fk_article_tax_category1`
     FOREIGN KEY (`tax_category_name` , `tax_revision` )
@@ -430,6 +431,7 @@ CREATE  TABLE IF NOT EXISTS `kasse`.`bill_order` (
   `payed_cash` TINYINT(1) NOT NULL ,
   `state` ENUM('ordered','paid','fetched') NOT NULL DEFAULT 'ordered' ,
   `cancelled` TINYINT(1) NOT NULL DEFAULT false ,
+  `discount` INT NULL ,
   PRIMARY KEY (`bill_id`) ,
   CONSTRAINT `fk_bill_person1`
     FOREIGN KEY (`receipient_revision` , `receiptpient_ldap_name` )

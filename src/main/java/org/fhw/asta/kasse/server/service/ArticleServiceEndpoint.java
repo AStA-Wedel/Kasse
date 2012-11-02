@@ -1,5 +1,6 @@
 package org.fhw.asta.kasse.server.service;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.fhw.asta.kasse.server.dao.ArticleDao;
@@ -22,13 +23,13 @@ public class ArticleServiceEndpoint extends RemoteServiceServlet implements
   @Override
   public List<Article> getArticles()
   {
-    return this.dao.getAllArticles();
+    return this.dao.getAll();
   }
   
   @Override
   public List<Article> getArticleComponents(Article article)
   {
-	  return this.dao.getArticleComponents(article);
+	  return new LinkedList<Article>();
   }
 
 }

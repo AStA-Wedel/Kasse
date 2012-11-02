@@ -2,6 +2,10 @@ package org.fhw.asta.kasse.shared.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 import org.fhw.asta.kasse.shared.common.EuroAmount;
 
 /**
@@ -9,10 +13,13 @@ import org.fhw.asta.kasse.shared.common.EuroAmount;
  * 
  * @author julian
  */
+@Entity
 public class Article implements Serializable
 {
   private static final long serialVersionUID = 1L;
 
+  @Id
+  @GeneratedValue
   private int id;
 
   private int revision;

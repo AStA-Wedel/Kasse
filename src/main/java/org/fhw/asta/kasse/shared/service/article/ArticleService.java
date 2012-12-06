@@ -14,4 +14,6 @@ public interface ArticleService extends RemoteService {
 
 	List<Article> getArticleComponents(Article article); 
 	
+	Article getArticleById(String id);
+	
 }

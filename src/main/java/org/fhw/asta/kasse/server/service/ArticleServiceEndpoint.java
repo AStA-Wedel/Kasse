@@ -12,23 +12,25 @@ import com.google.inject.Singleton;
 
 @Singleton
 public class ArticleServiceEndpoint extends RemoteServiceServlet implements
-    ArticleService
-{
-  private static final long serialVersionUID = 1L;
+		ArticleService {
+	private static final long serialVersionUID = 1L;
 
-  @Inject
-  private ArticleDao dao;
+	@Inject
+	private ArticleDao dao;
 
-  @Override
-  public List<Article> getArticles()
-  {
-    return this.dao.getAllArticles();
-  }
-  
-  @Override
-  public List<Article> getArticleComponents(Article article)
-  {
-	  return this.dao.getArticleComponents(article);
-  }
+	@Override
+	public List<Article> getArticles() {
+		return this.dao.getAllArticles();
+	}
+
+	@Override
+	public List<Article> getArticleComponents(Article article) {
+		return this.dao.getArticleComponents(article);
+	}
+
+	@Override
+	public Article getArticleById(String id) {
+		return this.dao.getArticleById(id);
+	}
 
 }

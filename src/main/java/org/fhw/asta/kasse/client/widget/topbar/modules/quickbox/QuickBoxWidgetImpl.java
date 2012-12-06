@@ -1,6 +1,7 @@
 package org.fhw.asta.kasse.client.widget.topbar.modules.quickbox;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.HasChangeHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -29,5 +30,12 @@ public class QuickBoxWidgetImpl extends Composite implements QuickBoxWidget {
 	public HasText getQuickBox() {
 		return textBox;
 	}
+
+	@Override
+	public HasChangeHandlers getQuickBoxHandlers() {
+		return textBox;
+	}
+	
+	
 
 }

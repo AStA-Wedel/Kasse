@@ -5,6 +5,7 @@ import org.fhw.asta.kasse.client.widget.topbar.modules.quickbox.QuickBoxWidget;
 import org.fhw.asta.kasse.client.widget.topbar.modules.searchbox.SearchBoxWidget;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.HasChangeHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -70,5 +71,10 @@ public class ReadyTopBarWidgetImpl extends Composite implements ReadyTopBarWidge
 	@Override
 	public HasText getSearchBox() {
 		return searchBox.getSearchBox();
+	}
+
+	@Override
+	public HasChangeHandlers getQuickBoxHandlers() {
+		return quickBox.getQuickBoxHandlers();
 	}
 }

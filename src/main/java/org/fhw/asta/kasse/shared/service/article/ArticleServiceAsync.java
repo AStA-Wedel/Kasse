@@ -13,4 +13,6 @@ public interface ArticleServiceAsync {
 	void getArticleComponents(Article article,
 			AsyncCallback<List<Article>> callback);
 
+	void getArticleById(String id, AsyncCallback<Article> callback);
+
 }

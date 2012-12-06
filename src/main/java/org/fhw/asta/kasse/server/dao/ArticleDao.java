@@ -6,12 +6,10 @@ import java.util.List;
 
 import org.fhw.asta.kasse.shared.common.EuroAmount;
 import org.fhw.asta.kasse.shared.model.Article;
+import org.fhw.asta.kasse.shared.model.Category;
 import org.springframework.jdbc.core.RowMapper;
 
 public class ArticleDao extends GenericDao {
-	private final String getAllArticlesQueryString = "SELECT article_id,"
-			+ "article_revision, name, description, price, tax_category_name,"
-			+ "tax_revision, enabled FROM article;";
 
 	private class ArticleRowMapper implements RowMapper<Article> {
 		@Override
@@ -24,9 +22,30 @@ public class ArticleDao extends GenericDao {
 		}
 	}
 
+	private class CategoryRowMapper implements RowMapper<Category> {
+		@Override
+		public Category mapRow(final ResultSet arg0, final int arg1)
+				throws SQLException {
+			return new Category(arg0.getInt(1), arg0.getString(2));
+		}
+	}
+
 	public List<Article> getAllArticles() {
-		return this.template.query(this.getAllArticlesQueryString,
-				new ArticleRowMapper());
+		return this.template
+				.query("SELECT article_id,"
+						+ "article_revision, name, description, price, tax_category_name,"
+						+ "tax_revision, enabled FROM article;",
+						new ArticleRowMapper());
+	}
+
+	public List<Article> getArticlesByCategory(String id) {
+		return this.template
+				.query("SELECT article.article_id,article.article_revision,"
+						+ "name, description, price, tax_category_name,"
+						+ "tax_revision, enabled FROM article JOIN category_mapping"
+						+ " ON article.article_id = category_mapping.article_id AND article.article_revision = category_mapping.article_revision"
+						+ " WHERE category_id ='"+id+"';",
+						new ArticleRowMapper());
 	}
 
 	public List<Article> getArticleComponents(final Article article) {
@@ -41,11 +60,19 @@ public class ArticleDao extends GenericDao {
 						new ArticleRowMapper());
 	}
 
-	public Article getArticleById(String id)
-  {
-	return this.template.query("SELECT article_id, article_revision, name, description," +
-								"price, tax_category_name, tax_revision," +
-								"enabled FROM article WHERE article_id = '" + id + "';", new ArticleRowMapper()).get(0);
-								
-  }
+	public Article getArticleById(String id) {
+		return this.template.query(
+				"SELECT article_id, article_revision, name, description,"
+						+ "price, tax_category_name, tax_revision,"
+						+ "enabled FROM article WHERE article_id = '" + id
+						+ "';", new ArticleRowMapper()).get(0);
+
+	}
+
+	public List<Category> getAllCategories() {
+		return this.template.query(
+				"SELECT category_id, category_name FROM category;",
+				new CategoryRowMapper());
+	}
+
 }

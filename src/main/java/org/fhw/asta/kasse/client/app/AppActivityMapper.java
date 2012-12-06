@@ -26,7 +26,7 @@ public class AppActivityMapper implements ActivityMapper {
 		}
 		
 		if (place instanceof ArticleListPlace) {
-			return articleListActivityFactory.create();
+			return articleListActivityFactory.create((ArticleListPlace)place);
 		}
 
 		return null;

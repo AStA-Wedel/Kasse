@@ -25,7 +25,7 @@ public class Category implements Serializable
     return this.id;
   }
 
-  public String name()
+  public String getName()
   {
     return this.name;
   }

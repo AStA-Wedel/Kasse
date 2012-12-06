@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.fhw.asta.kasse.server.dao.ArticleDao;
 import org.fhw.asta.kasse.shared.model.Article;
+import org.fhw.asta.kasse.shared.model.Category;
 import org.fhw.asta.kasse.shared.service.article.ArticleService;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -32,5 +33,17 @@ public class ArticleServiceEndpoint extends RemoteServiceServlet implements
 	public Article getArticleById(String id) {
 		return this.dao.getArticleById(id);
 	}
+
+	@Override
+	public List<Category> getCategories() {
+		return this.dao.getAllCategories();
+	}
+
+	@Override
+	public List<Article> getArticlesByCategory(String id) {
+		return this.dao.getArticlesByCategory(id);
+	}
+	
+	
 
 }

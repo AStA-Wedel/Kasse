@@ -1,5 +1,9 @@
 package org.fhw.asta.kasse.client.widget.sidebar;
 
+import java.util.List;
+
+import org.fhw.asta.kasse.shared.model.Category;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -43,8 +47,24 @@ public class SidebarWidgetImpl extends Composite implements SidebarWidget {
 	}
 
 	@Override
-	public void addCat(String cat) {
-		addHtml("<li class=\"nav-header\">"+cat+"</li>");
+	public void addCat(Category cat) {
+		addHtml("<li><a href=\"#ArticleListPlace:"+cat.getId()+"\">"+cat.getName()+"</a></li>");
 		
+	}
+
+	@Override
+	public void addCats(List<Category> cats) {
+		clear();
+		addLink("#ArticleListPlace:","Alle");
+		for (Category cat : cats)
+		{
+			addCat(cat);
+		}
+		
+	}
+
+	@Override
+	public void addCapital(String capital) {
+		addHtml("<li class=\"nav-header\">"+capital+"</li>");	
 	}
 }

@@ -4,9 +4,12 @@ import java.util.List;
 import java.util.Set;
 
 import org.fhw.asta.kasse.client.controller.BasketController;
+import org.fhw.asta.kasse.client.place.ArticleListPlace;
 import org.fhw.asta.kasse.client.widget.articlelist.ArticleListWidget;
 import org.fhw.asta.kasse.client.widget.basket.BasketWidget;
+import org.fhw.asta.kasse.client.widget.sidebar.SidebarWidget;
 import org.fhw.asta.kasse.shared.model.Article;
+import org.fhw.asta.kasse.shared.model.Category;
 import org.fhw.asta.kasse.shared.service.article.ArticleServiceAsync;
 
 import com.google.common.collect.Sets;
@@ -22,6 +25,7 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
 import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
 public class ArticleListActivity extends AbstractActivity {
 
@@ -40,16 +44,25 @@ public class ArticleListActivity extends AbstractActivity {
 	@Inject 
 	private ArticleServiceAsync articleService;
 	
+	@Inject
+	private SidebarWidget sidebarWidget;
+	
 	private ListDataProvider<Article> articleDataProvider;
 	
 	private Article currentOverlayObject; 
 	
 	private Set<HandlerRegistration> handlerRegistrations = Sets.newHashSet();
+
+	private ArticleListPlace articleListPlace;
+	
+	@Inject
+	public ArticleListActivity(@Assisted ArticleListPlace articleListPlace) {
+		this.articleListPlace = articleListPlace;
+	}
 	
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		panel.setWidget(articleListWidget);
-		
 		articleListWidget.getToBasketColumn().setFieldUpdater(new ToBasketUpdater());
 		
 		OverlayOpenFieldUpdater openOverlayFieldUpdater = new OverlayOpenFieldUpdater();
@@ -60,7 +73,13 @@ public class ArticleListActivity extends AbstractActivity {
 		
 		articleDataProvider = new ListDataProvider<Article>(new ArticleIdProvider());
 		articleDataProvider.addDataDisplay(articleListWidget.getArticleList());		
-		articleService.getArticles(new ArticleDataHandler());
+		articleService.getCategories(new CategoryCallback());
+		if(articleListPlace.getToken().equals(""))
+		{
+			articleService.getArticles(new ArticleDataHandler());
+		} else {
+			articleService.getArticlesByCategory(articleListPlace.getToken(), new ArticleDataHandler());
+		}
 	}
 	
 	@Override
@@ -140,6 +159,22 @@ public class ArticleListActivity extends AbstractActivity {
 			articleListWidget.closeOverlay();
 		}
 		
+		
+	}
+	
+	private class CategoryCallback implements AsyncCallback<List<Category>> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(List<Category> result) {
+			sidebarWidget.addCats(result);
+			
+		}
 		
 	}
 

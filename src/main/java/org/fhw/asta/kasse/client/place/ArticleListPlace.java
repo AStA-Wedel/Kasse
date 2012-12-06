@@ -5,20 +5,32 @@ import com.google.gwt.place.shared.PlaceTokenizer;
 
 public class ArticleListPlace extends Place {
 	
+	private String token;
+	
+	public ArticleListPlace(String token) {
+		this.token = token;
+	}
+
+	public ArticleListPlace() {
+		this.token = "";
+	}
+
 	public static final class Tokenizer implements PlaceTokenizer<ArticleListPlace> {
 
 		@Override
 		public ArticleListPlace getPlace(String token) {
-			// TODO Auto-generated method stub
-			return null;
+			return new ArticleListPlace(token);
 		}
 
 		@Override
 		public String getToken(ArticleListPlace place) {
-			// TODO Auto-generated method stub
-			return null;
+			return place.getToken();
 		}
 		
+	}
+
+	public String getToken() {
+		return token;
 	}
 		
 }

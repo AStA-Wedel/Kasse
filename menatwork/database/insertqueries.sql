@@ -1,4 +1,5 @@
 USE kasse;
+delete from category_mapping;
 DELETE FROM stuff;
 DELETE FROM packet_part;
 DELETE FROM packet;
@@ -8,6 +9,8 @@ DELETE FROM lecturer;
 DELETE FROM tax_category;
 delete from person;
 delete from person_group;
+delete from category;
+
 
 INSERT INTO tax_category(tax_category_name, tax_revision, tax_rate)
 VALUES('REDU', 0, 0.07);
@@ -105,6 +108,19 @@ INSERT INTO packet_part( packet_id, packet_revision, article_id, article_revisio
 	AND a2.article_revision = 0;
 
 
+/* ---------------Cats  ---------------------------*/
+
+INSERT INTO category (category_name) VALUES ('Obst');
+INSERT INTO category (category_name) VALUES ('Skripte');
+INSERT INTO category (category_name) VALUES ('Bürozeugs');
+
+INSERT INTO category_mapping(category_id, article_id, article_revision) 
+	SELECT (SELECT category_id FROM category WHERE category_name = 'Skripte'), article_id, article_revision FROM article
+	WHERE name = 'Ev. Religion';
+
+INSERT INTO category_mapping(category_id, article_id, article_revision) 
+	SELECT (SELECT category_id FROM category WHERE category_name = 'Bürozeugs'), article_id, article_revision FROM article
+	WHERE name = 'Allgemeine BWL';
 
 /* ----------------------------------------------- */
 

@@ -3,6 +3,7 @@ package org.fhw.asta.kasse.shared.service.article;
 import java.util.List;
 
 import org.fhw.asta.kasse.shared.model.Article;
+import org.fhw.asta.kasse.shared.model.Category;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -14,5 +15,9 @@ public interface ArticleServiceAsync {
 			AsyncCallback<List<Article>> callback);
 
 	void getArticleById(String id, AsyncCallback<Article> callback);
+
+	void getCategories(AsyncCallback<List<Category>> callback);
+
+	void getArticlesByCategory(String id, AsyncCallback<List<Article>> callback);
 
 }

@@ -1,5 +1,6 @@
 package org.fhw.asta.kasse.server.service;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.fhw.asta.kasse.server.component.user.UserComponent;
@@ -25,32 +26,29 @@ public class BasketServiceEndpoint extends RemoteServiceServlet implements Baske
 
 	@Override
 	public void removeItem(BasketItem item) {
-		// TODO fill content
-		
-	}
-
-	@Override
-	public void updateItem(BasketItem item) {
-		// TODO Auto-generated method stub
-		
+		Iterator<BasketItem> it = userComponent.getUser().getBasket().iterator();
+		while(it.hasNext()){
+			BasketItem i = it.next();
+			if(i.getArticleId() == item.getArticleId() && i.getAmount() == item.getAmount() && i.getDiscount() == item.getDiscount()){
+				userComponent.getUser().getBasket().remove(i);
+			}
+		}
+		userComponent.getUser().getBasket().remove(item);		
 	}
 
 	@Override
 	public void addItem(BasketItem item) {
-		// TODO Auto-generated method stub
-		
+		userComponent.getUser().getBasket().add(item);
 	}
 
 	@Override
 	public Integer getDiscount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return userComponent.getUser().getBasketDiscount();
 	}
 
 	@Override
 	public void setDiscount(int discount) {
-		// TODO Auto-generated method stub
-		
+		userComponent.getUser().setBasketDiscount(discount);		
 	}
 
 }

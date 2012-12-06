@@ -20,6 +20,8 @@ public class User implements Serializable {
 
 	private List<BasketItem> basket = Lists.newArrayList();
 	
+	private Integer basketDiscount = 0;
+	
 	public String getEmail() {
 		return email;
 	}
@@ -27,7 +29,15 @@ public class User implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public Integer getBasketDiscount(){
+		return basketDiscount;
+	}
 
+	public void setBasketDiscount(Integer discount){
+		basketDiscount = discount;
+	}
+	
 	public void setAuthenticationStatus(AuthenticationStatus authenticationStatus) {
 		this.authenticationStatus = authenticationStatus;
 	}

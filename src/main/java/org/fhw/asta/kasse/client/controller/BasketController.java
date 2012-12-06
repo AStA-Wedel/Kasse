@@ -130,7 +130,8 @@ public class BasketController {
 				BasketItem toUpdate = new BasketItem(object.getItemName(),
 						object.getItemPrice(), object.getArticleId(),
 						Integer.valueOf(value),object.getDiscount());
-				basketService.updateItem(toUpdate, new BasketVoidHandler());
+				basketService.removeItem(object, new BasketVoidHandler());
+				basketService.addItem(toUpdate, new BasketVoidHandler());
 				basketDataProvider.getList().remove(object);
 				basketDataProvider.getList().add(toUpdate);
 				flush();
@@ -160,7 +161,8 @@ public class BasketController {
 				BasketItem toUpdate = new BasketItem(object.getItemName(),
 						object.getItemPrice(), object.getArticleId(),
 						object.getAmount(), Integer.valueOf(value));
-				basketService.updateItem(toUpdate, new BasketVoidHandler());
+				basketService.removeItem(object, new BasketVoidHandler());
+				basketService.addItem(toUpdate, new BasketVoidHandler());
 				basketDataProvider.getList().remove(object);
 				basketDataProvider.getList().add(toUpdate);
 				flush();
@@ -210,6 +212,7 @@ public class BasketController {
 
 		@Override
 		public void onSuccess(List<BasketItem> result) {
+			basketDataProvider.getList().clear();
 			basketDataProvider.getList().addAll(result);
 			flush();
 
@@ -229,7 +232,6 @@ public class BasketController {
 		public void onSuccess(Integer result) {
 			basketWidget.getDiscountBox().setText(result.toString());
 			flush();
-
 		}
 	}
 

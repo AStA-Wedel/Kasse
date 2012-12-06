@@ -34,7 +34,7 @@ public class ArticleDao extends GenericDao {
 		return this.template
 				.query("SELECT article_id,"
 						+ "article_revision, name, description, price, tax_category_name,"
-						+ "tax_revision, enabled FROM article;",
+						+ "tax_revision, enabled FROM article WHERE enabled = true;",
 						new ArticleRowMapper());
 	}
 
@@ -44,7 +44,7 @@ public class ArticleDao extends GenericDao {
 						+ "name, description, price, tax_category_name,"
 						+ "tax_revision, enabled FROM article JOIN category_mapping"
 						+ " ON article.article_id = category_mapping.article_id AND article.article_revision = category_mapping.article_revision"
-						+ " WHERE category_id ='"+id+"';",
+						+ " WHERE category_id ='"+id+"' AND enabled = true;",
 						new ArticleRowMapper());
 	}
 
@@ -65,7 +65,7 @@ public class ArticleDao extends GenericDao {
 				"SELECT article_id, article_revision, name, description,"
 						+ "price, tax_category_name, tax_revision,"
 						+ "enabled FROM article WHERE article_id = '" + id
-						+ "';", new ArticleRowMapper()).get(0);
+						+ "' AND enabled = true;", new ArticleRowMapper()).get(0);
 
 	}
 

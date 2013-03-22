@@ -8,5 +8,5 @@
 		}
 	</ui:style>
 	
-	<g:HTML styleName="brand {style.paddingLeft}">AStA</g:HTML>
+	<g:HTML styleName="brand {style.paddingLeft}">Kasse</g:HTML>
 </ui:UiBinder> 

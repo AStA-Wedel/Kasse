@@ -2,7 +2,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<g:HTMLPanel styleName="mycontainer">
-		<div class="brand">AStA</div>
+		<div class="brand">Kasse</div>
 		<g:HTMLPanel styleName="navbar-search pull-left" ui:field="searchBoxPanel" />
 		<g:HTMLPanel ui:field="navBarPanel" />
 		<g:HTMLPanel styleName="navbar-search pull-right" ui:field="quickBoxPanel" />

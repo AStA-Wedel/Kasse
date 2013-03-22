@@ -7,6 +7,7 @@ import com.google.gwt.cell.client.ButtonCell;
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.EditTextCell;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -14,6 +15,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Widget;
@@ -30,7 +32,9 @@ public class BasketWidgetImpl extends Composite implements BasketWidget {
 	CellTable<BasketItem> basketTable;
 	@UiField Label sum;
 	@UiField TextBox discountBox;
-
+	@UiField Button checkoutButton;
+	@UiField TextBox matrNr;
+	
 	private Column<BasketItem,String> deleteColumn;
 	private Column<BasketItem,String> priceColumn;
 	private Column<BasketItem,String> amountColumn;
@@ -187,6 +191,16 @@ public class BasketWidgetImpl extends Composite implements BasketWidget {
 			sb.appendHtmlConstant("</button>");
 		}
 
+	}
+
+	@Override
+	public HasClickHandlers getCheckoutButton() {
+		return checkoutButton;
+	}
+
+	@Override
+	public TextBox getMatrNrBox() {
+		return matrNr;
 	}
 
 	

@@ -9,6 +9,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public interface CheckoutServiceAsync {
 
 	void doCheckout(List<BasketItem> items,int discount, String matrNr,
-			AsyncCallback<Boolean> callback);
+			AsyncCallback<Integer> callback);
 
 }

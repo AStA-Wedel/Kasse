@@ -11,5 +11,5 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("checkout")
 public interface CheckoutService extends RemoteService {
 
-	Boolean doCheckout(List<BasketItem> items, int discount, String matrNr); 
+	Integer doCheckout(List<BasketItem> items, int discount, String matrNr); 
 }

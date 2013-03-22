@@ -239,7 +239,7 @@ public class BasketController {
 
 	}
 
-	private class CheckoutCallback implements AsyncCallback<Boolean> {
+	private class CheckoutCallback implements AsyncCallback<Integer> {
 
 		@Override
 		public void onFailure(Throwable caught) {
@@ -247,10 +247,10 @@ public class BasketController {
 		}
 
 		@Override
-		public void onSuccess(Boolean result) {
-			if (result.booleanValue()) {
-				basketDataProvider.getList().clear();
-			}
+		public void onSuccess(Integer result) {
+			
+				//TODO FIXME 
+			
 		}
 
 	}

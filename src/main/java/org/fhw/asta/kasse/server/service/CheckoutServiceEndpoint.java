@@ -17,10 +17,11 @@ public class CheckoutServiceEndpoint extends RemoteServiceServlet implements Che
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public Boolean doCheckout(List<BasketItem> items, int discount,
+	public Integer doCheckout(List<BasketItem> items, int discount,
 			String matrNr) {
+		
 		// TODO Auto-generated method stub
-		return true;
+		return 0;
 	}
 
 

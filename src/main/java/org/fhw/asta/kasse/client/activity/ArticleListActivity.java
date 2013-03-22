@@ -12,6 +12,7 @@ import org.fhw.asta.kasse.shared.model.Article;
 import org.fhw.asta.kasse.shared.model.Category;
 import org.fhw.asta.kasse.shared.service.article.ArticleServiceAsync;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Sets;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.cell.client.FieldUpdater;
@@ -74,12 +75,12 @@ public class ArticleListActivity extends AbstractActivity {
 		articleDataProvider = new ListDataProvider<Article>(new ArticleIdProvider());
 		articleDataProvider.addDataDisplay(articleListWidget.getArticleList());		
 		articleService.getCategories(new CategoryCallback());
-		if(articleListPlace.getToken().equals(""))
-		{
-			articleService.getArticles(new ArticleDataHandler());
+		
+		if (Strings.isNullOrEmpty(articleListPlace.getToken())) {
+			articleService.getArticles(new ArticleDataHandler());			
 		} else {
-			articleService.getArticlesByCategory(articleListPlace.getToken(), new ArticleDataHandler());
-		}
+			articleService.getArticlesByCategory(articleListPlace.getToken(), new ArticleDataHandler());			
+		}		
 	}
 	
 	@Override

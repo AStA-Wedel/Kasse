@@ -23,7 +23,7 @@ public class TopbarController {
 	private TopBarWidget topbarWidget;
 	
 	@Inject
-	BasketController basketController;
+	private BasketController basketController;
 	
 	@Inject
 	private ArticleServiceAsync articleService;

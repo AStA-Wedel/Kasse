@@ -4,7 +4,7 @@ import org.fhw.asta.kasse.client.event.LoginEvent;
 import org.fhw.asta.kasse.client.place.LoginPlace;
 import org.fhw.asta.kasse.client.widget.login.LoginWidget;
 import org.fhw.asta.kasse.shared.authentication.AuthenticationResult;
-import org.fhw.asta.kasse.shared.service.UserServiceAsync;
+import org.fhw.asta.kasse.shared.service.user.UserServiceAsync;
 
 import com.google.common.base.Strings;
 import com.google.gwt.activity.shared.AbstractActivity;

@@ -45,7 +45,6 @@ public class Kasse implements EntryPoint {
 		placeHistoryHandler.register(injector.getPlaceController(), eventBus, DEFAULT_PLACE);
 		placeHistoryHandler.handleCurrentHistory();
 
-		
 		GWT.runAsync(new RunAsyncCallback() {
 			
 			@Override
@@ -61,8 +60,7 @@ public class Kasse implements EntryPoint {
 			}
 			
 		});
-		
-
+				
 		eventBus.addHandler(LoginEvent.TYPE, new LoginEventHandler() {
 			
 			@Override

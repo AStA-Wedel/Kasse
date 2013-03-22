@@ -3,7 +3,7 @@ package org.fhw.asta.kasse.server.service;
 import org.fhw.asta.kasse.server.common.User;
 import org.fhw.asta.kasse.server.component.user.UserComponent;
 import org.fhw.asta.kasse.shared.authentication.AuthenticationResult;
-import org.fhw.asta.kasse.shared.service.UserService;
+import org.fhw.asta.kasse.shared.service.user.UserService;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.inject.Inject;

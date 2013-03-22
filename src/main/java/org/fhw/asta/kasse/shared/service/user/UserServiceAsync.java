@@ -1,4 +1,4 @@
-package org.fhw.asta.kasse.shared.service;
+package org.fhw.asta.kasse.shared.service.user;
 
 import org.fhw.asta.kasse.shared.authentication.AuthenticationResult;
 

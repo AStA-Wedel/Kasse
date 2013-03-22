@@ -1,8 +1,10 @@
 package org.fhw.asta.kasse.client.app;
 
 import org.fhw.asta.kasse.client.inject.module.factory.ArticleListActivityFactory;
+import org.fhw.asta.kasse.client.inject.module.factory.BackofficeActivityFactory;
 import org.fhw.asta.kasse.client.inject.module.factory.LoginActivityFactory;
 import org.fhw.asta.kasse.client.place.ArticleListPlace;
+import org.fhw.asta.kasse.client.place.BackofficePlace;
 import org.fhw.asta.kasse.client.place.LoginPlace;
 
 import com.google.gwt.activity.shared.Activity;
@@ -18,6 +20,9 @@ public class AppActivityMapper implements ActivityMapper {
 	@Inject
 	private ArticleListActivityFactory articleListActivityFactory;
 	
+	@Inject
+	private BackofficeActivityFactory backofficeActivityFactory;
+	
 	@Override
 	public Activity getActivity(Place place) {
 
@@ -27,6 +32,10 @@ public class AppActivityMapper implements ActivityMapper {
 		
 		if (place instanceof ArticleListPlace) {
 			return articleListActivityFactory.create((ArticleListPlace)place);
+		}
+		
+		if (place instanceof BackofficePlace) {
+			return backofficeActivityFactory.create((BackofficePlace)place);
 		}
 
 		return null;

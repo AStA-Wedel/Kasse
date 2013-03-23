@@ -1,5 +1,6 @@
 package org.fhw.asta.kasse.server.service;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.fhw.asta.kasse.server.dao.ArticleDao;
@@ -36,6 +37,7 @@ public class BillOrderServiceEndpoint extends RemoteServiceServlet implements Bi
     final BillOrder bo = this.getBillOrder(id);
     return null;
 
+    return Collections.emptyList();
   }
 
 }

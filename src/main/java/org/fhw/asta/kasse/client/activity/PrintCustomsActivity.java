@@ -1,6 +1,7 @@
 package org.fhw.asta.kasse.client.activity;
 
 
+import java.util.Date;
 import java.util.List;
 
 import org.fhw.asta.kasse.client.common.EuroFormatter;
@@ -135,17 +136,17 @@ public class PrintCustomsActivity extends AbstractActivity {
 		printWidget.addHtml("<br /><br />");
 		printWidget.addHtml("<div class='recipient'><table><tr>"
 				+ "<td><strong>Name: </strong></td>"
-				+ "<td>"+billOrder.getReceipient().getFullName()+"</td>"
+				+ "<td>"+""+"</td>"
 				+ "</tr><tr><td><strong>Matrikel-Nr.: </strong></td>"
-				+ "<td>"+billOrder.getReceipient().getMatrNo()+"</td></tr></table>"
+				+ "<td>"+""+"</td></tr></table>"
 				+ "<div>");
 		printWidget.addHtml("<div class='billdata'><table class='billtbl'><tr>"
 				+"<td><strong>Rechnungs-Nr.: </strong></td>"
 				+ "<td class='billdata-right'>"+billOrder.getId()+"</td>"
 				+ "</tr><tr><td><strong>Datum: </strong></td>"
-				+ "<td class='billdata-right'>"+DateTimeFormat.getFormat("dd.MM.yyyy").format(billOrder.getCreationDate())+"</td></tr>"
+				+ "<td class='billdata-right'>"+DateTimeFormat.getFormat("dd.MM.yyyy").format(new Date())+"</td></tr>"
 				+ "<tr><td><strong>Bediener: </strong></td>"
-				+ "<td class='billdata-right'>"+billOrder.getIssuer().getFullName()+"</td></tr></table>"
+				+ "<td class='billdata-right'>"+""+"</td></tr></table>"
 				+ "<div>");
 		printWidget.addHtml("<br/><br/><br/><br/><h2><strong>Rechnung</strong></h2>");
 		masterDiscount = billOrder.getDiscount();

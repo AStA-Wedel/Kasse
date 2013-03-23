@@ -11,9 +11,12 @@ import org.fhw.asta.kasse.shared.basket.BasketItem;
 import org.fhw.asta.kasse.shared.common.EuroAmount;
 import org.fhw.asta.kasse.shared.model.BillOrder;
 import org.fhw.asta.kasse.shared.model.LetterHead;
+import org.fhw.asta.kasse.shared.model.Person;
 import org.fhw.asta.kasse.shared.service.billorder.BillOrderServiceAsync;
 import org.fhw.asta.kasse.shared.service.letterhead.LetterHeadServiceAsync;
+import org.fhw.asta.kasse.shared.service.user.UserServiceAsync;
 
+import com.google.common.base.Optional;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -29,6 +32,9 @@ public class PrintCustomsActivity extends AbstractActivity {
 
 	@Inject
 	private BillOrderServiceAsync billOrderService;
+	
+	@Inject
+	private UserServiceAsync userService;
 
 	@Inject
 	private LetterHeadServiceAsync letterHeadService;
@@ -38,6 +44,12 @@ public class PrintCustomsActivity extends AbstractActivity {
 
 	private PrintCustomsPlace printCustomsPlace;
 
+	
+	private BillOrder billOrder;
+	private Person recp;
+	private Person issue;
+	private List<BasketItem> articles;
+	
 	@Inject
 	public PrintCustomsActivity(@Assisted PrintCustomsPlace printCustomsPlace) {
 		this.printCustomsPlace = printCustomsPlace;
@@ -98,11 +110,12 @@ public class PrintCustomsActivity extends AbstractActivity {
 	}
 
 	private void printBILLORDER(int id) {
+		
 		billOrderService.getBillOrder(id, new AsyncCallback<BillOrder>() {
 
 			@Override
 			public void onSuccess(BillOrder result) {
-				printBillOrder(result);
+				billOrder = result;
 				billOrderService.getBillOrderArticles(result.getId(),
 						new AsyncCallback<List<BasketItem>>() {
 
@@ -114,7 +127,39 @@ public class PrintCustomsActivity extends AbstractActivity {
 
 							@Override
 							public void onSuccess(List<BasketItem> result) {
-								printArticles(result);
+								articles = result;
+								
+								userService.getUserByIdAndRevision(billOrder.getIssuerLdapName(), billOrder.getIssuerRevision(), new AsyncCallback<Optional<Person>>() {
+
+									@Override
+									public void onFailure(Throwable caught) {
+										// TODO Auto-generated method stub
+										
+									}
+
+									@Override
+									public void onSuccess(
+											Optional<Person> result) {
+										issue = result.or(new Person());
+										userService.getUserByIdAndRevision(billOrder.getRecipientLdapName(), billOrder.getReceipientRevision(), new AsyncCallback<Optional<Person>>() {
+
+											@Override
+											public void onFailure(
+													Throwable caught) {
+												// TODO Auto-generated method stub
+												
+											}
+
+											@Override
+											public void onSuccess(
+													Optional<Person> result) {
+												recp = result.or(new Person());
+												
+											}
+										};
+										
+									}
+								})
 
 							}
 						});
@@ -129,29 +174,26 @@ public class PrintCustomsActivity extends AbstractActivity {
 		});
 	}
 
-	private int masterDiscount;
-	
-	private void printBillOrder(BillOrder billOrder) {
+	private void printBillOrder() {
 		printWidget.addHtml("<br /><br />");
 		printWidget.addHtml("<div class='recipient'><table><tr>"
 				+ "<td><strong>Name: </strong></td>"
-				+ "<td>"+billOrder.getReceipient().getFullName()+"</td>"
+				+ "<td>"+recp.getPrename()+" "+recp.getSurname()+"</td>"
 				+ "</tr><tr><td><strong>Matrikel-Nr.: </strong></td>"
-				+ "<td>"+billOrder.getReceipient().getMatrNo()+"</td></tr></table>"
+				+ "<td>"+recp.getMatrNo()+"</td></tr></table>"
 				+ "<div>");
 		printWidget.addHtml("<div class='billdata'><table class='billtbl'><tr>"
 				+"<td><strong>Rechnungs-Nr.: </strong></td>"
 				+ "<td class='billdata-right'>"+billOrder.getId()+"</td>"
 				+ "</tr><tr><td><strong>Datum: </strong></td>"
-				+ "<td class='billdata-right'>"+DateTimeFormat.getFormat("dd.MM.yyyy").format(billOrder.getCreationDate())+"</td></tr>"
+				+ "<td class='billdata-right'>"+DateTimeFormat.getFormat("dd.MM.yyyy").format(billOrder.getDatetimeOfCreation())+"</td></tr>"
 				+ "<tr><td><strong>Bediener: </strong></td>"
-				+ "<td class='billdata-right'>"+billOrder.getIssuer().getFullName()+"</td></tr></table>"
+				+ "<td class='billdata-right'>"+issue.getPrename()+" "+issue.getSurname()+"</td></tr></table>"
 				+ "<div>");
 		printWidget.addHtml("<br/><br/><br/><br/><h2><strong>Rechnung</strong></h2>");
-		masterDiscount = billOrder.getDiscount();
 	}
 
-	private void printArticles(List<BasketItem> articles) {
+	private void printArticles() {
 		StringBuilder strb = new StringBuilder();
 		int sum = 0;
 		strb.append("<br/>");
@@ -175,8 +217,8 @@ public class PrintCustomsActivity extends AbstractActivity {
 		}
 		strb.append("<tr class='headline'><td></td><td class='desc'></td><td></td><td></td><td></td><td></td></tr>");
 		strb.append("<tr><td></td><td class='desc'></td><td></td><td></td><td><strong>Gesamt:</strong></td><td>"+EuroFormatter.format(new EuroAmount(sum))+"</td></tr>");
-		strb.append("<tr><td></td><td class='desc'></td><td></td><td></td><td><strong>Rabatt (&#037;):</strong></td><td>"+masterDiscount+"</td></tr>");
-		strb.append("<tr><td></td><td class='desc'></td><td></td><td></td><td><strong>Endsumme:</strong></td><td>"+EuroFormatter.format(new EuroAmount((int)Math.round(sum*(100.0-masterDiscount))))+"</td></tr>");
+		strb.append("<tr><td></td><td class='desc'></td><td></td><td></td><td><strong>Rabatt (&#037;):</strong></td><td>"+billOrder.getDiscount()+"</td></tr>");
+		strb.append("<tr><td></td><td class='desc'></td><td></td><td></td><td><strong>Endsumme:</strong></td><td>"+EuroFormatter.format(new EuroAmount((int)Math.round(sum*(100.0-billOrder.getDiscount()))))+"</td></tr>");
 		strb.append("</table>");
 		printWidget.addHtml(strb.toString());
 		printWidget.addHtml("<br /><br /><br />");

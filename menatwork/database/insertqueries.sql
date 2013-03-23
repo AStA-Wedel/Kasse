@@ -125,9 +125,11 @@ INSERT INTO category_mapping(category_id, article_id, article_revision)
 /* ----------------------------------------------- */
 
 insert into person_group
-values(0, 'default');
-values(1, 'Student');
+values(1, 'default');
+insert into person_group
+values(2, 'Student');
 
 insert into person
-values('default', 0, 'default', 'default', NULL, false, 0,            NULL, NULL,          NULL,    NULL,        NULL, NULL,                      NULL);
-values('inf9446', 0, 'Wefers', 'Julian',   9446, true,  1, '+491726627997', NULL, 'Schulenhörn', '25421', 'Pinneberg', '4a', 'julian.wefers@gmail.com');
+values('default', 0, 'default', 'default', NULL, false, 1,            NULL, NULL,          NULL,    NULL,        NULL, NULL,                      NULL);
+insert into person
+values('inf9446', 0, 'Wefers', 'Julian',   9446, true,  2, '+491726627997', NULL, 'Schulenhörn', '25421', 'Pinneberg', '4a', 'julian.wefers@gmail.com');

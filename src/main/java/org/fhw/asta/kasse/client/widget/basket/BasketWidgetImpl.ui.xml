@@ -20,7 +20,7 @@
 			</tr>
 			<tr>
 			<td>
-			<g:Button ui:field="checkoutButtonUnPayed" text="Nicht bezahlt" styleName="btn btn-small btn-warning"/>
+			<g:Button ui:field="checkoutButtonUnPayed" text="Nicht bezahlt" styleName="btn btn-mini btn-warning"/>
 			</td>
 			<td>
 			<g:Button ui:field="checkoutButton" text="Checkout" styleName="btn btn-success"/>	

@@ -10,6 +10,7 @@ import com.google.common.base.Optional;
 import com.google.inject.Inject;
 
 public abstract class GenericDao {
+	
 	@Inject
 	protected JdbcTemplate template;
 

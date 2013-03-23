@@ -38,6 +38,7 @@ public class BasketController {
   private ValueChangeHandler<String> masterDiscountUpdater;
   private ValueChangeHandler<String> matrNrUpdater;
   private ClickHandler checkoutHandler;
+  private ClickHandler checkoutHandlerUnPayed;
   private BasketComparator basketComparator = new BasketComparator();
 
   @Inject
@@ -71,6 +72,9 @@ public class BasketController {
 
     this.checkoutHandler = new CheckoutHandler();
     basketWidget.getCheckoutButton().addClickHandler(this.checkoutHandler);
+    
+    this.checkoutHandlerUnPayed = new CheckoutHandlerUnPayed();
+    basketWidget.getCheckoutButtonUnPayed().addClickHandler(this.checkoutHandlerUnPayed);
 
     this.matrNrUpdater = new MatrNrUpdater();
     basketWidget.getMatrNrBox().addValueChangeHandler(this.matrNrUpdater);
@@ -133,6 +137,18 @@ public class BasketController {
     }
 
   }
+  
+  private class CheckoutHandlerUnPayed implements ClickHandler {
+
+	    @Override
+	    public void onClick(ClickEvent event) {
+	      BasketController.this.checkoutService.doCheckout(
+	          Lists.newArrayList(BasketController.this.basketDataProvider.getList()),
+	          Integer.valueOf(BasketController.this.basketWidget.getDiscountBox().getText()),
+	          BasketController.this.basketWidget.getMatrNrBox().getText(), OrderState.Ordered, new CheckoutCallback());
+	    }
+
+	  }
 
   private class AmountUpdater implements FieldUpdater<BasketItem, String> {
 

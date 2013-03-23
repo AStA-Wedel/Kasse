@@ -26,4 +26,5 @@ public interface BasketWidget extends IsWidget {
 	TextBox getDiscountBox();
 	
 	HasClickHandlers getCheckoutButton();
+	HasClickHandlers getCheckoutButtonUnPayed();
 }

@@ -33,6 +33,7 @@ public class BasketWidgetImpl extends Composite implements BasketWidget {
 	@UiField Label sum;
 	@UiField TextBox discountBox;
 	@UiField Button checkoutButton;
+	@UiField Button checkoutButtonUnPayed;
 	@UiField TextBox matrNr;
 	
 	private Column<BasketItem,String> deleteColumn;
@@ -201,6 +202,11 @@ public class BasketWidgetImpl extends Composite implements BasketWidget {
 	@Override
 	public TextBox getMatrNrBox() {
 		return matrNr;
+	}
+
+	@Override
+	public HasClickHandlers getCheckoutButtonUnPayed() {
+		return checkoutButtonUnPayed;
 	}
 
 	

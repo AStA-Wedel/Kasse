@@ -2,28 +2,25 @@ package org.fhw.asta.kasse.shared.model;
 
 import java.io.Serializable;
 
-public class Person implements Serializable
-{
+public class Person implements Serializable {
   public static final long serialVersionUID = 1L;
 
   private String ldapName;
-
   private int revision;
-
   private String surname;
-
   private String prename;
-
-  private int matrNo;
-
+  private String matrNo;
   private boolean isAdmin;
-
   private int groupId;
+  private String phoneMobile;
+  private String phoneHome;
+  private String street;
+  private String zipcode;
+  private String town;
+  private String streetnumber;
 
-  public Person(final String ldapName, final int revision,
-      final String surname, final String prename, final int matrNo,
-      final boolean isAdmin, final int groupId)
-  {
+  public Person(String ldapName, int revision, String surname, String prename, String matrNo, boolean isAdmin,
+      int groupId, String phoneMobile, String phoneHome, String street, String zipcode, String town, String streetnumber) {
     this.ldapName = ldapName;
     this.revision = revision;
     this.surname = surname;
@@ -31,59 +28,64 @@ public class Person implements Serializable
     this.matrNo = matrNo;
     this.isAdmin = isAdmin;
     this.groupId = groupId;
+    this.phoneMobile = phoneMobile;
+    this.phoneHome = phoneHome;
+    this.street = street;
+    this.zipcode = zipcode;
+    this.town = town;
+    this.streetnumber = streetnumber;
   }
 
-  public Person()
-  {
-  }
-
-  public String getLdapName()
-  {
+  public String getLdapName() {
     return this.ldapName;
   }
 
-  public int getRevision()
-  {
+  public int getRevision() {
     return this.revision;
   }
 
-  public String getSurname()
-  {
+  public String getSurname() {
     return this.surname;
   }
 
-  public String getPrename()
-  {
+  public String getPrename() {
     return this.prename;
   }
 
-  public String getFullName()
-  {
-    return this.prename + ' ' + this.surname;
-  }
-
-  public int getMatrNo()
-  {
+  public String getMatrNo() {
     return this.matrNo;
   }
 
-  public boolean isAdmin()
-  {
+  public boolean isAdmin() {
     return this.isAdmin;
   }
 
-  public void setAdminFlag(final boolean isAdmin)
-  {
-    this.isAdmin = isAdmin;
-  }
-
-  public int getGroupId()
-  {
+  public int getGroupId() {
     return this.groupId;
   }
 
-  public void setGroupId(final int groupId)
-  {
-    this.groupId = groupId;
+  public String getPhoneMobile() {
+    return this.phoneMobile;
   }
+
+  public String getPhoneHome() {
+    return this.phoneHome;
+  }
+
+  public String getStreet() {
+    return this.street;
+  }
+
+  public String getZipcode() {
+    return this.zipcode;
+  }
+
+  public String getTown() {
+    return this.town;
+  }
+
+  public String getStreetnumber() {
+    return this.streetnumber;
+  }
+
 }

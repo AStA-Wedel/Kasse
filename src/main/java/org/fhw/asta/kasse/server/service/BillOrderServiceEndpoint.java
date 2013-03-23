@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.fhw.asta.kasse.server.dao.ArticleDao;
 import org.fhw.asta.kasse.shared.basket.BasketItem;
-import org.fhw.asta.kasse.shared.model.Article;
 import org.fhw.asta.kasse.shared.model.BillOrder;
 import org.fhw.asta.kasse.shared.model.OrderState;
 import org.fhw.asta.kasse.shared.model.Person;

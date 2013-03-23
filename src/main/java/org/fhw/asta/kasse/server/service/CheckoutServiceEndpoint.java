@@ -25,7 +25,8 @@ public class CheckoutServiceEndpoint extends RemoteServiceServlet implements Che
 		Optional<String> email = emailProvider.get();
 		
 		if (email.isPresent()) {
-		
+			
+			
 			
 			
 		} else {
@@ -34,9 +35,5 @@ public class CheckoutServiceEndpoint extends RemoteServiceServlet implements Che
 		
 		return 0;
 	}
-
-
-
-
 
 }

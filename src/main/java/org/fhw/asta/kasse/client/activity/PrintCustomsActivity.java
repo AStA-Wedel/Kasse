@@ -1,5 +1,6 @@
 package org.fhw.asta.kasse.client.activity;
 
+
 import java.util.List;
 
 import org.fhw.asta.kasse.client.common.EuroFormatter;
@@ -16,7 +17,6 @@ import org.fhw.asta.kasse.shared.service.letterhead.LetterHeadServiceAsync;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;

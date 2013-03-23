@@ -36,7 +36,6 @@ public class WidgetModule extends AbstractGinModule {
 
 	@Override
 	protected void configure() {
-		
 				
 		bind(TopBarWidgetContainer.class).to(TopBarWidgetImpl.class).in(Singleton.class);
 		bind(EmptyTopBarWidget.class).to(EmptyTopBarWidgetImpl.class).in(Singleton.class);

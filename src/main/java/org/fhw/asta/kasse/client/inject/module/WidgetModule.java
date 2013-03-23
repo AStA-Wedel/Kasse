@@ -10,6 +10,8 @@ import org.fhw.asta.kasse.client.widget.login.LoginWidget;
 import org.fhw.asta.kasse.client.widget.login.LoginWidgetImpl;
 import org.fhw.asta.kasse.client.widget.main.MainWidget;
 import org.fhw.asta.kasse.client.widget.main.MainWidgetImpl;
+import org.fhw.asta.kasse.client.widget.print.PrintWidget;
+import org.fhw.asta.kasse.client.widget.print.PrintWidgetImpl;
 import org.fhw.asta.kasse.client.widget.root.KasseRootPanel;
 import org.fhw.asta.kasse.client.widget.root.KasseRootPanelImpl;
 import org.fhw.asta.kasse.client.widget.sidebar.SidebarWidget;
@@ -49,9 +51,10 @@ public class WidgetModule extends AbstractGinModule {
 		bind(NavBarWidget.class).to(NavBarWidgetImpl.class).in(Singleton.class);
 		bind(QuickBoxWidget.class).to(QuickBoxWidgetImpl.class).in(Singleton.class);
 		bind(SearchBoxWidget.class).to(SearchBoxWidgetImpl.class).in(Singleton.class);		
-
 		bind(KasseRootPanel.class).to(KasseRootPanelImpl.class).in(Singleton.class);
 		bind(HasTopbar.class).toProvider(HasTopbarProvider.class).in(Singleton.class);
+		bind(PrintWidget.class).to(PrintWidgetImpl.class).in(Singleton.class);
+		
 	}
 	
 }

@@ -21,7 +21,7 @@ import com.google.common.collect.Iterables;
  */
 public class UserLdapNameProvider implements Supplier<Optional<String>> {
 
-	private static final String EMAIL_COOKIE = "ldap_name";
+	private static final String COOKIE_NAME = "ldap_name";
 
 	private final HttpServletRequest req;
 
@@ -50,7 +50,7 @@ public class UserLdapNameProvider implements Supplier<Optional<String>> {
 
 		@Override
 		public boolean apply(@Nullable Cookie cookie) {
-			return cookie.getName().equals(EMAIL_COOKIE)
+			return cookie.getName().equals(COOKIE_NAME)
 					&& !Strings.isNullOrEmpty(cookie.getValue());
 		}
 

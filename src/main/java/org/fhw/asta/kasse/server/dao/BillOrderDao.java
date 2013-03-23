@@ -32,4 +32,5 @@ public class BillOrderDao extends GenericDao {
     // TODO: loggen, falls wider erwarten mehr als ein ergebnis zurückkommt
     return this.template.queryForObject("SELECT * FROM bill_order WHERE bill_id = ?", new Object[]{id}, this.mapper);
   }
+
 }

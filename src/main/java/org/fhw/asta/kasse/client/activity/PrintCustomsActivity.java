@@ -154,12 +154,14 @@ public class PrintCustomsActivity extends AbstractActivity {
 											public void onSuccess(
 													Optional<Person> result) {
 												recp = result.or(new Person());
+												printBillOrder();
+												printArticles();
 												
 											}
-										};
+										});
 										
 									}
-								})
+								});
 
 							}
 						});
@@ -187,6 +189,7 @@ public class PrintCustomsActivity extends AbstractActivity {
 				+ "<td class='billdata-right'>"+billOrder.getId()+"</td>"
 				+ "</tr><tr><td><strong>Datum: </strong></td>"
 				+ "<td class='billdata-right'>"+DateTimeFormat.getFormat("dd.MM.yyyy").format(billOrder.getDatetimeOfCreation())+"</td></tr>"
+
 				+ "<tr><td><strong>Bediener: </strong></td>"
 				+ "<td class='billdata-right'>"+issue.getPrename()+" "+issue.getSurname()+"</td></tr></table>"
 				+ "<div>");

@@ -7,6 +7,7 @@ import org.fhw.asta.kasse.client.common.EuroFormatter;
 import org.fhw.asta.kasse.client.place.PrintCustomsPlace;
 import org.fhw.asta.kasse.client.widget.HasTopbar;
 import org.fhw.asta.kasse.client.widget.print.PrintWidget;
+import org.fhw.asta.kasse.shared.basket.BasketItem;
 import org.fhw.asta.kasse.shared.common.EuroAmount;
 import org.fhw.asta.kasse.shared.model.Article;
 import org.fhw.asta.kasse.shared.model.BillOrder;
@@ -104,7 +105,7 @@ public class PrintCustomsActivity extends AbstractActivity {
 			public void onSuccess(BillOrder result) {
 				printBillOrder(result);
 				billOrderService.getBillOrderArticles(result.getId(),
-						new AsyncCallback<List<Article>>() {
+						new AsyncCallback<List<BasketItem>>() {
 
 							@Override
 							public void onFailure(Throwable caught) {
@@ -113,7 +114,7 @@ public class PrintCustomsActivity extends AbstractActivity {
 							}
 
 							@Override
-							public void onSuccess(List<Article> result) {
+							public void onSuccess(List<BasketItem> result) {
 								printArticles(result);
 
 							}
@@ -148,20 +149,20 @@ public class PrintCustomsActivity extends AbstractActivity {
 		printWidget.addHtml("<br/><br/><br/><br/><h2><strong>Rechnung</strong></h2>");
 	}
 
-	private void printArticles(List<Article> articles) {
+	private void printArticles(List<BasketItem> articles) {
 		StringBuilder strb = new StringBuilder();
 		int sum = 0;
 		strb.append("<br/>");
 		strb.append("<table class='regtb'><tr class='headline'><td>Menge</td><td class='desc'>Beschreibung</td><td>E-Preis</td><td>G-Preis</td><td>Abgehohlt</td></tr>");
-		for (Article art : articles) {
-			EuroAmount euroAmount = new EuroAmount(art.getPrice().getCentAmount()*art.getAmount());
+		for (BasketItem art : articles) {
+			EuroAmount euroAmount = new EuroAmount(art.getItemPrice().getCentAmount()*art.getAmount());
 			sum += euroAmount.getCentAmount();
 			strb.append("<tr class='unbreakable'><td>"
 								+art.getAmount()
 								+"</td><td class='desc'>"
-								+art.getName()
+								+art.getItemName()
 								+"</td><td>"
-								+EuroFormatter.format(art.getPrice())
+								+EuroFormatter.format(art.getItemPrice())
 								+"</td><td>"
 								+EuroFormatter.format(euroAmount)
 								+"</td><td><div class='abghe'>"

@@ -1,9 +1,11 @@
 package org.fhw.asta.kasse.server.service;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.fhw.asta.kasse.server.dao.ArticleDao;
+import org.fhw.asta.kasse.shared.basket.BasketItem;
 import org.fhw.asta.kasse.shared.model.Article;
 import org.fhw.asta.kasse.shared.model.BillOrder;
 import org.fhw.asta.kasse.shared.model.OrderState;
@@ -33,9 +35,9 @@ public class BillOrderServiceEndpoint extends RemoteServiceServlet implements Bi
 	}
 
 	@Override
-	public List<Article> getBillOrderArticles(int id) {
+	public List<BasketItem> getBillOrderArticles(int id) {
 		// TODO Auto-generated method stub
-		return this.dao.getAllArticles();
+		return new LinkedList<BasketItem>();
 	}
 
 }

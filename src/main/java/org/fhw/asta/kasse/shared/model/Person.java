@@ -36,6 +36,9 @@ public class Person implements Serializable {
     this.streetnumber = streetnumber;
   }
 
+  public Person() {
+  };
+
   public String getLdapName() {
     return this.ldapName;
   }

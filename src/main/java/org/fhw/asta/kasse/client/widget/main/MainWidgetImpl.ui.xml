@@ -3,7 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
 		.topPadding {
-			padding-top: 60px;
+			padding-top: 20px;
 		}
 	</ui:style>
 	<g:HTMLPanel styleName="{style.topPadding}">

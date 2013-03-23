@@ -133,6 +133,7 @@ public class BasketController {
           Lists.newArrayList(BasketController.this.basketDataProvider.getList()),
           Integer.valueOf(BasketController.this.basketWidget.getDiscountBox().getText()),
           BasketController.this.basketWidget.getMatrNrBox().getText(), 'p', new CheckoutCallback());
+      flush();
     }
 
   }
@@ -145,6 +146,7 @@ public class BasketController {
           Lists.newArrayList(BasketController.this.basketDataProvider.getList()),
           Integer.valueOf(BasketController.this.basketWidget.getDiscountBox().getText()),
           BasketController.this.basketWidget.getMatrNrBox().getText(), 'o', new CheckoutCallback());
+      flush();
     }
 
   }

@@ -31,9 +31,13 @@ public class CheckoutServiceEndpoint extends RemoteServiceServlet implements Che
       throws CheckoutException {
 
     final Optional<String> issuerLdapName = new UserLdapNameProvider(this.getThreadLocalRequest()).get();
-
-    if (issuerLdapName.isPresent() && this.userDao.exists(receipientLdapName)) {
-      return this.billOrderDao.saveBillOrder(items, discount, receipientLdapName, issuerLdapName.get(), orderState);
+    
+    if (issuerLdapName.isPresent() && this.userDao.exists(issuerLdapName.get())) {
+    	if(this.userDao.exists(receipientLdapName)) {
+    		return this.billOrderDao.saveBillOrder(items, discount, receipientLdapName, issuerLdapName.get(), orderState);
+    	} else {
+    		return this.billOrderDao.saveBillOrder(items, discount, "default", issuerLdapName.get(), orderState);
+    	}
     } else {
       LOGGER.info("A non registered user tried to checkout");
       throw new CheckoutException("No issuer for checkout given. Are you logged in?");

@@ -30,8 +30,7 @@ public class UserDao extends GenericDao {
   }
 
   public boolean exists(String ldapName) {
-	final int res = template.queryForInt("SELECT COUNT(0) FROM person WHERE ldap_name = ? LIMIT 1", new Object[]{ ldapName });
-	return res > 0;
+	return getPersonById(ldapName).isPresent();
   }
   public Optional<Person> getPersonById(final String ldapName) {
 	return queryForObject("SELECT p1.* FROM person p1 WHERE p1.ldap_name = ? AND p1.revision ="

@@ -33,7 +33,7 @@ public class BillOrder implements Serializable {
   private boolean paidCash;
 
   /** State of the order, if it is fetched, this object is considered a bill */
-  private OrderState state;
+  private char orderState;
 
   /**
    * If an order is cancelled, any service granted has been revoked, thus this Order is invalid for company reports
@@ -50,12 +50,12 @@ public class BillOrder implements Serializable {
    * @param issuer
    * @param creationDate
    * @param paidCash
-   * @param state
+   * @param orderState
    * @param cancelled
    * @param articles
    */
   public BillOrder(int id, int receipientRevision, String recipientLdapName, int issuerRevision, String issuerLdapName,
-      Date datetimeOfCreation, boolean paidCash, OrderState state, boolean cancelled, int discount) {
+      Date datetimeOfCreation, boolean paidCash, char orderState, boolean cancelled, int discount) {
     this.id = id;
     this.receipientRevision = receipientRevision;
     this.recipientLdapName = recipientLdapName;
@@ -63,7 +63,7 @@ public class BillOrder implements Serializable {
     this.issuerLdapName = issuerLdapName;
     this.datetimeOfCreation = datetimeOfCreation;
     this.paidCash = paidCash;
-    this.state = state;
+    this.orderState = orderState;
     this.discount = discount;
     this.cancelled = cancelled;
   }
@@ -99,8 +99,8 @@ public class BillOrder implements Serializable {
     return this.paidCash;
   }
 
-  public OrderState getState() {
-    return this.state;
+  public char getOrderState() {
+    return this.orderState;
   }
 
   public int getDiscount() {

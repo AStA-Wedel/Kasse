@@ -221,7 +221,7 @@ public class PrintCustomsActivity extends AbstractActivity {
 		for (BasketItem art : articles) {
 			EuroAmount euroAmount = new EuroAmount((int) Math.round((art
 					.getItemPrice().getCentAmount() * art.getAmount())
-					* (100.0 - art.getDiscount())));
+					* ((100.0 - art.getDiscount())/100)));
 			sum += euroAmount.getCentAmount();
 			strb.append("<tr class='unbreakable'><td>" + art.getAmount()
 					+ "</td><td class='desc'>" + art.getItemName()
@@ -239,7 +239,7 @@ public class PrintCustomsActivity extends AbstractActivity {
 				+ billOrder.getDiscount() + "</td></tr>");
 		strb.append("<tr><td></td><td class='desc'></td><td></td><td></td><td><strong>Endsumme:</strong></td><td>"
 				+ EuroFormatter.format(new EuroAmount((int) Math.round(sum
-						* (100.0 - billOrder.getDiscount())))) + "</td></tr>");
+						* ((100.0 - billOrder.getDiscount())/100)))) + "</td></tr>");
 		strb.append("</table>");
 		printWidget.addHtml(strb.toString());
 		printWidget.addHtml("<br /><br /><br />");

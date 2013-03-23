@@ -5,20 +5,22 @@ import com.google.gwt.user.client.Cookies;
 
 public class SessionManagerComponent {
 
+	private static final String COOKIE_NAME = "ldap_name";
+	
 	public boolean isLoggedIn() {
-		return !Strings.isNullOrEmpty(Cookies.getCookie("email"));
+		return !Strings.isNullOrEmpty(Cookies.getCookie(COOKIE_NAME));
 	}
 	
 	public String getUserEmail() {
 		if (!isLoggedIn()) {
-			return Cookies.getCookie("email");
+			return Cookies.getCookie(COOKIE_NAME);
 		} else {
 			throw new RuntimeException("Junge check VORHER das der Nutzer eingeloggt ist!!");
 		}
 	}
 	
 	public void setLoggedIn(String email) {
-		Cookies.setCookie("email", email);
+		Cookies.setCookie(COOKIE_NAME, email);
 	}
 	
 }

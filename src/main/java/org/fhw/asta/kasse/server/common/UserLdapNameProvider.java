@@ -19,13 +19,13 @@ import com.google.common.collect.Iterables;
  * @author alexbiehl
  * 
  */
-public class UserEmailProvider implements Supplier<Optional<String>> {
+public class UserLdapNameProvider implements Supplier<Optional<String>> {
 
-	private static final String EMAIL_COOKIE = "email";
+	private static final String COOKIE_NAME = "ldap_name";
 
 	private final HttpServletRequest req;
 
-	public UserEmailProvider(HttpServletRequest req) {
+	public UserLdapNameProvider(HttpServletRequest req) {
 		this.req = req;
 	}
 
@@ -50,7 +50,7 @@ public class UserEmailProvider implements Supplier<Optional<String>> {
 
 		@Override
 		public boolean apply(@Nullable Cookie cookie) {
-			return cookie.getName().equals(EMAIL_COOKIE)
+			return cookie.getName().equals(COOKIE_NAME)
 					&& !Strings.isNullOrEmpty(cookie.getValue());
 		}
 

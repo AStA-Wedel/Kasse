@@ -22,6 +22,9 @@ public class MainWidgetImpl extends Composite implements MainWidget {
 	}
 
 	@UiField
+	HTMLPanel sidebarPanel;
+	
+	@UiField
 	SimplePanel mainContainer;
 	
 	@UiField
@@ -45,7 +48,10 @@ public class MainWidgetImpl extends Composite implements MainWidget {
 		sidebarContainer.clear();
 		
 		if (widget != null) {
+			sidebarPanel.setVisible(true);
 			sidebarContainer.add(widget);			
+		} else {
+			sidebarPanel.setVisible(false);
 		}
 	}
 
@@ -55,7 +61,10 @@ public class MainWidgetImpl extends Composite implements MainWidget {
 		basketContainer.clear();
 		
 		if (widget != null) {
+			basketContainer.setVisible(true);
 			basketContainer.add(widget);			
+		} else {
+			basketContainer.setVisible(false);
 		}
 	}
 

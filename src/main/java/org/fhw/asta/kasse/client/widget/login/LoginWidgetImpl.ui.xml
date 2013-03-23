@@ -15,7 +15,7 @@
 			<legend>Login</legend>
 		
   			<div class="control-group">
-    			<label class="control-label" for="inputEmail">Email</label>
+    			<label class="control-label" for="inputEmail">RZ-Login</label>
     			<div class="controls">
 	    			<g:TextBox ui:field="emailTextBox" styleName="" focus="true"/>
     			</div>
@@ -24,7 +24,7 @@
   			<div class="control-group">
     			<label class="control-label" for="inputPassword">Password</label>
     			<div class="controls">
-					<g:TextBox ui:field="passwordTextBox" styleName="" />
+					<g:PasswordTextBox ui:field="passwordTextBox" styleName="" />
    	 			</div>
   			</div>
   			

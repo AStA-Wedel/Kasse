@@ -30,7 +30,7 @@ public class UserDao extends GenericDao {
   }
 
   public boolean exists(String ldapName) {
-	final int res = template.queryForInt("SELECT COUNT(ldap_name) FROM person WHERE ldap_name = ?", new Object[]{ldapName});
+	final int res = template.queryForInt("SELECT COUNT(0) FROM person WHERE ldap_name = ?", new Object[]{ ldapName });
 	return res > 0;
   }
   public Optional<Person> getPersonById(final String ldapName) {

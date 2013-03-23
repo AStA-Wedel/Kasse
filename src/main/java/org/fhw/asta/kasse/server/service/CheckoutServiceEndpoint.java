@@ -23,10 +23,10 @@ public class CheckoutServiceEndpoint extends RemoteServiceServlet implements
 	public Integer doCheckout(List<BasketItem> items, int discount,
 			String matrNr) throws CheckoutException {
 
-		final Optional<String> email = new UserLdapNameProvider(
+		final Optional<String> issuerLdapName = new UserLdapNameProvider(
 				this.getThreadLocalRequest()).get();
 
-		if (email.isPresent()) {
+		if (issuerLdapName.isPresent()) {
 
 		} else {
 			LOGGER.info("A non registered user tried to checkout");

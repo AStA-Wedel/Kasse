@@ -1,6 +1,5 @@
 package org.fhw.asta.kasse.server.service;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.fhw.asta.kasse.server.dao.ArticleDao;
@@ -34,8 +33,8 @@ public class BillOrderServiceEndpoint extends RemoteServiceServlet implements Bi
 
   @Override
   public List<BasketItem> getBillOrderArticles(int id) {
-    // TODO Auto-generated method stub
-    return new LinkedList<BasketItem>();
+    final BillOrder bo = this.getBillOrder(id);
+
   }
 
 }

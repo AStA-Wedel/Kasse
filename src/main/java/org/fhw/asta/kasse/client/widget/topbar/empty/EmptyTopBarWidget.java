@@ -1,9 +1,8 @@
 package org.fhw.asta.kasse.client.widget.topbar.empty;
 
-import com.google.gwt.user.client.ui.IsWidget;
+import org.fhw.asta.kasse.client.widget.topbar.TopbarWidget;
 
-public interface EmptyTopBarWidget extends IsWidget {
-	
-	
+
+public interface EmptyTopBarWidget extends TopbarWidget {
 
 }

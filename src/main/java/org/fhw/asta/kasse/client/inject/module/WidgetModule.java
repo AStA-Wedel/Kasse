@@ -1,5 +1,7 @@
 package org.fhw.asta.kasse.client.inject.module;
 
+import org.fhw.asta.kasse.client.inject.module.provider.HasTopbarProvider;
+import org.fhw.asta.kasse.client.widget.HasTopbar;
 import org.fhw.asta.kasse.client.widget.articlelist.ArticleListWidget;
 import org.fhw.asta.kasse.client.widget.articlelist.ArticleListWidgetImpl;
 import org.fhw.asta.kasse.client.widget.basket.BasketWidget;
@@ -8,9 +10,11 @@ import org.fhw.asta.kasse.client.widget.login.LoginWidget;
 import org.fhw.asta.kasse.client.widget.login.LoginWidgetImpl;
 import org.fhw.asta.kasse.client.widget.main.MainWidget;
 import org.fhw.asta.kasse.client.widget.main.MainWidgetImpl;
+import org.fhw.asta.kasse.client.widget.root.KasseRootPanel;
+import org.fhw.asta.kasse.client.widget.root.KasseRootPanelImpl;
 import org.fhw.asta.kasse.client.widget.sidebar.SidebarWidget;
 import org.fhw.asta.kasse.client.widget.sidebar.SidebarWidgetImpl;
-import org.fhw.asta.kasse.client.widget.topbar.TopBarWidget;
+import org.fhw.asta.kasse.client.widget.topbar.TopBarWidgetContainer;
 import org.fhw.asta.kasse.client.widget.topbar.TopBarWidgetImpl;
 import org.fhw.asta.kasse.client.widget.topbar.empty.EmptyTopBarWidget;
 import org.fhw.asta.kasse.client.widget.topbar.empty.EmptyTopBarWidgetImpl;
@@ -30,9 +34,12 @@ public class WidgetModule extends AbstractGinModule {
 
 	@Override
 	protected void configure() {
-		bind(TopBarWidget.class).to(TopBarWidgetImpl.class).in(Singleton.class);
+		
+				
+		bind(TopBarWidgetContainer.class).to(TopBarWidgetImpl.class).in(Singleton.class);
 		bind(EmptyTopBarWidget.class).to(EmptyTopBarWidgetImpl.class).in(Singleton.class);
 		bind(ReadyTopBarWidget.class).to(ReadyTopBarWidgetImpl.class).in(Singleton.class);
+
 		bind(LoginWidget.class).to(LoginWidgetImpl.class);
 		
 		bind(MainWidget.class).to(MainWidgetImpl.class).in(Singleton.class);		
@@ -41,9 +48,10 @@ public class WidgetModule extends AbstractGinModule {
 		bind(ArticleListWidget.class).to(ArticleListWidgetImpl.class).in(Singleton.class);
 		bind(NavBarWidget.class).to(NavBarWidgetImpl.class).in(Singleton.class);
 		bind(QuickBoxWidget.class).to(QuickBoxWidgetImpl.class).in(Singleton.class);
-		bind(SearchBoxWidget.class).to(SearchBoxWidgetImpl.class).in(Singleton.class);
-		
-		
+		bind(SearchBoxWidget.class).to(SearchBoxWidgetImpl.class).in(Singleton.class);		
+
+		bind(KasseRootPanel.class).to(KasseRootPanelImpl.class).in(Singleton.class);
+		bind(HasTopbar.class).toProvider(HasTopbarProvider.class).in(Singleton.class);
 	}
 	
 }

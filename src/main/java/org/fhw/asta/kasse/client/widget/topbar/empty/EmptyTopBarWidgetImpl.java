@@ -17,6 +17,5 @@ public class EmptyTopBarWidgetImpl extends Composite implements EmptyTopBarWidge
 	public EmptyTopBarWidgetImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
-
-
+		
 }

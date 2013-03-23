@@ -1,28 +1,32 @@
 package org.fhw.asta.kasse.client.activity;
 
-import org.fhw.asta.kasse.client.event.LoginEvent;
+import org.fhw.asta.kasse.client.common.login.LoginToken;
+import org.fhw.asta.kasse.client.components.SessionManagerComponent;
+import org.fhw.asta.kasse.client.place.ArticleListPlace;
 import org.fhw.asta.kasse.client.place.LoginPlace;
+import org.fhw.asta.kasse.client.widget.HasTopbar;
 import org.fhw.asta.kasse.client.widget.login.LoginWidget;
+import org.fhw.asta.kasse.client.widget.topbar.TopBarWidgetContainer;
+import org.fhw.asta.kasse.client.widget.topbar.empty.EmptyTopBarWidget;
 import org.fhw.asta.kasse.shared.authentication.AuthenticationResult;
 import org.fhw.asta.kasse.shared.service.user.UserServiceAsync;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import com.google.web.bindery.event.shared.EventBus;
 
 
 public class LoginActivity extends AbstractActivity {
 
 	private final LoginPlace loginPlace; 
-		
-	private HandlerRegistration submitHandlerRegistration;
 
 	@Inject 
 	private LoginWidget loginWidget; 
@@ -31,7 +35,18 @@ public class LoginActivity extends AbstractActivity {
 	private UserServiceAsync userService;
 
 	@Inject
-	private EventBus eventBus;
+	private PlaceController placeController;
+	
+	@Inject
+	private EmptyTopBarWidget topbarWidget;
+	
+	@Inject
+	private HasTopbar topbarContainer;
+	
+	@Inject 
+	private SessionManagerComponent sessionManager;
+	
+	private HandlerRegistration submitHandlerRegistration;
 	
 	@Inject
 	public LoginActivity(@Assisted LoginPlace loginPlace) {
@@ -40,13 +55,16 @@ public class LoginActivity extends AbstractActivity {
 	
 	public void start(AcceptsOneWidget panel, com.google.gwt.event.shared.EventBus eventBus) {		
 		
-		this.eventBus = eventBus;
-		
 		submitHandlerRegistration = loginWidget.getSubmitButton().addClickHandler(new LoginClickHandler());	
 		
-		loginWidget.getEmailText().setText(loginPlace.getEmail());
+		LoginToken loginToken = loginPlace.getLoginToken();
 		
-		panel.setWidget(loginWidget);		
+		Optional<String> maybeEmail = loginToken.getEmail();
+		
+		loginWidget.getEmailText().setText(maybeEmail.isPresent() ? maybeEmail.get() : "");
+				
+		panel.setWidget(loginWidget);
+		topbarContainer.setTopbar(topbarWidget);
 	}
 	
 	private void doLogin(String email, String password) {
@@ -62,7 +80,15 @@ public class LoginActivity extends AbstractActivity {
 		switch (authenticationResult.getAuthenticationStatus()) {
 			
 		case AUTHENTICATED:		
-			eventBus.fireEvent(new LoginEvent(/* TODO */ "User"));
+			
+			sessionManager.setLoggedIn(loginWidget.getEmailText().getText());
+			
+			if (loginPlace.getLoginToken().getRedirect().isPresent()) {
+				placeController.goTo(loginPlace.getLoginToken().getRedirect().get());
+			} else {
+				placeController.goTo(new ArticleListPlace());				
+			}
+			
 			break;
 			
 		case NOT_AUTHENTICATED:

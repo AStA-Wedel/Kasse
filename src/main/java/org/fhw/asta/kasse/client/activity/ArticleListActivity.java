@@ -5,9 +5,12 @@ import java.util.Set;
 
 import org.fhw.asta.kasse.client.controller.BasketController;
 import org.fhw.asta.kasse.client.place.ArticleListPlace;
+import org.fhw.asta.kasse.client.widget.HasTopbar;
 import org.fhw.asta.kasse.client.widget.articlelist.ArticleListWidget;
 import org.fhw.asta.kasse.client.widget.basket.BasketWidget;
+import org.fhw.asta.kasse.client.widget.main.MainWidget;
 import org.fhw.asta.kasse.client.widget.sidebar.SidebarWidget;
+import org.fhw.asta.kasse.client.widget.topbar.ready.ReadyTopBarWidget;
 import org.fhw.asta.kasse.shared.model.Article;
 import org.fhw.asta.kasse.shared.model.Category;
 import org.fhw.asta.kasse.shared.service.article.ArticleServiceAsync;
@@ -39,14 +42,23 @@ public class ArticleListActivity extends AbstractActivity {
 	@Inject
 	private BasketController basketController;
 	
+	@Inject 
+	private ArticleServiceAsync articleService;
+
+	@Inject
+	private ReadyTopBarWidget readyTopbarWidget;
+	
 	@Inject
 	private BasketWidget basketWidget;
 	
-	@Inject 
-	private ArticleServiceAsync articleService;
-	
 	@Inject
 	private SidebarWidget sidebarWidget;
+	
+	@Inject
+	private MainWidget mainWidget;
+	
+	@Inject
+	private HasTopbar topbarContainer;
 	
 	private ListDataProvider<Article> articleDataProvider;
 	
@@ -63,7 +75,15 @@ public class ArticleListActivity extends AbstractActivity {
 	
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		panel.setWidget(articleListWidget);
+
+		topbarContainer.setTopbar(readyTopbarWidget);
+		
+		mainWidget.setSidebarWidget(sidebarWidget);
+		mainWidget.setBasketWidget(basketWidget);
+		mainWidget.setWidget(articleListWidget);
+		
+		panel.setWidget(mainWidget);
+		
 		articleListWidget.getToBasketColumn().setFieldUpdater(new ToBasketUpdater());
 		
 		OverlayOpenFieldUpdater openOverlayFieldUpdater = new OverlayOpenFieldUpdater();

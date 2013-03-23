@@ -6,8 +6,9 @@ import org.fhw.asta.kasse.client.inject.module.ControllerModule;
 import org.fhw.asta.kasse.client.inject.module.WidgetModule;
 import org.fhw.asta.kasse.client.widget.basket.BasketWidget;
 import org.fhw.asta.kasse.client.widget.main.MainWidget;
+import org.fhw.asta.kasse.client.widget.root.KasseRootPanel;
 import org.fhw.asta.kasse.client.widget.sidebar.SidebarWidget;
-import org.fhw.asta.kasse.client.widget.topbar.TopBarWidget;
+import org.fhw.asta.kasse.client.widget.topbar.TopBarWidgetContainer;
 
 import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.inject.client.GinModules;
@@ -33,6 +34,8 @@ public interface AppInjector extends Ginjector {
 		
 		SidebarWidget getSidebarWidget();
 		
-		TopBarWidget getTopbarWidget();
+		TopBarWidgetContainer getTopbarWidget();
+		
+		KasseRootPanel getKasseRootPanel();
 		
 }

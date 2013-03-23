@@ -16,7 +16,7 @@ public class BackofficeActivity extends AbstractActivity {
 	public BackofficeActivity(@Assisted BackofficePlace backofficePlace) {
 		this.backofficePlace = backofficePlace;
 	}
-	
+
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		// TODO Auto-generated method stub

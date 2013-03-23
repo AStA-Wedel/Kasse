@@ -2,7 +2,7 @@ package org.fhw.asta.kasse.client.controller;
 
 import org.fhw.asta.kasse.client.event.LoginEvent;
 import org.fhw.asta.kasse.client.event.LoginEventHandler;
-import org.fhw.asta.kasse.client.widget.topbar.TopBarWidget;
+import org.fhw.asta.kasse.client.widget.topbar.TopBarWidgetContainer;
 import org.fhw.asta.kasse.client.widget.topbar.ready.ReadyTopBarWidget;
 import org.fhw.asta.kasse.shared.model.Article;
 import org.fhw.asta.kasse.shared.service.article.ArticleServiceAsync;
@@ -20,7 +20,7 @@ public class TopbarController {
 	private ReadyTopBarWidget readyTopbarWidget;
 	
 	@Inject
-	private TopBarWidget topbarWidget;
+	private TopBarWidgetContainer topbarWidget;
 	
 	@Inject
 	private BasketController basketController;
@@ -34,7 +34,7 @@ public class TopbarController {
 	}
 	
 	private void onLogin() {
-		topbarWidget.setWidget(readyTopbarWidget);
+		//topbarWidget.setWidget(readyTopbarWidget);
 		
 		readyTopbarWidget.getQuickBoxHandlers().addChangeHandler(new QuickBoxHandler());
 	}

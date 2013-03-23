@@ -1,36 +1,34 @@
 package org.fhw.asta.kasse.client.place;
 
+import org.fhw.asta.kasse.client.common.login.LoginToken;
+
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
 public class LoginPlace extends Place {
 
-	private final String email; 
+	private final LoginToken loginToken;
 	
-	public LoginPlace() {
-		this("");
+	public LoginPlace(LoginToken loginToken) {
+		this.loginToken = loginToken;
 	}
 	
-	public LoginPlace(String email) {
-		this.email = email;
+	public LoginToken getLoginToken() {
+		return loginToken;
 	}
-
-	public String getEmail() {
-		return email;
-	}
-		
+	
 	public static final class Tokenizer implements PlaceTokenizer<LoginPlace> {
 
 		@Override
 		public LoginPlace getPlace(String token) {
-			return new LoginPlace(token);
+			return new LoginPlace(LoginToken.fromString(token));
 		}
 
 		@Override
 		public String getToken(LoginPlace place) {
-			return place.getEmail();
+			return place.getLoginToken().toHistoryToken();
 		}
-
+		
 	}
 
 }

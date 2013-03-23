@@ -11,7 +11,7 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
-public class TopBarWidgetImpl extends Composite implements  TopBarWidget {
+public class TopBarWidgetImpl extends Composite implements  TopBarWidgetContainer {
 
 	private static TopBarWidgetImplUiBinder uiBinder = GWT
 			.create(TopBarWidgetImplUiBinder.class);
@@ -33,10 +33,13 @@ public class TopBarWidgetImpl extends Composite implements  TopBarWidget {
 	@UiField
 	SimplePanel simplePanel;
 	
-	@Override
 	public void setWidget(IsWidget widget) {
 		simplePanel.setWidget(widget);
 	}
 
+	@Override
+	public void setTopbar(TopbarWidget topbarWidget) {
+		simplePanel.setWidget(topbarWidget);
+	}
 
 }

@@ -13,7 +13,7 @@ public class PrintCustomsToken {
 		TAX,
 		USERLIST				
 	}
-	
+		
 
 	private final PrintType printType;
 	private final int id;

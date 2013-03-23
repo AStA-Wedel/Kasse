@@ -70,7 +70,6 @@ public class ArticleListWidgetImpl extends Composite implements ArticleListWidge
 		cellTable.addColumn(priceTextColumn,"Preis");
 		cellTable.addColumn(toBasketColumn);
 		
-		
 		cellTable.setColumnWidth(idColumn,"15%");
 		cellTable.setColumnWidth(nameColumn,"60%");
 		cellTable.setColumnWidth(priceTextColumn,"20%");

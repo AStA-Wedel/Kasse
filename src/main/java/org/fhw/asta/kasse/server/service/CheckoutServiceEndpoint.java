@@ -7,6 +7,7 @@ import org.fhw.asta.kasse.server.common.UserLdapNameProvider;
 import org.fhw.asta.kasse.server.dao.UserDao;
 import org.fhw.asta.kasse.shared.basket.BasketItem;
 import org.fhw.asta.kasse.shared.exception.CheckoutException;
+import org.fhw.asta.kasse.shared.model.OrderState;
 import org.fhw.asta.kasse.shared.service.checkout.CheckoutService;
 
 import com.google.common.base.Optional;
@@ -23,9 +24,10 @@ public class CheckoutServiceEndpoint extends RemoteServiceServlet implements Che
   private UserDao userDao;
 
   @Override
-  public Integer doCheckout(List<BasketItem> items, int discount, String ldapName) throws CheckoutException {
+  public Integer doCheckout(List<BasketItem> items, int discount, String receipientLdapName, OrderState state)
+      throws CheckoutException {
     final Optional<String> issuerLdapName = new UserLdapNameProvider(this.getThreadLocalRequest()).get();
-    if (issuerLdapName.isPresent() && this.userDao.exists(ldapName)) {
+    if (issuerLdapName.isPresent() && this.userDao.exists(receipientLdapName)) {
 
     } else {
       LOGGER.info("A non registered user tried to checkout");

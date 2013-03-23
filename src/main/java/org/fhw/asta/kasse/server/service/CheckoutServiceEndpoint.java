@@ -13,24 +13,20 @@ import com.google.inject.Singleton;
 
 @Singleton
 public class CheckoutServiceEndpoint extends RemoteServiceServlet implements CheckoutService {
+  private static final long serialVersionUID = 1L;
 
-	private static final long serialVersionUID = 1L;
+  @Override
+  public Integer doCheckout(List<BasketItem> items, int discount, String matrNr) throws CheckoutException {
 
-	@Override
-	public Integer doCheckout(List<BasketItem> items, int discount,
-			String matrNr) throws CheckoutException {
-		
-		Optional<String> email = new UserEmailProvider(getThreadLocalRequest()).get();
-		
-		if (email.isPresent()) {
+    final Optional<String> email = new UserEmailProvider(this.getThreadLocalRequest()).get();
 
-			
-			
-		} else {
-			throw new CheckoutException("No issuer for checkout given. Are you logged in?");
-		}
-		
-		return 0;
-	}
+    if (email.isPresent()) {
+
+    } else {
+      throw new CheckoutException("No issuer for checkout given. Are you logged in?");
+    }
+
+    return 0;
+  }
 
 }

@@ -2,8 +2,6 @@ package org.fhw.asta.kasse.server.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.fhw.asta.kasse.server.common.UserEmailProvider;
 import org.fhw.asta.kasse.shared.basket.BasketItem;
 import org.fhw.asta.kasse.shared.exception.CheckoutException;

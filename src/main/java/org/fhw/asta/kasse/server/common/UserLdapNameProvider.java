@@ -19,13 +19,13 @@ import com.google.common.collect.Iterables;
  * @author alexbiehl
  * 
  */
-public class UserEmailProvider implements Supplier<Optional<String>> {
+public class UserLdapNameProvider implements Supplier<Optional<String>> {
 
-	private static final String EMAIL_COOKIE = "email";
+	private static final String EMAIL_COOKIE = "ldap_name";
 
 	private final HttpServletRequest req;
 
-	public UserEmailProvider(HttpServletRequest req) {
+	public UserLdapNameProvider(HttpServletRequest req) {
 		this.req = req;
 	}
 

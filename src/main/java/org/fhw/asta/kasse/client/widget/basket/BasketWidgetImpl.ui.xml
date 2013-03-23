@@ -15,7 +15,7 @@
 			<td><g:Label ui:field="sum" text="€0.00"/></td>
 			</tr>
 			<tr>
-			<td><strong>MatrNr: </strong></td>
+			<td><strong>RZ-Login: </strong></td>
 			<td><g:TextBox ui:field="matrNr" text="0000"/></td>
 			</tr>
 			<tr>

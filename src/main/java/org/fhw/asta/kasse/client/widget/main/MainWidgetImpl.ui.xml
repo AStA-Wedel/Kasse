@@ -11,12 +11,11 @@
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div class="span2">
-					<div class="well sidebar-nav">
+					<g:HTMLPanel ui:field="sidebarPanel"  styleName="well sidebar-nav">
 						<ul class="nav nav-list">
 							<g:HTMLPanel ui:field="sidebarContainer" />
 						</ul>
-
-					</div>
+					</g:HTMLPanel>
 				</div>
 				<div class="span7">
 					<div class="">
@@ -25,13 +24,7 @@
 				</div>
 
 				<div class="span3">
-					<div class="well sidebar-nav">
-						<g:HTMLPanel ui:field="basketContainer" />
-					</div>
-
-					<div class="well sidebar-nav">
-						bla
-					</div>
+					<g:HTMLPanel styleName="well sidebar-nav" ui:field="basketContainer" />
 				</div>
 			</div>
 

@@ -6,12 +6,19 @@ import javax.annotation.Nullable;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.base.Strings;
 import com.google.common.base.Supplier;
 import com.google.common.collect.Iterables;
 
+/**
+ * Returns the email of the current logged in user if present.
+ * 
+ * @author alexbiehl
+ *
+ */
 public class UserEmailProvider implements Supplier<Optional<String>> {
 
 	private static final String EMAIL_COOKIE = "email";
@@ -29,13 +36,19 @@ public class UserEmailProvider implements Supplier<Optional<String>> {
 				.tryFind(Arrays.asList(req.getCookies()),
 						new ValidUserCookiePredicate());
 
-		if (!cookie.isPresent()) {
-			return Optional.absent();
-		} else {
-			return Optional.of(cookie.get().getValue());
-		}
+		return cookie.transform(new CookieTransformFunction());
 	}
 
+	private static class CookieTransformFunction implements Function<Cookie, String> {
+
+		@Override
+		@Nullable
+		public String apply(@Nullable Cookie input) {
+			return input.getValue();
+		}
+	
+	}
+	
 	private static class ValidUserCookiePredicate implements Predicate<Cookie> {
 
 		@Override

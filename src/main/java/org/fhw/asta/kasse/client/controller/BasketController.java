@@ -5,6 +5,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 import org.fhw.asta.kasse.client.common.EuroFormatter;
+import org.fhw.asta.kasse.client.common.PrintCustomsToken;
+import org.fhw.asta.kasse.client.common.PrintCustomsToken.PrintType;
 import org.fhw.asta.kasse.client.widget.basket.BasketWidget;
 import org.fhw.asta.kasse.shared.basket.BasketItem;
 import org.fhw.asta.kasse.shared.model.Article;
@@ -17,7 +19,9 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.http.client.URL;
 import com.google.gwt.place.shared.PlaceController;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
@@ -248,9 +252,9 @@ public class BasketController {
 
 		@Override
 		public void onSuccess(Integer result) {
-			
-				//TODO FIXME 
-			
+			basketDataProvider.getList().clear();
+			PrintCustomsToken token = new PrintCustomsToken(PrintType.BILLORDER, result);
+			Window.open(Window.Location.createUrlBuilder().setHash("PrintCustomsPlace:").buildString() + token.toString(), "_blank", "");			
 		}
 
 	}

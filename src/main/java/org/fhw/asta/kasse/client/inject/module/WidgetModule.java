@@ -47,7 +47,9 @@ public class WidgetModule extends AbstractGinModule {
 		
 		bind(MainWidget.class).to(MainWidgetImpl.class).in(Singleton.class);		
 		bind(BasketWidget.class).to(BasketWidgetImpl.class).in(Singleton.class);
-		bind(SidebarWidget.class).to(SidebarWidgetImpl.class).in(Singleton.class);
+		
+		bind(SidebarWidget.class).to(SidebarWidgetImpl.class);
+
 		bind(ArticleListWidget.class).to(ArticleListWidgetImpl.class).in(Singleton.class);
 		bind(NavBarWidget.class).to(NavBarWidgetImpl.class).in(Singleton.class);
 		bind(QuickBoxWidget.class).to(QuickBoxWidgetImpl.class).in(Singleton.class);

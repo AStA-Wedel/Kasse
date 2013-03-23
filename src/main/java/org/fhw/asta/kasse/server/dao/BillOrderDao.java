@@ -63,12 +63,6 @@ public class BillOrderDao extends GenericDao {
         + "DISCOUNT);";
     this.template.update(insertBillOrder, new Object[]{}, keyholder);
 
-    final String insertBillOrder = "INSERT INTO bill_order"
-        + "(receipient_revision, receipient_ldap_name, issuer_revision, issuer_ldap_name, paid_cash, state, discount) "
-        + "VALUES(" + "SELECT MAX(revision) FROM person WHERE ldap_name = RECEIPIENT_NAME," + "RECEIPIENT_NAME,"
-        + "SELECT MAX(revision) FROM person WHERE ldap_name = ISSUER_NAME," + "ISSUER_NAME," + "PAID_CASH," + "STATE,"
-        + "DISCOUNT);";
-
     for (final BasketItem bi : items) {
       new StringBuilder().append("INSERT INTO BILL_CONTAINS_ARTICLE VALUES(" + "SELECT MAX(bill_id) FROM bill_order,"
           + "ARTICLE_ID," + "SELECT MAX(article_revision) FROM article WHERE article_id = ARTICLE_ID," + "COUNT,"

@@ -109,12 +109,12 @@ public class PrintCustomsActivity extends AbstractActivity {
 
 	private void printBILLORDER(int id) {
 
-		billOrderService.getBillOrder(id, new AsyncCallback<BillOrder>() {
+		billOrderService.getBillOrder(id, new AsyncCallback<Optional<BillOrder>>() {
 
 			@Override
-			public void onSuccess(BillOrder result) {
-				billOrder = result;
-				billOrderService.getBillOrderArticles(result.getId(),
+			public void onSuccess(Optional<BillOrder> result) {
+				billOrder = result.get();
+				billOrderService.getBillOrderArticles(billOrder.getId(),
 						new AsyncCallback<List<BasketItem>>() {
 
 							@Override

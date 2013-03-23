@@ -8,6 +8,7 @@ import org.fhw.asta.kasse.shared.basket.BasketItem;
 import org.fhw.asta.kasse.shared.model.BillOrder;
 import org.fhw.asta.kasse.shared.service.billorder.BillOrderService;
 
+import com.google.common.base.Optional;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -27,7 +28,7 @@ public class BillOrderServiceEndpoint extends RemoteServiceServlet implements Bi
   private BillOrderDao billOrderDao;
 
   @Override
-  public BillOrder getBillOrder(int id) {
+  public Optional<BillOrder> getBillOrder(int id) {
     return this.billOrderDao.getBillOrder(id);
   }
 

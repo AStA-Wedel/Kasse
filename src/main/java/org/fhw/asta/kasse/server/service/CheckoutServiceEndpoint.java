@@ -13,30 +13,19 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.inject.Singleton;
 
 @Singleton
-public class CheckoutServiceEndpoint extends RemoteServiceServlet implements
-		CheckoutService {
-	private static final long serialVersionUID = 1L;
+public class CheckoutServiceEndpoint extends RemoteServiceServlet implements CheckoutService {
+  private static final long serialVersionUID = 1L;
+  private static final Logger LOGGER = Logger.getLogger(CheckoutServiceEndpoint.class);
 
-	private static final Logger LOGGER = Logger
-			.getLogger(CheckoutServiceEndpoint.class);
-
-	@Override
-	public Integer doCheckout(List<BasketItem> items, int discount,
-			String matrNr) throws CheckoutException {
-
-		final Optional<String> email = new UserEmailProvider(
-				this.getThreadLocalRequest()).get();
-
-		if (email.isPresent()) {
-
-		} else {
-			LOGGER.info("A non registered user tried to checkout");
-
-			throw new CheckoutException(
-					"No issuer for checkout given. Are you logged in?");
-		}
-
-		return 0;
-	}
+  @Override
+  public Integer doCheckout(List<BasketItem> items, int discount, String matrNr) throws CheckoutException {
+    final Optional<String> email = new UserEmailProvider(this.getThreadLocalRequest()).get();
+    if (email.isPresent()) {
+    } else {
+      LOGGER.info("A non registered user tried to checkout");
+      throw new CheckoutException("No issuer for checkout given. Are you logged in?");
+    }
+    return 0;
+  }
 
 }

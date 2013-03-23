@@ -3,7 +3,6 @@ package org.fhw.asta.kasse.client.activity;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
 import org.fhw.asta.kasse.client.controller.BasketController;
 import org.fhw.asta.kasse.client.place.ArticleListPlace;
 import org.fhw.asta.kasse.client.widget.HasTopbar;

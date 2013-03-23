@@ -18,7 +18,7 @@ public class UserDao extends GenericDao {
     public Person mapRow(ResultSet arg0, int arg1) throws SQLException {
       return new Person(arg0.getString(1), arg0.getInt(2), arg0.getString(3), arg0.getString(4), arg0.getString(5),
           arg0.getBoolean(6), arg0.getInt(7), arg0.getString(8), arg0.getString(9), arg0.getString(10),
-          arg0.getString(11), arg0.getString(12), arg0.getString(13));
+          arg0.getString(11), arg0.getString(12), arg0.getString(13), arg0.getString(14));
     }
   }
 

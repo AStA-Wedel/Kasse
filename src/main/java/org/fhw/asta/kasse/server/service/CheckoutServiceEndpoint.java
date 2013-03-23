@@ -16,7 +16,6 @@ import com.google.inject.Singleton;
 public class CheckoutServiceEndpoint extends RemoteServiceServlet implements
 		CheckoutService {
 	private static final long serialVersionUID = 1L;
-
 	private static final Logger LOGGER = Logger
 			.getLogger(CheckoutServiceEndpoint.class);
 
@@ -38,5 +37,4 @@ public class CheckoutServiceEndpoint extends RemoteServiceServlet implements
 
 		return 0;
 	}
-
 }

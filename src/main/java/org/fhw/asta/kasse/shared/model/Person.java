@@ -18,9 +18,11 @@ public class Person implements Serializable {
   private String zipcode;
   private String town;
   private String streetnumber;
+  private String email;
 
   public Person(String ldapName, int revision, String surname, String prename, String matrNo, boolean isAdmin,
-      int groupId, String phoneMobile, String phoneHome, String street, String zipcode, String town, String streetnumber) {
+      int groupId, String phoneMobile, String phoneHome, String street, String zipcode, String town,
+      String streetnumber, String email) {
     this.ldapName = ldapName;
     this.revision = revision;
     this.surname = surname;
@@ -34,6 +36,7 @@ public class Person implements Serializable {
     this.zipcode = zipcode;
     this.town = town;
     this.streetnumber = streetnumber;
+    this.email = email;
   }
 
   public Person() {
@@ -89,6 +92,10 @@ public class Person implements Serializable {
 
   public String getStreetnumber() {
     return this.streetnumber;
+  }
+
+  public String getEmail() {
+    return this.email;
   }
 
 }

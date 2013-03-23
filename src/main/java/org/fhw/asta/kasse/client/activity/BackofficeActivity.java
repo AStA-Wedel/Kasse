@@ -21,6 +21,10 @@ public class BackofficeActivity extends AbstractActivity {
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		// TODO Auto-generated method stub
 		
+		backofficePlace.toString();
+		
 	}
+
+	
 
 }

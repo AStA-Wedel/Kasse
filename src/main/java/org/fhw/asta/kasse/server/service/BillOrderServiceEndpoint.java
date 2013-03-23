@@ -34,6 +34,7 @@ public class BillOrderServiceEndpoint extends RemoteServiceServlet implements Bi
   @Override
   public List<BasketItem> getBillOrderArticles(int id) {
     final BillOrder bo = this.getBillOrder(id);
+    return null;
 
   }
 

@@ -29,6 +29,11 @@ public class UserDao extends GenericDao {
             new PersonRowMapper());
   }
 
+  public boolean exists(String ldapName) {
+    final String res = this.template.queryForObject("SELECT ldap_name FROM person WHERE ldap_name = ?",
+        new Object[]{ldapName}, String.class);
+    return res != null;
+  }
   public Optional<Person> getPersonById(final String ldapName) {
     return Optional.fromNullable(this.template.queryForObject(
         "SELECT p1.* FROM person p1 WHERE p1.ldap_name = ? AND p1.revision ="

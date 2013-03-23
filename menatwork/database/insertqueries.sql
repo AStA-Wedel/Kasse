@@ -65,7 +65,7 @@ INSERT INTO article(article_revision, name, price, tax_category_name, tax_revisi
 	VALUES(0, 'Allgemeine BWL', 2285, 'NONE', 0, true);
 
 INSERT INTO script( script_id, script_revision, lecturer_id )
-	SELECT article_id, article_revision, (SELECT lecturer_id FROM lecturer WHERE prename = 'Gunnar') 
+	SELECT article_id, article_revision, (SELECT lecturer_id FROM lecturer WHERE prename = 'Gunnar')
 	FROM article
 	WHERE name = 'Allgemeine BWL';
 
@@ -73,14 +73,14 @@ INSERT INTO script( script_id, script_revision, lecturer_id )
 INSERT INTO article(article_revision, name, price, tax_category_name, tax_revision, enabled)
 	VALUES(0, 'Religion Starterpaket', 330, 'NONE', 0, true);
 INSERT INTO packet( packet_id, packet_revision )
-	SELECT article_id, article_revision 
+	SELECT article_id, article_revision
 	FROM article
 	WHERE name = 'Religion Starterpaket';
 
 INSERT INTO article(article_revision, name, price, tax_category_name, tax_revision, enabled)
 	VALUES(0, 'Erkenntnistheorie 1', 150, 'NONE', 0, true);
 INSERT INTO script( script_id, script_revision, lecturer_id )
-	SELECT article_id, article_revision, (SELECT lecturer_id FROM lecturer WHERE prename = 'Gunnar') 
+	SELECT article_id, article_revision, (SELECT lecturer_id FROM lecturer WHERE prename = 'Gunnar')
 	FROM article
 	WHERE name = 'Erkenntnistheorie 1';
 INSERT INTO packet_part( packet_id, packet_revision, article_id, article_revision )
@@ -95,7 +95,7 @@ INSERT INTO packet_part( packet_id, packet_revision, article_id, article_revisio
 INSERT INTO article(article_revision, name, price, tax_category_name, tax_revision, enabled)
 	VALUES(0, 'Ev. Religion', 180, 'NONE', 0, true);
 INSERT INTO script( script_id, script_revision, lecturer_id )
-	SELECT article_id, article_revision, (SELECT lecturer_id FROM lecturer WHERE prename = 'Gunnar') 
+	SELECT article_id, article_revision, (SELECT lecturer_id FROM lecturer WHERE prename = 'Gunnar')
 	FROM article
 	WHERE name = 'Ev. Religion';
 INSERT INTO packet_part( packet_id, packet_revision, article_id, article_revision )
@@ -114,18 +114,20 @@ INSERT INTO category (category_name) VALUES ('Obst');
 INSERT INTO category (category_name) VALUES ('Skripte');
 INSERT INTO category (category_name) VALUES ('Bürozeugs');
 
-INSERT INTO category_mapping(category_id, article_id, article_revision) 
+INSERT INTO category_mapping(category_id, article_id, article_revision)
 	SELECT (SELECT category_id FROM category WHERE category_name = 'Skripte'), article_id, article_revision FROM article
 	WHERE name = 'Ev. Religion';
 
-INSERT INTO category_mapping(category_id, article_id, article_revision) 
+INSERT INTO category_mapping(category_id, article_id, article_revision)
 	SELECT (SELECT category_id FROM category WHERE category_name = 'Bürozeugs'), article_id, article_revision FROM article
 	WHERE name = 'Allgemeine BWL';
 
 /* ----------------------------------------------- */
 
 insert into person_group
-values(0, 'Admin', false, false);
+values(0, 'default');
+values(1, 'Student');
 
 insert into person
-values('inf9446', 0, 'Wefers', 'Julian', 9446, true, (select group_id from person_group where name = 'Admin'));
+values('default', 0, 'default', 'default', NULL, false, 0,            NULL, NULL,          NULL,    NULL,        NULL, NULL,                      NULL);
+values('inf9446', 0, 'Wefers', 'Julian',   9446, true,  1, '+491726627997', NULL, 'Schulenhörn', '25421', 'Pinneberg', '4a', 'julian.wefers@gmail.com');

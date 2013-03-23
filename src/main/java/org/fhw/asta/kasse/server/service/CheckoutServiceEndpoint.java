@@ -11,21 +11,13 @@ import com.google.inject.Singleton;
 @Singleton
 public class CheckoutServiceEndpoint extends RemoteServiceServlet implements CheckoutService {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	@Override
-	public Integer doCheckout(List<BasketItem> items, int discount,
-			String matrNr) {
-		
-		// TODO Auto-generated method stub
-		return 0;
-	}
+  @Override
+  public Integer doCheckout(final List<BasketItem> items, final int discount, final String matrNr) {
 
-
-
-
+    // TODO Auto-generated method stub
+    return 0;
+  }
 
 }

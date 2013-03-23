@@ -10,7 +10,6 @@ import org.fhw.asta.kasse.client.common.PrintCustomsToken.PrintType;
 import org.fhw.asta.kasse.client.widget.basket.BasketWidget;
 import org.fhw.asta.kasse.shared.basket.BasketItem;
 import org.fhw.asta.kasse.shared.model.Article;
-import org.fhw.asta.kasse.shared.model.OrderState;
 import org.fhw.asta.kasse.shared.service.checkout.CheckoutServiceAsync;
 
 import com.google.common.collect.ComparisonChain;
@@ -72,7 +71,7 @@ public class BasketController {
 
     this.checkoutHandler = new CheckoutHandler();
     basketWidget.getCheckoutButton().addClickHandler(this.checkoutHandler);
-    
+
     this.checkoutHandlerUnPayed = new CheckoutHandlerUnPayed();
     basketWidget.getCheckoutButtonUnPayed().addClickHandler(this.checkoutHandlerUnPayed);
 
@@ -133,22 +132,22 @@ public class BasketController {
       BasketController.this.checkoutService.doCheckout(
           Lists.newArrayList(BasketController.this.basketDataProvider.getList()),
           Integer.valueOf(BasketController.this.basketWidget.getDiscountBox().getText()),
-          BasketController.this.basketWidget.getMatrNrBox().getText(), OrderState.Paid, new CheckoutCallback());
+          BasketController.this.basketWidget.getMatrNrBox().getText(), 'p', new CheckoutCallback());
     }
 
   }
-  
+
   private class CheckoutHandlerUnPayed implements ClickHandler {
 
-	    @Override
-	    public void onClick(ClickEvent event) {
-	      BasketController.this.checkoutService.doCheckout(
-	          Lists.newArrayList(BasketController.this.basketDataProvider.getList()),
-	          Integer.valueOf(BasketController.this.basketWidget.getDiscountBox().getText()),
-	          BasketController.this.basketWidget.getMatrNrBox().getText(), OrderState.Ordered, new CheckoutCallback());
-	    }
+    @Override
+    public void onClick(ClickEvent event) {
+      BasketController.this.checkoutService.doCheckout(
+          Lists.newArrayList(BasketController.this.basketDataProvider.getList()),
+          Integer.valueOf(BasketController.this.basketWidget.getDiscountBox().getText()),
+          BasketController.this.basketWidget.getMatrNrBox().getText(), 'o', new CheckoutCallback());
+    }
 
-	  }
+  }
 
   private class AmountUpdater implements FieldUpdater<BasketItem, String> {
 

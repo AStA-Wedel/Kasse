@@ -20,12 +20,10 @@ public class CheckoutServiceEndpoint extends RemoteServiceServlet implements Che
 	public Integer doCheckout(List<BasketItem> items, int discount,
 			String matrNr) throws CheckoutException {
 		
-		UserEmailProvider emailProvider = new UserEmailProvider(getThreadLocalRequest());		
-		
-		Optional<String> email = emailProvider.get();
+		Optional<String> email = new UserEmailProvider(getThreadLocalRequest()).get();
 		
 		if (email.isPresent()) {
-			
+
 			
 			
 			

@@ -30,13 +30,15 @@ public class UserDao extends GenericDao {
   }
 
   public Optional<Person> getPersonById(final String ldapName) {
-    Person person = null;
-    person = this.template
-        .queryForObject(
-            "SELECT p1.* FROM person p1 WHERE p1.ldap_name = ? AND p1.revision = (SELECT MAX(p2.revision) FROM person p2 WHERE p2.ldap_name = p1.ldap_name)",
-            new Object[]{ldapName}, new PersonRowMapper());
-
-    return Optional.fromNullable(person);
+    return Optional.fromNullable(this.template.queryForObject(
+        "SELECT p1.* FROM person p1 WHERE p1.ldap_name = ? AND p1.revision ="
+            + "(SELECT MAX(p2.revision) FROM person p2 WHERE p2.ldap_name = p1.ldap_name)", new Object[]{ldapName},
+        new PersonRowMapper()));
   }
 
+  public Optional<Person> getPersonByIdAndRevision(String ldapName, int revision) {
+    return Optional.fromNullable(this.template.queryForObject(
+        "SELECT * FROM person WHERE ldap_name = ? AND revision = ?", new Object[]{ldapName, revision},
+        new PersonRowMapper()));
+  }
 }

@@ -114,6 +114,10 @@
 		<!-- Generate compiled stuff in the folder used for developing mode -->
 		<outputDirectory>target/www/WEB-INF/classes</outputDirectory>
 
+		<properties>
+			<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		</properties>
+
 		<plugins>
 
 			<!-- GWT Maven Plugin -->

@@ -42,5 +42,5 @@ public class EuroAmount implements Serializable
   {
     return new EuroAmount(this.cents * factor);
   }
-
+  
 }

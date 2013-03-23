@@ -43,14 +43,20 @@ public class MainWidgetImpl extends Composite implements MainWidget {
 	public void setSidebarWidget(IsWidget widget) {
 		this.basketWidget = widget;
 		sidebarContainer.clear();
-		sidebarContainer.add(widget);
+		
+		if (widget != null) {
+			sidebarContainer.add(widget);			
+		}
 	}
 
 	@Override
 	public void setBasketWidget(IsWidget widget) {
 		this.sidebarWidget = widget;
 		basketContainer.clear();
-		basketContainer.add(widget);
+		
+		if (widget != null) {
+			basketContainer.add(widget);			
+		}
 	}
 
 	@Override

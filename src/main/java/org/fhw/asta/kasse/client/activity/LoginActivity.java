@@ -53,6 +53,8 @@ public class LoginActivity extends AbstractActivity {
 	
 	public void start(AcceptsOneWidget panel, com.google.gwt.event.shared.EventBus eventBus) {		
 		
+		sessionManager.setLoggedIn(null);
+		
 		submitHandlerRegistration = loginWidget.getSubmitButton().addClickHandler(new LoginClickHandler());	
 		
 		LoginToken loginToken = loginPlace.getLoginToken();

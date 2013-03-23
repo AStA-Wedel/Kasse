@@ -8,7 +8,7 @@
 
 		<div class="navbar-search pull-right">
 			<ul class="nav" >
-				<li><a href="#UserListPlace:">Logout</a></li>
+				<li><a href="#:LoginPlace:">Logout</a></li>
 			</ul>		
 		</div>
 	</g:HTMLPanel>

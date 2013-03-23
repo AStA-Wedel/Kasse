@@ -32,13 +32,7 @@ public class ReadyTopBarWidgetImpl extends Composite implements ReadyTopBarWidge
 	NavBarWidget navBar;
 	
 	@Inject
-	QuickBoxWidget quickBox;
-	
-	@Inject
 	SearchBoxWidget searchBox;
-	
-	@UiField
-	HTMLPanel quickBoxPanel;
 	
 	@UiField
 	HTMLPanel navBarPanel;
@@ -50,11 +44,9 @@ public class ReadyTopBarWidgetImpl extends Composite implements ReadyTopBarWidge
 	public void init(NavBarWidget navBar, QuickBoxWidget quickBox, SearchBoxWidget searchBox)
 	{
 		this.navBar = navBar;
-		this.quickBox = quickBox;
 		this.searchBox = searchBox;
 		
 		searchBoxPanel.add(searchBox);
-		quickBoxPanel.add(quickBox);
 		navBarPanel.add(navBar);		
 	}
 	
@@ -64,18 +56,9 @@ public class ReadyTopBarWidgetImpl extends Composite implements ReadyTopBarWidge
 	}
 
 	@Override
-	public HasText getQuickBox() {
-		return quickBox.getQuickBox();
-	}
-
-	@Override
 	public HasText getSearchBox() {
 		return searchBox.getSearchBox();
 	}
 
-	@Override
-	public HasChangeHandlers getQuickBoxHandlers() {
-		return quickBox.getQuickBoxHandlers();
-	}
 
 }

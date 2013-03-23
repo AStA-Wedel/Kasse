@@ -5,6 +5,11 @@
 		<div class="brand">Kasse</div>
 		<g:HTMLPanel styleName="navbar-search pull-left" ui:field="searchBoxPanel" />
 		<g:HTMLPanel ui:field="navBarPanel" />
-		<g:HTMLPanel styleName="navbar-search pull-right" ui:field="quickBoxPanel" />
+
+		<div class="navbar-search pull-right">
+			<ul class="nav" >
+				<li><a href="#:LoginPlace:">Logout</a></li>
+			</ul>		
+		</div>
 	</g:HTMLPanel>
 </ui:UiBinder> 

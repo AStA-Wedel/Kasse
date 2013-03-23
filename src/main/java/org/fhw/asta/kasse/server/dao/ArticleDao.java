@@ -1,12 +1,16 @@
 package org.fhw.asta.kasse.server.dao;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import org.fhw.asta.kasse.shared.common.EuroAmount;
 import org.fhw.asta.kasse.shared.model.Article;
 import org.fhw.asta.kasse.shared.model.Category;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.ConnectionCallback;
 import org.springframework.jdbc.core.RowMapper;
 
 public class ArticleDao extends GenericDao {
@@ -31,6 +35,7 @@ public class ArticleDao extends GenericDao {
 	}
 
 	public List<Article> getAllArticles() {
+
 		return this.template
 				.query("SELECT article_id,"
 						+ "article_revision, name, description, price, tax_category_name,"

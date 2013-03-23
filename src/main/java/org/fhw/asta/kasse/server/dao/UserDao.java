@@ -30,14 +30,12 @@ public class UserDao extends GenericDao {
   }
 
   public boolean exists(String ldapName) {
-	final int res = template.queryForInt("SELECT COUNT(ldap_name) FROM person WHERE ldap_name = ?", new Object[]{ldapName});
+	final int res = template.queryForInt("SELECT COUNT(0) FROM person WHERE ldap_name = ? LIMIT 1", new Object[]{ ldapName });
 	return res > 0;
   }
   public Optional<Person> getPersonById(final String ldapName) {
-    return Optional.fromNullable(this.template.queryForObject(
-        "SELECT p1.* FROM person p1 WHERE p1.ldap_name = ? AND p1.revision ="
-            + "(SELECT MAX(p2.revision) FROM person p2 WHERE p2.ldap_name = p1.ldap_name)", new Object[]{ldapName},
-        new PersonRowMapper()));
+	return queryForObject("SELECT p1.* FROM person p1 WHERE p1.ldap_name = ? AND p1.revision ="
+            + "(SELECT MAX(p2.revision) FROM person p2 WHERE p2.ldap_name = p1.ldap_name)", new Object[]{ldapName}, new PersonRowMapper());	  
   }
 
   public Optional<Person> getPersonByIdAndRevision(String ldapName, int revision) {

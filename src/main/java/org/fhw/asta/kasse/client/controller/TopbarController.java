@@ -36,15 +36,17 @@ public class TopbarController {
 	private void onLogin() {
 		//topbarWidget.setWidget(readyTopbarWidget);
 		
-		readyTopbarWidget.getQuickBoxHandlers().addChangeHandler(new QuickBoxHandler());
+		//readyTopbarWidget.getQuickBoxHandlers().addChangeHandler(new QuickBoxHandler());
 	}
 	
 	private class QuickBoxHandler implements ChangeHandler {
 
 		@Override
 		public void onChange(ChangeEvent event) {
-			HasText quickBox = readyTopbarWidget.getQuickBox();
-			String qText = quickBox.getText();
+			//HasText quickBox = readyTopbarWidget.getQuickBox();
+			
+			
+			String qText ="";
 			
 			if(qText.matches("[a-zA-Z][0-9]+")){
 				if(qText.matches("[aA][0-9]+")){
@@ -52,7 +54,6 @@ public class TopbarController {
 				} // else if(qText.matches.....
 			}
 			
-			quickBox.setText("");
 		}
 		
 	}

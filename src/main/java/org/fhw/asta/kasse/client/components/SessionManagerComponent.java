@@ -20,7 +20,13 @@ public class SessionManagerComponent {
 	}
 	
 	public void setLoggedIn(String email) {
-		Cookies.setCookie(COOKIE_NAME, email);
+		
+		if (!Strings.isNullOrEmpty(email)) {
+			Cookies.setCookie(COOKIE_NAME, email);			
+		} else {
+			Cookies.removeCookie(COOKIE_NAME);
+		}
+		
 	}
 	
 }

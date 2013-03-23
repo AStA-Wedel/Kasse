@@ -8,7 +8,7 @@ import com.google.gwt.place.shared.PlaceTokenizer;
 
 public class PrintCustomsPlace extends Place {
 
-private final Optional<PrintCustomsToken> token;
+	private final Optional<PrintCustomsToken> token;
 	
 	public PrintCustomsPlace(Optional<PrintCustomsToken> token) {
 		this.token = token;
@@ -27,11 +27,7 @@ private final Optional<PrintCustomsToken> token;
 
 		@Override
 		public String getToken(PrintCustomsPlace place) {
-			if (place.getToken().isPresent()) {
-				return place.getToken().get().toString();
-			} else {
-				return "";
-			}
+			return place.getToken().or(PrintCustomsToken.EMPTY_TOKEN).toString();			
 		}
 		
 	}

@@ -6,12 +6,10 @@ import org.fhw.asta.kasse.client.place.ArticleListPlace;
 import org.fhw.asta.kasse.client.place.LoginPlace;
 import org.fhw.asta.kasse.client.widget.HasTopbar;
 import org.fhw.asta.kasse.client.widget.login.LoginWidget;
-import org.fhw.asta.kasse.client.widget.topbar.TopBarWidgetContainer;
 import org.fhw.asta.kasse.client.widget.topbar.empty.EmptyTopBarWidget;
 import org.fhw.asta.kasse.shared.authentication.AuthenticationResult;
 import org.fhw.asta.kasse.shared.service.user.UserServiceAsync;
 
-import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -59,10 +57,8 @@ public class LoginActivity extends AbstractActivity {
 		
 		LoginToken loginToken = loginPlace.getLoginToken();
 		
-		Optional<String> maybeEmail = loginToken.getEmail();
-		
-		loginWidget.getEmailText().setText(maybeEmail.isPresent() ? maybeEmail.get() : "");
-				
+		loginWidget.getEmailText().setText(loginToken.getEmail().or(""));
+						
 		panel.setWidget(loginWidget);
 		topbarContainer.setTopbar(topbarWidget);
 	}
@@ -83,11 +79,7 @@ public class LoginActivity extends AbstractActivity {
 			
 			sessionManager.setLoggedIn(loginWidget.getEmailText().getText());
 			
-			if (loginPlace.getLoginToken().getRedirect().isPresent()) {
-				placeController.goTo(loginPlace.getLoginToken().getRedirect().get());
-			} else {
-				placeController.goTo(new ArticleListPlace());				
-			}
+			placeController.goTo(loginPlace.getLoginToken().getRedirect().or(new ArticleListPlace()));
 			
 			break;
 			

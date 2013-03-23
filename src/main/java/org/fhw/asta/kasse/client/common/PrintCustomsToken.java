@@ -5,6 +5,8 @@ import com.google.common.base.Strings;
 
 public class PrintCustomsToken {
 
+	public static final PrintCustomsToken EMPTY_TOKEN = new PrintCustomsToken(null, 0);
+	
 	public enum PrintType {
 		BILLORDER,
 		RECEIPT,
@@ -30,10 +32,9 @@ public class PrintCustomsToken {
 	}
 	
 	public String toString() {
-		return printType.toString() + "," + Integer.toString(id);
+		return this != EMPTY_TOKEN ? printType.toString() + "," + Integer.toString(id) : "";
 	}
 
-	
 	public static Optional<PrintCustomsToken> fromString(String token) {
 				
 		if (Strings.isNullOrEmpty(token)){

@@ -1,6 +1,5 @@
 package org.fhw.asta.kasse.client.activity;
 
-import org.fhw.asta.kasse.client.common.PrintCustomsToken.PrintType;
 import org.fhw.asta.kasse.client.place.PrintCustomsPlace;
 import org.fhw.asta.kasse.client.widget.print.PrintWidget;
 

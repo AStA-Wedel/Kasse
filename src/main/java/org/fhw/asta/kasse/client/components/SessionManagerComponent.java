@@ -10,13 +10,12 @@ public class SessionManagerComponent {
 	}
 	
 	public String getUserEmail() {
-	
+		
 		if (!isLoggedIn()) {
 			return Cookies.getCookie("email");
 		} else {
 			throw new RuntimeException("Junge check VORHER das der Nutzer eingeloggt ist!!");
 		}
-
 	}
 	
 	public void setLoggedIn(String email) {

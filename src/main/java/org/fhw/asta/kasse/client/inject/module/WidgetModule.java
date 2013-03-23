@@ -28,6 +28,8 @@ import org.fhw.asta.kasse.client.widget.topbar.modules.searchbox.SearchBoxWidget
 import org.fhw.asta.kasse.client.widget.topbar.modules.searchbox.SearchBoxWidgetImpl;
 import org.fhw.asta.kasse.client.widget.topbar.ready.ReadyTopBarWidget;
 import org.fhw.asta.kasse.client.widget.topbar.ready.ReadyTopBarWidgetImpl;
+import org.fhw.asta.kasse.client.widget.userlist.UserListWidget;
+import org.fhw.asta.kasse.client.widget.userlist.UserListWidgetImpl;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Singleton;
@@ -53,6 +55,7 @@ public class WidgetModule extends AbstractGinModule {
 		bind(KasseRootPanel.class).to(KasseRootPanelImpl.class).in(Singleton.class);
 		bind(HasTopbar.class).toProvider(HasTopbarProvider.class).in(Singleton.class);
 		bind(PrintWidget.class).to(PrintWidgetImpl.class).in(Singleton.class);
+		bind(UserListWidget.class).to(UserListWidgetImpl.class).in(Singleton.class);
 		
 	}
 	

@@ -3,6 +3,7 @@ package org.fhw.asta.kasse.server.service;
 import org.fhw.asta.kasse.server.common.User;
 import org.fhw.asta.kasse.server.component.user.UserComponent;
 import org.fhw.asta.kasse.shared.authentication.AuthenticationResult;
+import org.fhw.asta.kasse.shared.model.Person;
 import org.fhw.asta.kasse.shared.service.user.UserService;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -25,6 +26,12 @@ public class UserServiceEndpoint extends RemoteServiceServlet implements UserSer
 		User user = userComponent.authenticate(email, password);
 		
 		return new AuthenticationResult(user.getAuthenticationStatus());
+	}
+
+	@Override
+	public Person getUserById(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

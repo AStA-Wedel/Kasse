@@ -31,7 +31,7 @@ public class BillOrderServiceEndpoint extends RemoteServiceServlet implements Bi
 	@Override
 	public BillOrder getBillOrder(int id) {
 		// TODO Auto-generated method stub
-		return new BillOrder(12, new Person("horst", 2, "meier", "horst", 2144, false, 12), new Person("gandalf", 2, "gandalf", "der graue", 2666, false, 12), new Date(), false, OrderState.Ordered, false);
+		return new BillOrder(12, new Person("horst", 2, "meier", "horst", 2144, false, 12), new Person("gandalf", 2, "gandalf", "der graue", 2666, false, 12), new Date(), false, OrderState.Ordered, false,0);
 	}
 
 	@Override

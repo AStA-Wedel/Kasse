@@ -34,6 +34,10 @@ public class BillOrder implements Serializable
 
   /** State of the order, if it is fetched, this object is considered a bill */
   private OrderState state;
+  
+
+
+private int discount;
 
   /**
    * If an order is cancelled, any service granted has been revoked, thus this
@@ -56,7 +60,7 @@ public class BillOrder implements Serializable
    */
   public BillOrder(final int id, final Person receipient, final Person issuer,
       final Date creationDate, final boolean paidCash, final OrderState state,
-      final boolean cancelled)
+      final boolean cancelled, final int discount)
   {
     this.id = id;
     this.receipient = receipient;
@@ -65,6 +69,7 @@ public class BillOrder implements Serializable
     this.paidCash = paidCash;
     this.state = state;
     this.cancelled = cancelled;
+    this.discount = discount;
   }
 
   public BillOrder()
@@ -74,6 +79,10 @@ public class BillOrder implements Serializable
   public int getId()
   {
     return this.id;
+  }
+  
+  public int getDiscount() {
+	return discount;
   }
 
   public Person getIssuer()

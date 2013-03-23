@@ -1,6 +1,5 @@
 package org.fhw.asta.kasse.server.service;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.fhw.asta.kasse.server.dao.ArticleDao;
@@ -34,8 +33,7 @@ public class BillOrderServiceEndpoint extends RemoteServiceServlet implements Bi
 
   @Override
   public List<BasketItem> getBillOrderArticles(int id) {
-    final BillOrder bo = this.getBillOrder(id);
-    return Collections.emptyList();
+    return this.billOrderDao.getBillOrderArticles(id);
   }
 
 }

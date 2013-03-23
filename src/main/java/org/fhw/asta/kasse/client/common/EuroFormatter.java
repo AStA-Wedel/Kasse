@@ -25,7 +25,5 @@ public class EuroFormatter {
 	{
 		return formatWithDiscount(euroAmount.getCentAmount(),discount);
 	}
-	
-
-	
+		
 }

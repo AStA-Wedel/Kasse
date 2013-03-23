@@ -1,6 +1,5 @@
 package org.fhw.asta.kasse.client.activity;
 
-
 import java.util.List;
 
 import org.fhw.asta.kasse.client.common.EuroFormatter;
@@ -32,7 +31,7 @@ public class PrintCustomsActivity extends AbstractActivity {
 
 	@Inject
 	private BillOrderServiceAsync billOrderService;
-	
+
 	@Inject
 	private UserServiceAsync userService;
 
@@ -44,12 +43,11 @@ public class PrintCustomsActivity extends AbstractActivity {
 
 	private PrintCustomsPlace printCustomsPlace;
 
-	
 	private BillOrder billOrder;
 	private Person recp;
 	private Person issue;
 	private List<BasketItem> articles;
-	
+
 	@Inject
 	public PrintCustomsActivity(@Assisted PrintCustomsPlace printCustomsPlace) {
 		this.printCustomsPlace = printCustomsPlace;
@@ -110,7 +108,7 @@ public class PrintCustomsActivity extends AbstractActivity {
 	}
 
 	private void printBILLORDER(int id) {
-		
+
 		billOrderService.getBillOrder(id, new AsyncCallback<BillOrder>() {
 
 			@Override
@@ -128,40 +126,55 @@ public class PrintCustomsActivity extends AbstractActivity {
 							@Override
 							public void onSuccess(List<BasketItem> result) {
 								articles = result;
-								
-								userService.getUserByIdAndRevision(billOrder.getIssuerLdapName(), billOrder.getIssuerRevision(), new AsyncCallback<Optional<Person>>() {
 
-									@Override
-									public void onFailure(Throwable caught) {
-										// TODO Auto-generated method stub
-										
-									}
-
-									@Override
-									public void onSuccess(
-											Optional<Person> result) {
-										issue = result.or(new Person());
-										userService.getUserByIdAndRevision(billOrder.getRecipientLdapName(), billOrder.getReceipientRevision(), new AsyncCallback<Optional<Person>>() {
+								userService.getUserByIdAndRevision(
+										billOrder.getIssuerLdapName(),
+										billOrder.getIssuerRevision(),
+										new AsyncCallback<Optional<Person>>() {
 
 											@Override
 											public void onFailure(
 													Throwable caught) {
-												// TODO Auto-generated method stub
-												
+												// TODO Auto-generated method
+												// stub
+
 											}
 
 											@Override
 											public void onSuccess(
 													Optional<Person> result) {
-												recp = result.or(new Person());
-												printBillOrder();
-												printArticles();
-												
+												issue = result.or(new Person());
+												userService
+														.getUserByIdAndRevision(
+																billOrder
+																		.getRecipientLdapName(),
+																billOrder
+																		.getReceipientRevision(),
+																new AsyncCallback<Optional<Person>>() {
+
+																	@Override
+																	public void onFailure(
+																			Throwable caught) {
+																		// TODO
+																		// Auto-generated
+																		// method
+																		// stub
+
+																	}
+
+																	@Override
+																	public void onSuccess(
+																			Optional<Person> result) {
+																		recp = result
+																				.or(new Person());
+																		printBillOrder();
+																		printArticles();
+
+																	}
+																});
+
 											}
 										});
-										
-									}
-								});
 
 							}
 						});
@@ -179,21 +192,25 @@ public class PrintCustomsActivity extends AbstractActivity {
 	private void printBillOrder() {
 		printWidget.addHtml("<br /><br />");
 		printWidget.addHtml("<div class='recipient'><table><tr>"
-				+ "<td><strong>Name: </strong></td>"
-				+ "<td>"+recp.getPrename()+" "+recp.getSurname()+"</td>"
-				+ "</tr><tr><td><strong>Matrikel-Nr.: </strong></td>"
-				+ "<td>"+recp.getMatrNo()+"</td></tr></table>"
-				+ "<div>");
+				+ "<td><strong>Name: </strong></td>" + "<td>"
+				+ recp.getPrename() + " " + recp.getSurname() + "</td>"
+				+ "</tr><tr><td><strong>Matrikel-Nr.: </strong></td>" + "<td>"
+				+ recp.getMatrNo() + "</td></tr></table>" + "<div>");
 		printWidget.addHtml("<div class='billdata'><table class='billtbl'><tr>"
-				+"<td><strong>Rechnungs-Nr.: </strong></td>"
-				+ "<td class='billdata-right'>"+billOrder.getId()+"</td>"
+				+ "<td><strong>Rechnungs-Nr.: </strong></td>"
+				+ "<td class='billdata-right'>"
+				+ billOrder.getId()
+				+ "</td>"
 				+ "</tr><tr><td><strong>Datum: </strong></td>"
-				+ "<td class='billdata-right'>"+DateTimeFormat.getFormat("dd.MM.yyyy").format(billOrder.getDatetimeOfCreation())+"</td></tr>"
+				+ "<td class='billdata-right'>"
+				+ DateTimeFormat.getFormat("dd.MM.yyyy").format(
+						billOrder.getDatetimeOfCreation()) + "</td></tr>"
 
 				+ "<tr><td><strong>Bediener: </strong></td>"
-				+ "<td class='billdata-right'>"+issue.getPrename()+" "+issue.getSurname()+"</td></tr></table>"
-				+ "<div>");
-		printWidget.addHtml("<br/><br/><br/><br/><h2><strong>Rechnung</strong></h2>");
+				+ "<td class='billdata-right'>" + issue.getPrename() + " "
+				+ issue.getSurname() + "</td></tr></table>" + "<div>");
+		printWidget
+				.addHtml("<br/><br/><br/><br/><h2><strong>Rechnung</strong></h2>");
 	}
 
 	private void printArticles() {
@@ -202,30 +219,32 @@ public class PrintCustomsActivity extends AbstractActivity {
 		strb.append("<br/>");
 		strb.append("<table class='regtb'><tr class='headline'><td>Menge</td><td class='desc'>Beschreibung</td><td>Rabatt (&#037;)</td><td>E-Preis</td><td>G-Preis</td><td>Abgehohlt</td></tr>");
 		for (BasketItem art : articles) {
-			EuroAmount euroAmount = new EuroAmount((int)Math.round((art.getItemPrice().getCentAmount()*art.getAmount())*(100.0-art.getDiscount())));
+			EuroAmount euroAmount = new EuroAmount((int) Math.round((art
+					.getItemPrice().getCentAmount() * art.getAmount())
+					* (100.0 - art.getDiscount())));
 			sum += euroAmount.getCentAmount();
-			strb.append("<tr class='unbreakable'><td>"
-								+art.getAmount()
-								+"</td><td class='desc'>"
-								+art.getItemName()
-								+"</td><td>"
-								+art.getDiscount()
-								+"</td><td>"
-								+EuroFormatter.format(art.getItemPrice())
-								+"</td><td>"
-								+EuroFormatter.format(euroAmount)
-								+"</td><td><div class='abghe'>"
-								+"&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>"
-								+"</td></tr>");
+			strb.append("<tr class='unbreakable'><td>" + art.getAmount()
+					+ "</td><td class='desc'>" + art.getItemName()
+					+ "</td><td>" + art.getDiscount() + "</td><td>"
+					+ EuroFormatter.format(art.getItemPrice()) + "</td><td>"
+					+ EuroFormatter.format(euroAmount)
+					+ "</td><td><div class='abghe'>"
+					+ "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>"
+					+ "</td></tr>");
 		}
 		strb.append("<tr class='headline'><td></td><td class='desc'></td><td></td><td></td><td></td><td></td></tr>");
-		strb.append("<tr><td></td><td class='desc'></td><td></td><td></td><td><strong>Gesamt:</strong></td><td>"+EuroFormatter.format(new EuroAmount(sum))+"</td></tr>");
-		strb.append("<tr><td></td><td class='desc'></td><td></td><td></td><td><strong>Rabatt (&#037;):</strong></td><td>"+billOrder.getDiscount()+"</td></tr>");
-		strb.append("<tr><td></td><td class='desc'></td><td></td><td></td><td><strong>Endsumme:</strong></td><td>"+EuroFormatter.format(new EuroAmount((int)Math.round(sum*(100.0-billOrder.getDiscount()))))+"</td></tr>");
+		strb.append("<tr><td></td><td class='desc'></td><td></td><td></td><td><strong>Gesamt:</strong></td><td>"
+				+ EuroFormatter.format(new EuroAmount(sum)) + "</td></tr>");
+		strb.append("<tr><td></td><td class='desc'></td><td></td><td></td><td><strong>Rabatt (&#037;):</strong></td><td>"
+				+ billOrder.getDiscount() + "</td></tr>");
+		strb.append("<tr><td></td><td class='desc'></td><td></td><td></td><td><strong>Endsumme:</strong></td><td>"
+				+ EuroFormatter.format(new EuroAmount((int) Math.round(sum
+						* (100.0 - billOrder.getDiscount())))) + "</td></tr>");
 		strb.append("</table>");
 		printWidget.addHtml(strb.toString());
 		printWidget.addHtml("<br /><br /><br />");
-		printWidget.addHtml("<strong><center>Diese Rechnung ist laut &sect;19 UStG Umsatzsteuerbefreit</center></strong>");
+		printWidget
+				.addHtml("<strong><center>Diese Rechnung ist laut &sect;19 UStG Umsatzsteuerbefreit</center></strong>");
 	}
 
 	private void printRECEIPT(int id) {

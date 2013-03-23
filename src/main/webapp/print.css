@@ -1,0 +1,46 @@
+
+	.headline {
+		width: 100%;
+		border-bottom-width:2px;
+		border-bottom-color:black;
+		border-bottom-style: solid;
+		text-align:center;
+		font-weight:bold;
+	}
+	
+	.regtb{
+		width:100%;
+		clear: both;
+		text-align:center;
+		vertical-align:center;
+	}
+	
+	.abghe{
+		height:70px;
+		border: 1px dotted black;
+		margin: 2px;
+	}
+	
+	.unbreakable {
+		page-break-inside: avoid;
+	}
+	
+	.desc {
+		text-align:left;
+	}
+	
+	.billdata-right {
+		text-align:right;
+	}
+	
+	.recipient {
+		float:left;
+		width: 50%;
+	}
+	.billdata {
+		float:right;
+		width: 50%;
+	}
+	.billtbl {
+		float: right;
+	}

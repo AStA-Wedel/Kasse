@@ -4,6 +4,7 @@
 	<ui:style>
 		
 	</ui:style>
+	
 	<g:HTMLPanel>
 	    <g:HTML wordWrap="true" ui:field="htmlWidget"></g:HTML>
 	</g:HTMLPanel>

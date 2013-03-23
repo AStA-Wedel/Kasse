@@ -22,6 +22,8 @@ public class Article implements Serializable
   private EuroAmount price;
 
   private String description;
+  
+  private int amount;
 
   /**
    * Tax category name, determines, if an article has reduced/full/no tax rate.
@@ -57,7 +59,23 @@ public class Article implements Serializable
     this.taxCategoryName = taxCategoryName;
     this.taxRevision = taxRevision;
     this.enabled = enabled;
+    this.amount = 0;
   }
+  
+  public Article(final int id, final int revision, final String name,
+	      final String description, final EuroAmount price,
+	      final String taxCategoryName, final int taxRevision, final boolean enabled, final int amount)
+	  {
+	    this.id = id;
+	    this.revision = revision;
+	    this.name = name;
+	    this.description = description;
+	    this.price = price;
+	    this.taxCategoryName = taxCategoryName;
+	    this.taxRevision = taxRevision;
+	    this.enabled = enabled;
+	    this.amount = amount;
+	  }
 
   /**
    * Default constructor, only exists because of Serialization. Will create an
@@ -95,6 +113,11 @@ public class Article implements Serializable
   public int getTaxRevision()
   {
     return this.taxRevision;
+  }
+  
+  public int getAmount()
+  {
+    return this.amount;
   }
 
   public boolean isEnabled()

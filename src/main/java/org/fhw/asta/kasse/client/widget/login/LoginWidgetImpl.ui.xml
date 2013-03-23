@@ -24,7 +24,7 @@
   			<div class="control-group">
     			<label class="control-label" for="inputPassword">Password</label>
     			<div class="controls">
-					<g:TextBox ui:field="passwordTextBox" styleName="" />
+					<g:PasswordTextBox ui:field="passwordTextBox" styleName="" />
    	 			</div>
   			</div>
   			

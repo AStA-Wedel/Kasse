@@ -7,6 +7,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -20,13 +21,14 @@ public class LoginWidgetImpl extends Composite implements LoginWidget {
 
 	public LoginWidgetImpl() {
 		initWidget(uiBinder.createAndBindUi(this));		
+		
 	}
 
 	@UiField
 	TextBox emailTextBox;
 	
 	@UiField
-	TextBox passwordTextBox;
+	PasswordTextBox passwordTextBox;
 	
 	@UiField
 	Button submitButton;

@@ -4,6 +4,7 @@
 
 	<g:HTMLPanel styleName="">
 			<ul class="nav" >
+				<li><a href="#ArticleListPlace:">Artikelübersicht</a></li>
 				<li><a href="#UserListPlace:">Benutzerverwaltung</a></li>
 			</ul>		
 	</g:HTMLPanel>

@@ -65,11 +65,12 @@ public class BasketWidgetImpl extends Composite implements BasketWidget {
 		deleteColumn = new DeleteColumn(deleteButton);
 		basketTable.addColumn(deleteColumn);
 		
-		basketTable.setColumnWidth(amountColumn,"10%");
-		basketTable.setColumnWidth(nameColumn,"50%");
+		basketTable.setColumnWidth(amountColumn,"17%");
+		basketTable.setColumnWidth(nameColumn,"35%");
 		basketTable.setColumnWidth(discountColumn, "15%");
-		basketTable.setColumnWidth(priceColumn,"15%");
-		basketTable.setColumnWidth(deleteColumn,"10%");
+		basketTable.setColumnWidth(priceColumn,"19%");
+		basketTable.setColumnWidth(deleteColumn,"14%");
+		basketTable.setWidth("100%", true);
 
 	}
 

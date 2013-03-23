@@ -218,9 +218,6 @@ public class BasketController {
 
     @Override
     public void onValueChange(ValueChangeEvent<String> event) {
-      if (!event.getValue().matches("[0-9]+")) {
-        BasketController.this.basketWidget.getMatrNrBox().setText("0000");
-      }
       BasketController.this.flush();
     }
 

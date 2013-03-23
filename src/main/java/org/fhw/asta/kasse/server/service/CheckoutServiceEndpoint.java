@@ -26,7 +26,6 @@ public class CheckoutServiceEndpoint extends RemoteServiceServlet implements Che
 
 			
 			
-			
 		} else {
 			throw new CheckoutException("No issuer for checkout given. Are you logged in?");
 		}

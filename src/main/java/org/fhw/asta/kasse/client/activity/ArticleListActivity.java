@@ -21,6 +21,8 @@ import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.DoubleClickEvent;
+import com.google.gwt.event.dom.client.DoubleClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.place.shared.PlaceController;
@@ -90,8 +92,8 @@ public class ArticleListActivity extends AbstractActivity {
 		articleListWidget.getIdColumn().setFieldUpdater(openOverlayFieldUpdater);
 		articleListWidget.getNameColumn().setFieldUpdater(openOverlayFieldUpdater);
 		
-		handlerRegistrations.add(articleListWidget.getOverlayToBasketButton().addClickHandler(new ToBasketClickHandler()));
-		
+		handlerRegistrations.add(articleListWidget.getOverlayToBasketButton().addDoubleClickHandler(new ToBasketClickHandler()));
+				
 		articleDataProvider = new ListDataProvider<Article>(new ArticleIdProvider());
 		articleDataProvider.addDataDisplay(articleListWidget.getArticleList());		
 		articleService.getCategories(new CategoryCallback());
@@ -172,12 +174,12 @@ public class ArticleListActivity extends AbstractActivity {
 		}
 	}
 	
-	private class ToBasketClickHandler implements ClickHandler {
+	private class ToBasketClickHandler implements DoubleClickHandler {
 
 		@Override
-		public void onClick(ClickEvent event) {
+		public void onDoubleClick(DoubleClickEvent event) {
 			basketController.addBasketPosition(currentOverlayObject);
-			articleListWidget.closeOverlay();
+			articleListWidget.closeOverlay();			
 		}
 		
 		
@@ -193,11 +195,8 @@ public class ArticleListActivity extends AbstractActivity {
 
 		@Override
 		public void onSuccess(List<Category> result) {
-			sidebarWidget.addCats(result);
-			
-		}
-		
-	}
-
+			sidebarWidget.addCats(result);			
+		}	
+	}	
 	
 }

@@ -35,9 +35,6 @@ public class BillOrderDao extends GenericDao {
           arg0.getInt(5));
     }
   }
-  
-  public void saveBillOrder
-
   public List<BillOrder> getAllBillOrders() {
     return this.template.query("SELECT * FROM bill_order", this.billOrderMapper);
   }

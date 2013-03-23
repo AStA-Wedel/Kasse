@@ -26,7 +26,6 @@ public class UserComponent {
 		user.setEmail(email);
 		user.setAuthenticationStatus(AuthenticationStatus.AUTHENTICATED);
 		
-		
 		return user;
 	}
 	

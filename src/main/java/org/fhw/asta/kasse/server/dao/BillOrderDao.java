@@ -76,7 +76,7 @@ public class BillOrderDao extends GenericDao {
         + "bca INNER JOIN article a WHERE bo.bill_id = ?", new Object[]{id}, this.basketItemMapper);
   }
 
-  public void saveBillOrder(List<BasketItem> items, final int discount, final String receipientLdapName,
+  public int saveBillOrder(List<BasketItem> items, final int discount, final String receipientLdapName,
       final String issuerLdapName, final char orderState) {
     final int billNumber = this.createBillOrderProcedure.createBill(receipientLdapName, issuerLdapName, true, discount,
         orderState);
@@ -86,5 +86,7 @@ public class BillOrderDao extends GenericDao {
           + "(SELECT MAX(article_revision) FROM article WHERE article_id = ?)," + "?," + "FALSE," + "?);",
           new Object[]{billNumber, bo.getArticleId(), bo.getArticleId(), bo.getAmount(), bo.getDiscount()});
     }
+
+    return billNumber;
   }
 }

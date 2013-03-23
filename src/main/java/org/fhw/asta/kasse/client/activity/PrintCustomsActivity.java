@@ -9,7 +9,6 @@ import org.fhw.asta.kasse.client.widget.HasTopbar;
 import org.fhw.asta.kasse.client.widget.print.PrintWidget;
 import org.fhw.asta.kasse.shared.basket.BasketItem;
 import org.fhw.asta.kasse.shared.common.EuroAmount;
-import org.fhw.asta.kasse.shared.model.Article;
 import org.fhw.asta.kasse.shared.model.BillOrder;
 import org.fhw.asta.kasse.shared.model.LetterHead;
 import org.fhw.asta.kasse.shared.service.billorder.BillOrderServiceAsync;

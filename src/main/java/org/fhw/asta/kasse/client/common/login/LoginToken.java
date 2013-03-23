@@ -69,6 +69,5 @@ public class LoginToken {
 	public Optional<Place> getRedirect() {
 		return redirect;
 	}
-	
-	
+		
 }

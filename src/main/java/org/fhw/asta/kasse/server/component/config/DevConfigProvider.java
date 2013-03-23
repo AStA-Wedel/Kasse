@@ -34,7 +34,11 @@ public class DevConfigProvider implements ConfigProvider {
 			//LOGGER.error("Could not load " + ENV_PROPERTIES_FILENAME);
 			throw new RuntimeException(e);
 		} finally {
-			Closeables.closeQuietly(is);
+			try {
+				Closeables.close(is, true);
+			} catch (IOException e) {
+				// Never happens
+			}
 		}		
 		
 		return properties;

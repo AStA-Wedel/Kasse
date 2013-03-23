@@ -10,7 +10,6 @@ public class SessionManagerComponent {
 	}
 	
 	public String getUserEmail() {
-		
 		if (!isLoggedIn()) {
 			return Cookies.getCookie("email");
 		} else {

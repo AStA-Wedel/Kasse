@@ -130,6 +130,8 @@ public class PrintCustomsActivity extends AbstractActivity {
 		});
 	}
 
+	private int masterDiscount;
+	
 	private void printBillOrder(BillOrder billOrder) {
 		printWidget.addHtml("<br /><br />");
 		printWidget.addHtml("<div class='recipient'><table><tr>"
@@ -147,20 +149,23 @@ public class PrintCustomsActivity extends AbstractActivity {
 				+ "<td class='billdata-right'>"+billOrder.getIssuer().getFullName()+"</td></tr></table>"
 				+ "<div>");
 		printWidget.addHtml("<br/><br/><br/><br/><h2><strong>Rechnung</strong></h2>");
+		masterDiscount = billOrder.getDiscount();
 	}
 
 	private void printArticles(List<BasketItem> articles) {
 		StringBuilder strb = new StringBuilder();
 		int sum = 0;
 		strb.append("<br/>");
-		strb.append("<table class='regtb'><tr class='headline'><td>Menge</td><td class='desc'>Beschreibung</td><td>E-Preis</td><td>G-Preis</td><td>Abgehohlt</td></tr>");
+		strb.append("<table class='regtb'><tr class='headline'><td>Menge</td><td class='desc'>Beschreibung</td><td>Rabatt (&#037;)</td><td>E-Preis</td><td>G-Preis</td><td>Abgehohlt</td></tr>");
 		for (BasketItem art : articles) {
-			EuroAmount euroAmount = new EuroAmount(art.getItemPrice().getCentAmount()*art.getAmount());
+			EuroAmount euroAmount = new EuroAmount((int)Math.round((art.getItemPrice().getCentAmount()*art.getAmount())*(100.0-art.getDiscount())));
 			sum += euroAmount.getCentAmount();
 			strb.append("<tr class='unbreakable'><td>"
 								+art.getAmount()
 								+"</td><td class='desc'>"
 								+art.getItemName()
+								+"</td><td>"
+								+art.getDiscount()
 								+"</td><td>"
 								+EuroFormatter.format(art.getItemPrice())
 								+"</td><td>"
@@ -169,8 +174,10 @@ public class PrintCustomsActivity extends AbstractActivity {
 								+"&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>"
 								+"</td></tr>");
 		}
-		strb.append("<tr class='headline'><td></td><td class='desc'></td><td></td><td></td><td></td></tr>");
-		strb.append("<tr><td></td><td class='desc'></td><td></td><td><strong>Gesamt:</strong></td><td>"+EuroFormatter.format(new EuroAmount(sum))+"</td></tr>");
+		strb.append("<tr class='headline'><td></td><td class='desc'></td><td></td><td></td><td></td><td></td></tr>");
+		strb.append("<tr><td></td><td class='desc'></td><td></td><td></td><td><strong>Gesamt:</strong></td><td>"+EuroFormatter.format(new EuroAmount(sum))+"</td></tr>");
+		strb.append("<tr><td></td><td class='desc'></td><td></td><td></td><td><strong>Rabatt (&#037;):</strong></td><td>"+masterDiscount+"</td></tr>");
+		strb.append("<tr><td></td><td class='desc'></td><td></td><td></td><td><strong>Endsumme:</strong></td><td>"+EuroFormatter.format(new EuroAmount((int)Math.round(sum*(100.0-masterDiscount))))+"</td></tr>");
 		strb.append("</table>");
 		printWidget.addHtml(strb.toString());
 		printWidget.addHtml("<br /><br /><br />");

@@ -51,7 +51,8 @@ public class AppActivityMapper implements ActivityMapper {
 		}
 		
 		if (!sessionManager.isLoggedIn()) {
-			return loginActivityFactory.create(new LoginPlace(new LoginToken(Optional.<String>absent(), Optional.of(place))));		
+			return loginActivityFactory.create(new LoginPlace(new LoginToken(Optional.<String>absent(), Optional.<Place>absent())));		
+//			placeController.goTo(new LoginPlace(new LoginToken(Optional.<String>absent(), Optional.of(place))));			
 		}
 		
 		// INSERT NEW ACTIVITIES AFTER THIS

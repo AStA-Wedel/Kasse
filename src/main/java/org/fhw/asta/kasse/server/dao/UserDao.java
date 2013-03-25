@@ -32,6 +32,7 @@ public class UserDao extends GenericDao {
   public boolean exists(String ldapName) {
 	return getPersonById(ldapName).isPresent();
   }
+  
   public Optional<Person> getPersonById(final String ldapName) {
 	return queryForObject("SELECT p1.* FROM person p1 WHERE p1.ldap_name = ? AND p1.revision ="
             + "(SELECT MAX(p2.revision) FROM person p2 WHERE p2.ldap_name = p1.ldap_name)", new Object[]{ldapName}, new PersonRowMapper());	  

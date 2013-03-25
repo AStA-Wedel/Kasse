@@ -1,16 +1,12 @@
 package org.fhw.asta.kasse.server.dao;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 import org.fhw.asta.kasse.shared.common.EuroAmount;
 import org.fhw.asta.kasse.shared.model.Article;
 import org.fhw.asta.kasse.shared.model.Category;
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.ConnectionCallback;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.google.common.base.Optional;
@@ -51,7 +47,7 @@ public class ArticleDao extends GenericDao {
 						+ "name, description, price, tax_category_name,"
 						+ "tax_revision, enabled FROM article JOIN category_mapping"
 						+ " ON article.article_id = category_mapping.article_id AND article.article_revision = category_mapping.article_revision"
-						+ " WHERE category_id ='"+id+"' AND enabled = true;",
+						+ " WHERE category_id = ? AND enabled = true;", new Object[] { id },
 						new ArticleRowMapper());
 	}
 

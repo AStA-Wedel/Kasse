@@ -20,6 +20,8 @@ public class CheckoutServiceEndpoint extends RemoteServiceServlet implements Che
   private static final long serialVersionUID = 1L;
   private static final Logger LOGGER = Logger.getLogger(CheckoutServiceEndpoint.class);
 
+  private static final String DEFAULT_RECIPIENT = "default";
+  
   @Inject
   private UserDao userDao;
 
@@ -33,11 +35,11 @@ public class CheckoutServiceEndpoint extends RemoteServiceServlet implements Che
     final Optional<String> issuerLdapName = new UserLdapNameProvider(this.getThreadLocalRequest()).get();
     
     if (issuerLdapName.isPresent() && this.userDao.exists(issuerLdapName.get())) {
-    	if(this.userDao.exists(receipientLdapName)) {
-    		return this.billOrderDao.saveBillOrder(items, discount, receipientLdapName, issuerLdapName.get(), orderState);
-    	} else {
-    		return this.billOrderDao.saveBillOrder(items, discount, "default", issuerLdapName.get(), orderState);
-    	}
+    	
+    	String receipient = this.userDao.exists(receipientLdapName) ? receipientLdapName : DEFAULT_RECIPIENT;
+ 
+   		return this.billOrderDao.saveBillOrder(items, discount, receipient, issuerLdapName.get(), orderState);
+   	 
     } else {
       LOGGER.info("A non registered user tried to checkout");
       throw new CheckoutException("No issuer for checkout given. Are you logged in?");

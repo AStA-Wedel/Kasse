@@ -7,6 +7,7 @@ import org.fhw.asta.kasse.shared.model.Article;
 import org.fhw.asta.kasse.shared.model.Category;
 import org.fhw.asta.kasse.shared.service.article.ArticleService;
 
+import com.google.common.base.Optional;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -30,7 +31,7 @@ public class ArticleServiceEndpoint extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public Article getArticleById(String id) {
+	public Optional<Article> getArticleById(String id) {
 		return this.dao.getArticleById(id);
 	}
 

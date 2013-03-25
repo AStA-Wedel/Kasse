@@ -50,7 +50,7 @@ public class TopbarController {
 			
 			if(qText.matches("[a-zA-Z][0-9]+")){
 				if(qText.matches("[aA][0-9]+")){
-					articleService.getArticleById(qText.replaceAll("[a-zA-Z]", ""), new ArticleCallback());
+		//			articleService.getArticleById(qText.replaceAll("[a-zA-Z]", ""), new ArticleCallback());
 				} // else if(qText.matches.....
 			}
 			

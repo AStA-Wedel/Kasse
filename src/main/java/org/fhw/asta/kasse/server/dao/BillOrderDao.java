@@ -28,7 +28,7 @@ public class BillOrderDao extends GenericDao {
 
 	// private final Logger logger = Logger.getLogger(BillOrderDao.class);
 
-	private class BillOrderRowMapper implements RowMapper<BillOrder> {
+	private static class BillOrderRowMapper implements RowMapper<BillOrder> {
 		@Override
 		public BillOrder mapRow(final ResultSet arg0, final int arg1)
 				throws SQLException {
@@ -39,7 +39,7 @@ public class BillOrderDao extends GenericDao {
 		}
 	}
 
-	private class BasketItemMapper implements RowMapper<BasketItem> {
+	private static class BasketItemMapper implements RowMapper<BasketItem> {
 		@Override
 		public BasketItem mapRow(ResultSet arg0, int arg1) throws SQLException {
 			// TODO Auto-generated method stub
@@ -49,7 +49,7 @@ public class BillOrderDao extends GenericDao {
 		}
 	}
 
-	private class CreateBillOrderProcedure extends StoredProcedure {
+	private static class CreateBillOrderProcedure extends StoredProcedure {
 		public CreateBillOrderProcedure(JdbcTemplate template) {
 			super(template, "CREATE_BILL_ORDER");
 			this.setFunction(false);

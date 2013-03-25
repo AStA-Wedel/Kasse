@@ -13,9 +13,11 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ConnectionCallback;
 import org.springframework.jdbc.core.RowMapper;
 
+import com.google.common.base.Optional;
+
 public class ArticleDao extends GenericDao {
 
-	private class ArticleRowMapper implements RowMapper<Article> {
+	private static class ArticleRowMapper implements RowMapper<Article> {
 		@Override
 		public Article mapRow(final ResultSet arg0, final int arg1)
 				throws SQLException {
@@ -26,7 +28,7 @@ public class ArticleDao extends GenericDao {
 		}
 	}
 
-	private class CategoryRowMapper implements RowMapper<Category> {
+	private static class CategoryRowMapper implements RowMapper<Category> {
 		@Override
 		public Category mapRow(final ResultSet arg0, final int arg1)
 				throws SQLException {
@@ -65,13 +67,11 @@ public class ArticleDao extends GenericDao {
 						new ArticleRowMapper());
 	}
 
-	public Article getArticleById(String id) {
-		return this.template.query(
-				"SELECT article_id, article_revision, name, description,"
+	public Optional<Article> getArticleById(String id) {
+		return queryForObject("SELECT article_id, article_revision, name, description,"
 						+ "price, tax_category_name, tax_revision,"
-						+ "enabled FROM article WHERE article_id = '" + id
-						+ "' AND enabled = true;", new ArticleRowMapper()).get(0);
-
+						+ "enabled FROM article WHERE article_id = ? AND enabled = true;", new Object[] { id }, new ArticleRowMapper());
+		
 	}
 
 	public List<Category> getAllCategories() {

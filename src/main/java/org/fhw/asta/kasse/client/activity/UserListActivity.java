@@ -90,7 +90,7 @@ public class UserListActivity extends AbstractActivity {
 
 		@Override
 		public void update(int index, Person object, String value) {
-				
+				userWidget.showPerson(object);
 		}
 	}
 

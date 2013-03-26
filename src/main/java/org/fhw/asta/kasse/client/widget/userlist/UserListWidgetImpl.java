@@ -50,6 +50,7 @@ public class UserListWidgetImpl extends Composite implements UserListWidget{
 		prenameColumn = new PrenameColumn(openOverlayCell);
 		surnameColumn = new SurnameColumn(openOverlayCell);
 		matrNrColumn = new MatrNrColumn(openOverlayCell);
+
 		
 		cellTable.addColumn(matrNrColumn,"MatrNr");
 		cellTable.addColumn(prenameColumn,"Vorname");
@@ -60,8 +61,9 @@ public class UserListWidgetImpl extends Composite implements UserListWidget{
 		cellTable.setColumnWidth(prenameColumn,"40%");
 		cellTable.setColumnWidth(surnameColumn,"40%");
 		
-		cellTable.getHeader(2).setHeaderStyleNames(cellTable.getHeader(2).getHeaderStyleNames()+" tblleft");
-	}
+		
+		
+		}
 	
 	public UserListWidgetImpl() {
 		initializeCellTable();

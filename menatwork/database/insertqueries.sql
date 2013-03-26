@@ -133,3 +133,5 @@ insert into person
 values('default', 0, 'default', 'default', NULL, false, 1,            NULL, NULL,          NULL,    NULL,        NULL, NULL,                      NULL);
 insert into person
 values('inf9446', 0, 'Wefers', 'Julian',   9446, true,  2, '+491726627997', NULL, 'Schulenhörn', '25421', 'Pinneberg', '4a', 'julian.wefers@gmail.com');
+insert into person
+values('inf9144', 0, 'Alexander', 'Bülow',   9144, true,  2, '+49172666666', NULL, 'Theodor-Heuss-Str.', '21629', 'Neu Wulmstorf', '90', 'alexander.buelow@gmail.com');

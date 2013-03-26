@@ -3,6 +3,7 @@ package org.fhw.asta.kasse.client.widget.sidebar;
 import java.util.List;
 
 import org.fhw.asta.kasse.shared.model.Category;
+import org.fhw.asta.kasse.shared.model.PersonGroup;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -66,5 +67,22 @@ public class SidebarWidgetImpl extends Composite implements SidebarWidget {
 	@Override
 	public void addCapital(String capital) {
 		addHtml("<li class=\"nav-header\">"+capital+"</li>");	
+	}
+
+	@Override
+	public void addUserGroup(PersonGroup pers) {
+		addHtml("<li><a href=\"#UserListPlace:"+pers.getGroupId()+"\">"+pers.getName()+"</a></li>");
+		
+	}
+
+	@Override
+	public void addUserGroups(List<PersonGroup> pers) {
+		clear();
+		addLink("#UserListPlace:","Alle");
+		for (PersonGroup group: pers)
+		{
+			addUserGroup(group);
+		}
+		
 	}
 }

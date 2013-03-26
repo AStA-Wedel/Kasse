@@ -3,6 +3,7 @@ package org.fhw.asta.kasse.client.widget.sidebar;
 import java.util.List;
 
 import org.fhw.asta.kasse.shared.model.Category;
+import org.fhw.asta.kasse.shared.model.PersonGroup;
 
 import com.google.gwt.user.client.ui.IsWidget;
 
@@ -14,5 +15,7 @@ public interface SidebarWidget extends IsWidget{
 	public void addCapital(String capital);
 	public void addCat(Category cat);
 	public void addCats(List<Category> cats);
+	public void addUserGroup(PersonGroup pers);
+	public void addUserGroups(List<PersonGroup> pers);
 
 }

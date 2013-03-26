@@ -13,6 +13,7 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String email;
+	
 
 	private AuthenticationStatus authenticationStatus = AuthenticationStatus.NOT_AUTHENTICATED;
 
@@ -23,6 +24,7 @@ public class User implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	
 	public void setAuthenticationStatus(AuthenticationStatus authenticationStatus) {
 		this.authenticationStatus = authenticationStatus;

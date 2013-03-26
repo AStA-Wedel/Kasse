@@ -3,6 +3,7 @@ package org.fhw.asta.kasse.server.service;
 import java.util.List;
 
 import org.fhw.asta.kasse.server.common.User;
+import org.fhw.asta.kasse.server.common.UserLdapNameProvider;
 import org.fhw.asta.kasse.server.component.user.UserComponent;
 import org.fhw.asta.kasse.server.dao.UserDao;
 import org.fhw.asta.kasse.shared.authentication.AuthenticationResult;
@@ -62,5 +63,15 @@ public class UserServiceEndpoint extends RemoteServiceServlet implements
 	@Override
 	public List<Person> getUsersByGroup(String groupId) {
 		return this.userDao.getUsersByGroup(groupId);
+	}
+
+	@Override
+	public Boolean loggedOnUserIsAdmin() {
+		  final Optional<String> ldapName = new UserLdapNameProvider(this.getThreadLocalRequest()).get();
+		  if (ldapName.isPresent()) {
+			  return this.userDao.userIsAdmin(ldapName.get());
+		  } else {
+			  return false;
+		  }
 	}
 }

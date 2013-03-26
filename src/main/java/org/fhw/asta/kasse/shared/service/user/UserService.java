@@ -19,4 +19,5 @@ public interface UserService extends RemoteService {
   List<Person> getAllUsers();
   List<Person> getUsersByGroup(String groupId);
   List<PersonGroup> getAllUserGroups();
+  Boolean loggedOnUserIsAdmin();
 }

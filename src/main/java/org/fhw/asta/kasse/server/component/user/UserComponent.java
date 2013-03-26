@@ -24,8 +24,7 @@ public class UserComponent {
 		
 		User user = userProvider.get();
 		user.setEmail(email);
-		user.setAuthenticationStatus(AuthenticationStatus.AUTHENTICATED);
-		
+		user.setAuthenticationStatus(AuthenticationStatus.AUTHENTICATED);		
 		return user;
 	}
 	

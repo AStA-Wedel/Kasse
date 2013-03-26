@@ -62,6 +62,11 @@ public class UserDao extends GenericDao {
         "SELECT * FROM person WHERE ldap_name = ? AND revision = ?", new Object[]{ldapName, revision},
         new PersonRowMapper()));
   }
+
+public Boolean userIsAdmin(String ldapName) {
+	return queryForObject("SELECT p1.* FROM person p1 WHERE p1.ldap_name = ? AND p1.revision ="
+            + "(SELECT MAX(p2.revision) FROM person p2 WHERE p2.ldap_name = p1.ldap_name) AND p1.is_admin = TRUE", new Object[]{ldapName}, new PersonRowMapper()).isPresent();	
+}
   
  
 }

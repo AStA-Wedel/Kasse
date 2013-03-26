@@ -7,6 +7,7 @@ import org.fhw.asta.kasse.shared.model.PersonGroup;
 import org.fhw.asta.kasse.shared.service.user.UserServiceAsync;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -95,7 +96,7 @@ public class UserWidgetImpl extends Composite implements UserWidget {
 		this.pers = pers;
 		
 		userService.getAllUserGroups(new UserGroupCallback());
-		
+		userService.loggedOnUserIsAdmin(new AdminCallback());
 		rzLogin.setText(pers.getLdapName());
 		matrNr.setText(pers.getMatrNo());
 		preName.setText(pers.getPrename());
@@ -107,6 +108,7 @@ public class UserWidgetImpl extends Composite implements UserWidget {
 		zipcode.setText(pers.getZipcode());
 		town.setText(pers.getTown());
 		mail.setText(pers.getEmail());
+		isAdmin.setValue(pers.isAdmin());
 	}
 	
 	private class UserGroupCallback implements AsyncCallback<List<PersonGroup>> {
@@ -137,6 +139,26 @@ public class UserWidgetImpl extends Composite implements UserWidget {
 			
 			userGroup.setItemSelected(indexToFind, true);
 		}	
+	}
+
+	private class AdminCallback implements AsyncCallback<Boolean> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onSuccess(Boolean result) {
+				isAdmin.setEnabled(result);			
+		}
+		
+	}
+	
+	@Override
+	public HasClickHandlers getAbortButton() {
+		return abortButton;
 	}
 	
 

@@ -16,6 +16,8 @@ import org.fhw.asta.kasse.shared.service.user.UserServiceAsync;
 import com.google.common.base.Strings;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -63,7 +65,7 @@ public class UserListActivity extends AbstractActivity {
 		topbarContainer.setTopbar(readyTopbarWidget);
 		
 		mainWidget.setSidebarWidget(sidebarWidget);
-		mainWidget.setBasketWidget(userWidget);
+		mainWidget.setBasketWidget(null);
 		mainWidget.setWidget(userListWidget);
 		
 		panel.setWidget(mainWidget);
@@ -83,6 +85,8 @@ public class UserListActivity extends AbstractActivity {
 		} else {
 			userService.getUsersByGroup(userListPlace.getToken(), new UserCallback());			
 		}
+		
+		userWidget.getAbortButton().addClickHandler(new AbortHandler());
 	}
 	
 	private class AdjustUserUpdater implements FieldUpdater<Person,String>
@@ -90,8 +94,18 @@ public class UserListActivity extends AbstractActivity {
 
 		@Override
 		public void update(int index, Person object, String value) {
+				mainWidget.setBasketWidget(userWidget);
 				userWidget.showPerson(object);
 		}
+	}
+	
+	private class AbortHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			mainWidget.setBasketWidget(null);			
+		}
+		
 	}
 
 	private static final class UserIdProvider implements ProvidesKey<Person> {

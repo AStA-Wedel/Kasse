@@ -22,4 +22,6 @@ public interface UserServiceAsync {
 void getAllUserGroups(AsyncCallback<List<PersonGroup>> callback);
 
 void getUsersByGroup(String groupId, AsyncCallback<List<Person>> callback);
+
+void loggedOnUserIsAdmin(AsyncCallback<Boolean> callback);
 }

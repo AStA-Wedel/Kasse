@@ -7,6 +7,7 @@ import org.fhw.asta.kasse.client.widget.HasTopbar;
 import org.fhw.asta.kasse.client.widget.main.MainWidget;
 import org.fhw.asta.kasse.client.widget.sidebar.SidebarWidget;
 import org.fhw.asta.kasse.client.widget.topbar.ready.ReadyTopBarWidget;
+import org.fhw.asta.kasse.client.widget.user.UserWidget;
 import org.fhw.asta.kasse.client.widget.userlist.UserListWidget;
 import org.fhw.asta.kasse.shared.model.Person;
 import org.fhw.asta.kasse.shared.model.PersonGroup;
@@ -41,6 +42,9 @@ public class UserListActivity extends AbstractActivity {
 	private UserListWidget userListWidget;
 	
 	@Inject
+	private UserWidget userWidget;
+	
+	@Inject
 	private UserServiceAsync userService;
 	
 	
@@ -59,7 +63,7 @@ public class UserListActivity extends AbstractActivity {
 		topbarContainer.setTopbar(readyTopbarWidget);
 		
 		mainWidget.setSidebarWidget(sidebarWidget);
-		mainWidget.setBasketWidget(null);
+		mainWidget.setBasketWidget(userWidget);
 		mainWidget.setWidget(userListWidget);
 		
 		panel.setWidget(mainWidget);

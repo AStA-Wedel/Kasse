@@ -1,0 +1,82 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:p1="urn:import:com.google.gwt.user.cellview.client">
+	<g:HTMLPanel>
+		
+		<table>
+			<tr>
+				<td>RZ-Login:</td>
+				<td><g:TextBox ui:field="rzLogin" readOnly="true"/></td>
+			</tr>
+			<tr>
+				<td>Matrikel-Nr:</td>
+				<td><g:TextBox ui:field="matrNr" readOnly="true"/></td>
+			</tr>
+			<tr>
+				<td>Nutzergruppe:</td>
+				<td><g:ListBox ui:field="userGroup"/></td>
+			</tr>
+			<tr>
+				<td>Vorname:</td>
+				<td><g:TextBox ui:field="preName"/></td>
+			</tr>
+			<tr>
+				<td>Nachname:</td>
+				<td><g:TextBox ui:field="surName"/></td>
+			</tr>
+			<tr>
+				<td>Mobil:</td>
+				<td><g:TextBox ui:field="mobile"/></td>
+			</tr>
+			<tr>
+				<td>Festnetz:</td>
+				<td><g:TextBox ui:field="phone"/></td>
+			</tr>
+			<tr>
+				<td>Straße:</td>
+				<td><g:TextBox ui:field="street"/></td>
+			</tr>
+			<tr>
+				<td>Hausnummer:</td>
+				<td><g:TextBox ui:field="streetNumber"/></td>
+			</tr>
+			<tr>
+				<td>PLZ:</td>
+				<td><g:TextBox ui:field="zipcode"/></td>
+			</tr>
+			<tr>
+				<td>Ort:</td>
+				<td><g:TextBox ui:field="town"/></td>
+			</tr>
+			<tr>
+				<td>E-Mail:</td>
+				<td><g:TextBox ui:field="mail"/></td>
+			</tr>
+			<tr>
+				<td>Konto-Inhaber:</td>
+				<td><g:TextBox ui:field="accOwner"/></td>
+			</tr>
+			<tr>
+				<td>Konto-Nr.:</td>
+				<td><g:TextBox ui:field="accNumber"/></td>
+			</tr>
+			<tr>
+				<td>Bankleitzahl:</td>
+				<td><g:TextBox ui:field="accBLZ"/></td>
+			</tr>
+			<tr>
+				<td>Administrator:</td>
+				<td><g:SimpleCheckBox ui:field="isAdmin"/></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td>	</td>
+				<td><g:Button ui:field="abortButton" text="Abbrechen" styleName="btn btn-danger"/>&nbsp;<g:Button ui:field="saveButton" text="Speichern" styleName="btn btn-success"/></td>
+			</tr>
+		</table>
+
+	</g:HTMLPanel>
+</ui:UiBinder> 

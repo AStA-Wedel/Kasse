@@ -88,38 +88,22 @@ public class BasketController {
 		basketWidget.getMatrNrBox().addValueChangeHandler(this.matrNrUpdater);
 	}
 
-	private static class SameArticleIdPredicate implements
-			Predicate<BasketItem> {
-
-		private final int articleId;
-
-		public SameArticleIdPredicate(int articleId) {
-			this.articleId = articleId;
-		}
-
-		@Override
-		public boolean apply(@Nullable BasketItem input) {
-			return input.getArticleId() == articleId;
-		}
-
-	}
-
 	public void addBasketPosition(BasketItem basketItem) {
 
 		Optional<BasketItem> maybeBasketItem = Iterables.tryFind(
 				basketDataProvider.getList(), new SameArticleIdPredicate(
 						basketItem.getArticleId()));
 
-		
 		if (maybeBasketItem.isPresent()) {
-		
+
 			BasketItem bi = maybeBasketItem.get();
-			
+
 			this.basketDataProvider.getList().remove(bi);
 
-			basketItem = basketItem.addAmount(bi.getAmount()).updateDiscount(bi.getDiscount());			
+			basketItem = basketItem.addAmount(bi.getAmount()).updateDiscount(
+					bi.getDiscount());
 		}
-		
+
 		this.basketDataProvider.getList().add(basketItem);
 		this.flush();
 	}
@@ -225,15 +209,12 @@ public class BasketController {
 		public void update(int index, BasketItem object, String value) {
 			BasketItem toUpdate;
 
-			if (value.matches("[0-9]+")) {
-				toUpdate = new BasketItem(object.getItemName(),
-						object.getItemPrice(), object.getArticleId(),
-						object.getAmount(), Integer.valueOf(value));
-			} else {
-				toUpdate = new BasketItem(object.getItemName(),
-						object.getItemPrice(), object.getArticleId(),
-						object.getAmount(), 0);
-			}
+			int discountVal = value.matches("[0-9]+") ? Integer.valueOf(value)
+					: 0;
+
+			toUpdate = new BasketItem(object.getItemName(),
+					object.getItemPrice(), object.getArticleId(),
+					object.getAmount(), discountVal);
 
 			BasketController.this.basketDataProvider.getList().remove(object);
 			BasketController.this.basketDataProvider.getList().add(toUpdate);
@@ -301,6 +282,22 @@ public class BasketController {
 					Window.Location.createUrlBuilder()
 							.setHash("PrintCustomsPlace:").buildString()
 							+ token.toString(), "_blank", "");
+		}
+
+	}
+
+	private static class SameArticleIdPredicate implements
+			Predicate<BasketItem> {
+
+		private final int articleId;
+
+		public SameArticleIdPredicate(int articleId) {
+			this.articleId = articleId;
+		}
+
+		@Override
+		public boolean apply(@Nullable BasketItem input) {
+			return input.getArticleId() == articleId;
 		}
 
 	}

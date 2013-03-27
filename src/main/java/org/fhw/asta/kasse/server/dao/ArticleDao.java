@@ -18,8 +18,7 @@ public class ArticleDao extends GenericDao {
 		public Article mapRow(final ResultSet arg0, final int arg1)
 				throws SQLException {
 			return new Article(arg0.getInt(1), arg0.getInt(2),
-					arg0.getString(3), arg0.getString(4), new EuroAmount(
-							arg0.getInt(5)), arg0.getString(6), arg0.getInt(7),
+					arg0.getString(3), arg0.getString(4), EuroAmount.create(arg0.getInt(5)), arg0.getString(6), arg0.getInt(7),
 					arg0.getBoolean(8));
 		}
 	}

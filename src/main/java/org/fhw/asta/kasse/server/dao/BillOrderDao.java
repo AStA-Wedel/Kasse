@@ -42,8 +42,7 @@ public class BillOrderDao extends GenericDao {
 		@Override
 		public BasketItem mapRow(ResultSet arg0, int arg1) throws SQLException {
 			// TODO Auto-generated method stub
-			return new BasketItem(arg0.getString(1), new EuroAmount(
-					arg0.getInt(2)), arg0.getInt(3), arg0.getInt(4),
+			return new BasketItem(arg0.getString(1), EuroAmount.create(arg0.getInt(2)), arg0.getInt(3), arg0.getInt(4),
 					arg0.getInt(5));
 		}
 	}

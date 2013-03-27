@@ -12,18 +12,13 @@ public class EuroFormatter {
 		return format(euroAmount.getCentAmount());
 	}
 	
-	public static String format(int euroAmount){
+	private static String format(int euroAmount){
 		return EURO_NUMBER_FORMAT.format(euroAmount / 100.0);
-	}
-	
-	public static String formatWithDiscount(int euroAmount, int discount)
-	{
-		return format((int)Math.round((euroAmount *((100-discount)/100.0))));
 	}
 	
 	public static String formatWithDiscount(EuroAmount euroAmount, int discount)
 	{
-		return formatWithDiscount(euroAmount.getCentAmount(),discount);
+		return format(euroAmount.withDiscount(discount));		
 	}
-		
+			
 }

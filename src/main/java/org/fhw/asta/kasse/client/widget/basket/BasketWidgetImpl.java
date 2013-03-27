@@ -131,8 +131,8 @@ public class BasketWidgetImpl extends Composite implements BasketWidget {
 		}
 
 		@Override
-		public String getValue(BasketItem object) {
-			return EuroFormatter.formatWithDiscount(object.getItemPrice().getCentAmount() * object.getAmount(),object.getDiscount());
+		public String getValue(BasketItem bi) {
+			return EuroFormatter.formatWithDiscount(bi.getItemPrice().times(bi.getAmount()), bi.getDiscount());			
 		}
 	}
 	

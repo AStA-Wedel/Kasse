@@ -58,8 +58,8 @@ public class BasketItem implements Serializable {
 	  return total().withDiscount(discount);
   }
   
-  public BasketItem addAmount(int amount) {
-	  return new BasketItem(itemName, itemPrice, articleId, amount + this.amount, discount);
+  public BasketItem updateAmount(int amount) {
+	  return new BasketItem(itemName, itemPrice, articleId, amount, discount);
   }
   
   public BasketItem updateDiscount(int discount) {

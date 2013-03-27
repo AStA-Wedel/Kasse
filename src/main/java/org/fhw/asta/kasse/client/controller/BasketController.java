@@ -100,7 +100,8 @@ public class BasketController {
 
 			this.basketDataProvider.getList().remove(bi);
 
-			basketItem = basketItem.addAmount(bi.getAmount()).updateDiscount(
+			basketItem = basketItem.updateAmount(
+					bi.getAmount() + basketItem.getAmount()).updateDiscount(
 					bi.getDiscount());
 		}
 
@@ -176,16 +177,11 @@ public class BasketController {
 		@Override
 		public void update(int index, BasketItem object, String value) {
 			BasketItem toUpdate;
-			if (value.matches("[1-9][0-9]*")) {
-				toUpdate = new BasketItem(object.getItemName(),
-						object.getItemPrice(), object.getArticleId(),
-						Integer.valueOf(value), object.getDiscount());
 
-			} else {
-				toUpdate = new BasketItem(object.getItemName(),
-						object.getItemPrice(), object.getArticleId(), 1,
-						object.getDiscount());
-			}
+			int amountVal = value.matches("[1-9][0-9]*") ? Integer
+					.valueOf(value) : 1;
+
+			toUpdate = object.updateAmount(amountVal);
 
 			BasketController.this.basketDataProvider.getList().remove(object);
 			BasketController.this.basketDataProvider.getList().add(toUpdate);
@@ -212,9 +208,7 @@ public class BasketController {
 			int discountVal = value.matches("[0-9]+") ? Integer.valueOf(value)
 					: 0;
 
-			toUpdate = new BasketItem(object.getItemName(),
-					object.getItemPrice(), object.getArticleId(),
-					object.getAmount(), discountVal);
+			toUpdate = object.updateDiscount(discountVal);
 
 			BasketController.this.basketDataProvider.getList().remove(object);
 			BasketController.this.basketDataProvider.getList().add(toUpdate);

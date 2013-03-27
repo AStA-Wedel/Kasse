@@ -2,7 +2,6 @@ package org.fhw.asta.kasse.client.controller;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 
 import javax.annotation.Nullable;
 
@@ -15,7 +14,8 @@ import org.fhw.asta.kasse.shared.common.EuroAmount;
 import org.fhw.asta.kasse.shared.model.Article;
 import org.fhw.asta.kasse.shared.service.checkout.CheckoutServiceAsync;
 
-import com.google.common.base.Function;
+import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
 import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -32,232 +32,277 @@ import com.google.gwt.view.client.ProvidesKey;
 import com.google.inject.Inject;
 
 public class BasketController {
-  private final ListDataProvider<BasketItem> basketDataProvider;
+	private final ListDataProvider<BasketItem> basketDataProvider;
 
-  private BasketWidget basketWidget;
+	private BasketWidget basketWidget;
 
-  private FieldUpdater<BasketItem, String> deleteUpdater;
-  private FieldUpdater<BasketItem, String> amountUpdater;
-  private FieldUpdater<BasketItem, String> discountUpdater;
-  private ValueChangeHandler<String> masterDiscountUpdater;
-  private ValueChangeHandler<String> matrNrUpdater;
-  private ClickHandler checkoutHandler;
-  private ClickHandler checkoutHandlerUnPayed;
-  private BasketComparator basketComparator = new BasketComparator();
+	private FieldUpdater<BasketItem, String> deleteUpdater;
+	private FieldUpdater<BasketItem, String> amountUpdater;
+	private FieldUpdater<BasketItem, String> discountUpdater;
+	private ValueChangeHandler<String> masterDiscountUpdater;
+	private ValueChangeHandler<String> matrNrUpdater;
+	private ClickHandler checkoutHandler;
+	private ClickHandler checkoutHandlerUnPayed;
+	private BasketComparator basketComparator = new BasketComparator();
 
-  @Inject
-  private CheckoutServiceAsync checkoutService;
+	@Inject
+	private CheckoutServiceAsync checkoutService;
 
-  @Inject
-  private PlaceController placeController;
+	@Inject
+	private PlaceController placeController;
 
-  public BasketController() {
-    this.basketDataProvider = new ListDataProvider<BasketItem>(new BasketItemKeyProvider());
-  }
+	public BasketController() {
+		this.basketDataProvider = new ListDataProvider<BasketItem>(
+				new BasketItemKeyProvider());
+	}
 
-  @Inject
-  public void init(BasketWidget basketWidget) {
+	@Inject
+	public void init(BasketWidget basketWidget) {
 
-    this.basketWidget = basketWidget;
+		this.basketWidget = basketWidget;
 
-    this.basketDataProvider.addDataDisplay(this.basketWidget.getBasketTable());
+		this.basketDataProvider.addDataDisplay(this.basketWidget
+				.getBasketTable());
 
-    this.deleteUpdater = new DeleteUpdater();
-    basketWidget.getDeleteColumn().setFieldUpdater(this.deleteUpdater);
+		this.deleteUpdater = new DeleteUpdater();
+		basketWidget.getDeleteColumn().setFieldUpdater(this.deleteUpdater);
 
-    this.amountUpdater = new AmountUpdater();
-    basketWidget.getAmountColumn().setFieldUpdater(this.amountUpdater);
+		this.amountUpdater = new AmountUpdater();
+		basketWidget.getAmountColumn().setFieldUpdater(this.amountUpdater);
 
-    this.discountUpdater = new DiscountUpdater();
-    basketWidget.getDiscountColumn().setFieldUpdater(this.discountUpdater);
+		this.discountUpdater = new DiscountUpdater();
+		basketWidget.getDiscountColumn().setFieldUpdater(this.discountUpdater);
 
-    this.masterDiscountUpdater = new MasterDiscountUpdater();
-    basketWidget.getDiscountBox().addValueChangeHandler(this.masterDiscountUpdater);
+		this.masterDiscountUpdater = new MasterDiscountUpdater();
+		basketWidget.getDiscountBox().addValueChangeHandler(
+				this.masterDiscountUpdater);
 
-    this.checkoutHandler = new CheckoutHandler();
-    basketWidget.getCheckoutButton().addClickHandler(this.checkoutHandler);
+		this.checkoutHandler = new CheckoutHandler();
+		basketWidget.getCheckoutButton().addClickHandler(this.checkoutHandler);
 
-    this.checkoutHandlerUnPayed = new CheckoutHandlerUnPayed();
-    basketWidget.getCheckoutButtonUnPayed().addClickHandler(this.checkoutHandlerUnPayed);
+		this.checkoutHandlerUnPayed = new CheckoutHandlerUnPayed();
+		basketWidget.getCheckoutButtonUnPayed().addClickHandler(
+				this.checkoutHandlerUnPayed);
 
-    this.matrNrUpdater = new MatrNrUpdater();
-    basketWidget.getMatrNrBox().addValueChangeHandler(this.matrNrUpdater);
-  }
+		this.matrNrUpdater = new MatrNrUpdater();
+		basketWidget.getMatrNrBox().addValueChangeHandler(this.matrNrUpdater);
+	}
 
-  public void addBasketPosition(BasketItem basketItem) {
+	private static class SameArticleIdPredicate implements
+			Predicate<BasketItem> {
 
-    final Iterator<BasketItem> basketIterator = this.basketDataProvider.getList().iterator();
-    while (basketIterator.hasNext()) {
-      final BasketItem next = basketIterator.next();
-      if (next.getArticleId() == basketItem.getArticleId()) {
-        basketItem = new BasketItem(basketItem.getItemName(), basketItem.getItemPrice(), basketItem.getArticleId(),
-            basketItem.getAmount() + next.getAmount(), next.getDiscount());
-        this.basketDataProvider.getList().remove(next);
-      }
-    }
+		private final int articleId;
 
-    this.basketDataProvider.getList().add(basketItem);
-    this.flush();
+		public SameArticleIdPredicate(int articleId) {
+			this.articleId = articleId;
+		}
 
-  }
+		@Override
+		public boolean apply(@Nullable BasketItem input) {
+			return input.getArticleId() == articleId;
+		}
 
-  public void addBasketPosition(Article article) {
+	}
 
-    this.addBasketPosition(new BasketItem(article.getName(), article.getPrice(), article.getId(), 1));
-  }
+	public void addBasketPosition(BasketItem basketItem) {
 
-  private void flush() {
-    Collections.sort(this.basketDataProvider.getList(), this.basketComparator);
+		Optional<BasketItem> maybeBasketItem = Iterables.tryFind(
+				basketDataProvider.getList(), new SameArticleIdPredicate(
+						basketItem.getArticleId()));
 
-    EuroAmount sum = EuroAmount.ZERO_AMOUNT;
-        
-    for (BasketItem bi : basketDataProvider.getList()) {
-    	sum = sum.plus(bi.getItemPrice().times(bi.getAmount()).withDiscount(bi.getDiscount()));
-    }
-    
-    int discount = 0;
+		
+		if (maybeBasketItem.isPresent()) {
+		
+			BasketItem bi = maybeBasketItem.get();
+			
+			this.basketDataProvider.getList().remove(bi);
 
-    try {
-      discount = Integer.valueOf(this.basketWidget.getDiscountBox().getText());
-    } catch (final NumberFormatException e) {
-      discount = 0;
-    }
+			basketItem = basketItem.addAmount(bi.getAmount()).updateDiscount(bi.getDiscount());			
+		}
+		
+		this.basketDataProvider.getList().add(basketItem);
+		this.flush();
+	}
 
-    this.basketWidget.getSumLabel().setText(EuroFormatter.format(sum.withDiscount(discount)));
-  }
+	public void addBasketPosition(Article article) {
 
-  private class CheckoutHandler implements ClickHandler {
+		this.addBasketPosition(new BasketItem(article.getName(), article
+				.getPrice(), article.getId(), 1));
+	}
 
-    @Override
-    public void onClick(ClickEvent event) {
-      BasketController.this.checkoutService.doCheckout(
-          Lists.newArrayList(BasketController.this.basketDataProvider.getList()),
-          Integer.valueOf(BasketController.this.basketWidget.getDiscountBox().getText()),
-          BasketController.this.basketWidget.getMatrNrBox().getText(), 'p', new CheckoutCallback());
-      BasketController.this.flush();
-    }
+	private void flush() {
+		Collections.sort(this.basketDataProvider.getList(),
+				this.basketComparator);
 
-  }
+		EuroAmount sum = EuroAmount.ZERO_AMOUNT;
 
-  private class CheckoutHandlerUnPayed implements ClickHandler {
+		for (BasketItem bi : basketDataProvider.getList()) {
+			sum = sum.plus(bi.totalWithDiscount());
+		}
 
-    @Override
-    public void onClick(ClickEvent event) {
-      BasketController.this.checkoutService.doCheckout(
-          Lists.newArrayList(BasketController.this.basketDataProvider.getList()),
-          Integer.valueOf(BasketController.this.basketWidget.getDiscountBox().getText()),
-          BasketController.this.basketWidget.getMatrNrBox().getText(), 'o', new CheckoutCallback());
-      BasketController.this.flush();
-    }
+		int discount = 0;
 
-  }
+		try {
+			discount = Integer.valueOf(this.basketWidget.getDiscountBox()
+					.getText());
+		} catch (final NumberFormatException e) {
+			discount = 0;
+		}
 
-  private class AmountUpdater implements FieldUpdater<BasketItem, String> {
+		this.basketWidget.getSumLabel().setText(
+				EuroFormatter.format(sum.withDiscount(discount)));
+	}
 
-    @Override
-    public void update(int index, BasketItem object, String value) {
-      BasketItem toUpdate;
-      if (value.matches("[1-9][0-9]*")) {
-        toUpdate = new BasketItem(object.getItemName(), object.getItemPrice(), object.getArticleId(),
-            Integer.valueOf(value), object.getDiscount());
+	private class CheckoutHandler implements ClickHandler {
 
-      } else {
-        toUpdate = new BasketItem(object.getItemName(), object.getItemPrice(), object.getArticleId(), 1,
-            object.getDiscount());
-      }
+		@Override
+		public void onClick(ClickEvent event) {
+			BasketController.this.checkoutService
+					.doCheckout(
+							Lists.newArrayList(BasketController.this.basketDataProvider
+									.getList()), Integer
+									.valueOf(BasketController.this.basketWidget
+											.getDiscountBox().getText()),
+							BasketController.this.basketWidget.getMatrNrBox()
+									.getText(), 'p', new CheckoutCallback());
+			BasketController.this.flush();
+		}
 
-      BasketController.this.basketDataProvider.getList().remove(object);
-      BasketController.this.basketDataProvider.getList().add(toUpdate);
-      BasketController.this.flush();
+	}
 
-    }
-  }
+	private class CheckoutHandlerUnPayed implements ClickHandler {
 
-  private class DeleteUpdater implements FieldUpdater<BasketItem, String> {
+		@Override
+		public void onClick(ClickEvent event) {
+			BasketController.this.checkoutService
+					.doCheckout(
+							Lists.newArrayList(BasketController.this.basketDataProvider
+									.getList()), Integer
+									.valueOf(BasketController.this.basketWidget
+											.getDiscountBox().getText()),
+							BasketController.this.basketWidget.getMatrNrBox()
+									.getText(), 'o', new CheckoutCallback());
+			BasketController.this.flush();
+		}
 
-    @Override
-    public void update(int index, BasketItem object, String value) {
-      BasketController.this.basketDataProvider.getList().remove(object);
-      BasketController.this.flush();
-    }
-  }
+	}
 
-  private class DiscountUpdater implements FieldUpdater<BasketItem, String> {
+	private class AmountUpdater implements FieldUpdater<BasketItem, String> {
 
-    @Override
-    public void update(int index, BasketItem object, String value) {
-      BasketItem toUpdate;
+		@Override
+		public void update(int index, BasketItem object, String value) {
+			BasketItem toUpdate;
+			if (value.matches("[1-9][0-9]*")) {
+				toUpdate = new BasketItem(object.getItemName(),
+						object.getItemPrice(), object.getArticleId(),
+						Integer.valueOf(value), object.getDiscount());
 
-      if (value.matches("[0-9]+")) {
-        toUpdate = new BasketItem(object.getItemName(), object.getItemPrice(), object.getArticleId(),
-            object.getAmount(), Integer.valueOf(value));
-      } else {
-        toUpdate = new BasketItem(object.getItemName(), object.getItemPrice(), object.getArticleId(),
-            object.getAmount(), 0);
-      }
+			} else {
+				toUpdate = new BasketItem(object.getItemName(),
+						object.getItemPrice(), object.getArticleId(), 1,
+						object.getDiscount());
+			}
 
-      BasketController.this.basketDataProvider.getList().remove(object);
-      BasketController.this.basketDataProvider.getList().add(toUpdate);
-      BasketController.this.flush();
+			BasketController.this.basketDataProvider.getList().remove(object);
+			BasketController.this.basketDataProvider.getList().add(toUpdate);
+			BasketController.this.flush();
 
-    }
+		}
+	}
 
-  }
+	private class DeleteUpdater implements FieldUpdater<BasketItem, String> {
 
-  private class MasterDiscountUpdater implements ValueChangeHandler<String> {
+		@Override
+		public void update(int index, BasketItem object, String value) {
+			BasketController.this.basketDataProvider.getList().remove(object);
+			BasketController.this.flush();
+		}
+	}
 
-    @Override
-    public void onValueChange(ValueChangeEvent<String> event) {
-      if (!event.getValue().matches("[0-9]+")) {
-        BasketController.this.basketWidget.getDiscountBox().setText("0");
-      }
-      BasketController.this.flush();
-    }
+	private class DiscountUpdater implements FieldUpdater<BasketItem, String> {
 
-  }
+		@Override
+		public void update(int index, BasketItem object, String value) {
+			BasketItem toUpdate;
 
-  private class MatrNrUpdater implements ValueChangeHandler<String> {
+			if (value.matches("[0-9]+")) {
+				toUpdate = new BasketItem(object.getItemName(),
+						object.getItemPrice(), object.getArticleId(),
+						object.getAmount(), Integer.valueOf(value));
+			} else {
+				toUpdate = new BasketItem(object.getItemName(),
+						object.getItemPrice(), object.getArticleId(),
+						object.getAmount(), 0);
+			}
 
-    @Override
-    public void onValueChange(ValueChangeEvent<String> event) {
-      BasketController.this.flush();
-    }
+			BasketController.this.basketDataProvider.getList().remove(object);
+			BasketController.this.basketDataProvider.getList().add(toUpdate);
+			BasketController.this.flush();
 
-  }
+		}
 
-  private static final class BasketItemKeyProvider implements ProvidesKey<BasketItem> {
+	}
 
-    @Override
-    public Object getKey(BasketItem item) {
-      return item.getArticleId();
-    }
+	private class MasterDiscountUpdater implements ValueChangeHandler<String> {
 
-  }
+		@Override
+		public void onValueChange(ValueChangeEvent<String> event) {
+			if (!event.getValue().matches("[0-9]+")) {
+				BasketController.this.basketWidget.getDiscountBox()
+						.setText("0");
+			}
+			BasketController.this.flush();
+		}
 
-  private final class BasketComparator implements Comparator<BasketItem> {
+	}
 
-    @Override
-    public int compare(BasketItem o1, BasketItem o2) {
-      return ComparisonChain.start().compare(o1.getArticleId(), o2.getArticleId()).result();
-    }
+	private class MatrNrUpdater implements ValueChangeHandler<String> {
 
-  }
+		@Override
+		public void onValueChange(ValueChangeEvent<String> event) {
+			BasketController.this.flush();
+		}
 
-  private class CheckoutCallback implements AsyncCallback<Integer> {
+	}
 
-    @Override
-    public void onFailure(Throwable caught) {
-      // TODO FIXME
-    }
+	private static final class BasketItemKeyProvider implements
+			ProvidesKey<BasketItem> {
 
-    @Override
-    public void onSuccess(Integer result) {
-      BasketController.this.basketDataProvider.getList().clear();
-      final PrintCustomsToken token = new PrintCustomsToken(PrintType.BILLORDER, result);
-      Window.open(Window.Location.createUrlBuilder().setHash("PrintCustomsPlace:").buildString() + token.toString(),
-          "_blank", "");
-    }
+		@Override
+		public Object getKey(BasketItem item) {
+			return item.getArticleId();
+		}
 
-  }
+	}
+
+	private final class BasketComparator implements Comparator<BasketItem> {
+
+		@Override
+		public int compare(BasketItem o1, BasketItem o2) {
+			return ComparisonChain.start()
+					.compare(o1.getArticleId(), o2.getArticleId()).result();
+		}
+
+	}
+
+	private class CheckoutCallback implements AsyncCallback<Integer> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO FIXME
+		}
+
+		@Override
+		public void onSuccess(Integer result) {
+			BasketController.this.basketDataProvider.getList().clear();
+			final PrintCustomsToken token = new PrintCustomsToken(
+					PrintType.BILLORDER, result);
+			Window.open(
+					Window.Location.createUrlBuilder()
+							.setHash("PrintCustomsPlace:").buildString()
+							+ token.toString(), "_blank", "");
+		}
+
+	}
 
 }

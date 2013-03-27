@@ -31,7 +31,7 @@ public class EuroAmount implements Serializable
   public int getCentAmount() {
 	  return cents;
   }
-  
+    
   public EuroAmount plus(final EuroAmount summand)
   {
     return new EuroAmount(this.cents + summand.cents);

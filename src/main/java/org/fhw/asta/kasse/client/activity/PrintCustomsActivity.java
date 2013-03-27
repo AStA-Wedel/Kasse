@@ -239,8 +239,8 @@ public class PrintCustomsActivity extends AbstractActivity {
 		strb.append("<table class='regtb'><tr class='headline'><td>Menge</td><td class='desc'>Beschreibung</td><td>Rabatt (&#037;)</td><td>E-Preis</td><td>G-Preis</td><td>Abgehohlt</td></tr>");
 		for (BasketItem art : articles) {
 
-			EuroAmount euroAmount = art.getItemPrice().times(art.getAmount()).withDiscount(art.getDiscount());
-			
+			EuroAmount euroAmount = art.totalWithDiscount();
+						
 /*			EuroAmount euroAmount = new EuroAmount((int) Math.round((art
 					.getItemPrice().getCentAmount() * art.getAmount())
 					* ((100.0 - art.getDiscount()) / 100)));*/

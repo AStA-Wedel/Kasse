@@ -6,46 +6,6 @@ import org.fhw.asta.kasse.shared.common.EuroAmount;
 
 public class BasketItem implements Serializable {
 
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + this.amount;
-    result = prime * result + this.articleId;
-    result = prime * result + this.discount;
-    result = prime * result + ((this.itemName == null) ? 0 : this.itemName.hashCode());
-    result = prime * result + ((this.itemPrice == null) ? 0 : this.itemPrice.hashCode());
-    return result;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (this.getClass() != obj.getClass())
-      return false;
-    final BasketItem other = (BasketItem) obj;
-    if (this.amount != other.amount)
-      return false;
-    if (this.articleId != other.articleId)
-      return false;
-    if (this.discount != other.discount)
-      return false;
-    if (this.itemName == null) {
-      if (other.itemName != null)
-        return false;
-    } else if (!this.itemName.equals(other.itemName))
-      return false;
-    if (this.itemPrice == null) {
-      if (other.itemPrice != null)
-        return false;
-    } else if (!this.itemPrice.equals(other.itemPrice))
-      return false;
-    return true;
-  }
-
   private static final long serialVersionUID = 1L;
 
   private String itemName;
@@ -90,8 +50,60 @@ public class BasketItem implements Serializable {
     return this.amount;
   }
 
-  public EuroAmount getTotal() {
+  public EuroAmount total() {
     return this.getItemPrice().times(this.amount);
+  }
+  
+  public EuroAmount totalWithDiscount() {
+	  return total().withDiscount(discount);
+  }
+  
+  public BasketItem addAmount(int amount) {
+	  return new BasketItem(itemName, itemPrice, articleId, amount + this.amount, discount);
+  }
+  
+  public BasketItem updateDiscount(int discount) {
+	  return new BasketItem(itemName, itemPrice, articleId, amount, discount);
+  }
+  
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + this.amount;
+    result = prime * result + this.articleId;
+    result = prime * result + this.discount;
+    result = prime * result + ((this.itemName == null) ? 0 : this.itemName.hashCode());
+    result = prime * result + ((this.itemPrice == null) ? 0 : this.itemPrice.hashCode());
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (this.getClass() != obj.getClass())
+      return false;
+    final BasketItem other = (BasketItem) obj;
+    if (this.amount != other.amount)
+      return false;
+    if (this.articleId != other.articleId)
+      return false;
+    if (this.discount != other.discount)
+      return false;
+    if (this.itemName == null) {
+      if (other.itemName != null)
+        return false;
+    } else if (!this.itemName.equals(other.itemName))
+      return false;
+    if (this.itemPrice == null) {
+      if (other.itemPrice != null)
+        return false;
+    } else if (!this.itemPrice.equals(other.itemPrice))
+      return false;
+    return true;
   }
 
 }

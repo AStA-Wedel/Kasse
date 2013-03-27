@@ -3202,7 +3202,7 @@ input[type="button"].btn-block {
 .btn-success.active,
 .btn-info.active,
 .btn-inverse.active {
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.75) !important;
 }
 
 .btn {
@@ -3388,11 +3388,12 @@ input[type="button"].btn-block {
 }
 
 .btn-inverse:hover,
+.btn-inverse:visited,
 .btn-inverse:active,
 .btn-inverse.active,
 .btn-inverse.disabled,
 .btn-inverse[disabled] {
-  color: #ffffff;
+  color: #ffffff !important;
   background-color: #222222;
   *background-color: #151515;
 }

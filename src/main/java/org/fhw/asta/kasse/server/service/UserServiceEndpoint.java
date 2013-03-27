@@ -7,6 +7,7 @@ import org.fhw.asta.kasse.server.common.UserLdapNameProvider;
 import org.fhw.asta.kasse.server.component.user.UserComponent;
 import org.fhw.asta.kasse.server.dao.UserDao;
 import org.fhw.asta.kasse.shared.authentication.AuthenticationResult;
+import org.fhw.asta.kasse.shared.model.Account;
 import org.fhw.asta.kasse.shared.model.Person;
 import org.fhw.asta.kasse.shared.model.PersonGroup;
 import org.fhw.asta.kasse.shared.service.user.UserService;
@@ -73,5 +74,16 @@ public class UserServiceEndpoint extends RemoteServiceServlet implements
 		  } else {
 			  return false;
 		  }
+	}
+
+	@Override
+	public Optional<Account> getUserAccount(String ldapName) {
+		return this.userDao.getUserAccount(ldapName);
+	}
+
+	@Override
+	public void updateOrCreateUserAndAccount(Person person, Account account) {
+		this.userDao.updateOrCreateUser(person);
+		this.userDao.updateOrCreateAccount(account);		
 	}
 }

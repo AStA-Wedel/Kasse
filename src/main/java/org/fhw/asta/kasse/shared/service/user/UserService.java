@@ -3,6 +3,7 @@ package org.fhw.asta.kasse.shared.service.user;
 import java.util.List;
 
 import org.fhw.asta.kasse.shared.authentication.AuthenticationResult;
+import org.fhw.asta.kasse.shared.model.Account;
 import org.fhw.asta.kasse.shared.model.Person;
 import org.fhw.asta.kasse.shared.model.PersonGroup;
 
@@ -20,4 +21,6 @@ public interface UserService extends RemoteService {
   List<Person> getUsersByGroup(String groupId);
   List<PersonGroup> getAllUserGroups();
   Boolean loggedOnUserIsAdmin();
+  Optional<Account> getUserAccount(String ldapName);
+  void updateOrCreateUserAndAccount(Person person,Account account);
 }

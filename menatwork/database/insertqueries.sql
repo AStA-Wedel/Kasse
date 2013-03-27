@@ -7,6 +7,7 @@ DELETE FROM script;
 DELETE FROM article;
 DELETE FROM lecturer;
 DELETE FROM tax_category;
+delete from bank_account;
 delete from person;
 delete from person_group;
 delete from category;
@@ -123,15 +124,18 @@ INSERT INTO category_mapping(category_id, article_id, article_revision)
 	WHERE name = 'Allgemeine BWL';
 
 /* ----------------------------------------------- */
-
 insert into person_group
 values(1, 'default');
 insert into person_group
 values(2, 'Student');
+insert into person_group
+values(3, 'AStAFari');
 
 insert into person
 values('default', 0, 'default', 'default', NULL, false, 1,            NULL, NULL,          NULL,    NULL,        NULL, NULL,                      NULL);
 insert into person
 values('inf9446', 0, 'Wefers', 'Julian',   9446, true,  2, '+491726627997', NULL, 'Schulenhörn', '25421', 'Pinneberg', '4a', 'julian.wefers@gmail.com');
 insert into person
-values('inf9144', 0, 'Alexander', 'Bülow',   9144, true,  2, '+49172666666', NULL, 'Theodor-Heuss-Str.', '21629', 'Neu Wulmstorf', '90', 'alexander.buelow@gmail.com');
+values('inf9144', 0, 'Bülow', 'Alexander',   9144, true,  3, '+49172666666', NULL, 'Theodor-Heuss-Str.', '21629', 'Neu Wulmstorf', '90', 'alexander.buelow@gmail.com');
+
+insert into bank_account values ('inf9144',"Alexander Bülow",4218699,20750000);

@@ -91,7 +91,7 @@ public class PrintCustomsActivity extends AbstractActivity {
 					break;
 
 				case USERLIST:
-					printUSERLIST();
+					printUSERLIST(printCustomsPlace.getToken().get().getId());
 					break;
 				}
 			}
@@ -109,93 +109,108 @@ public class PrintCustomsActivity extends AbstractActivity {
 
 	private void printBILLORDER(int id) {
 
-		billOrderService.getBillOrder(id, new AsyncCallback<Optional<BillOrder>>() {
+		billOrderService.getBillOrder(id,
+				new AsyncCallback<Optional<BillOrder>>() {
 
-			@Override
-			public void onSuccess(Optional<BillOrder> result) {
-				billOrder = result.or(new BillOrder());
-				billOrderService.getBillOrderArticles(billOrder.getId(),
-						new AsyncCallback<List<BasketItem>>() {
+					@Override
+					public void onSuccess(Optional<BillOrder> result) {
+						billOrder = result.or(new BillOrder());
+						billOrderService.getBillOrderArticles(
+								billOrder.getId(),
+								new AsyncCallback<List<BasketItem>>() {
 
-							@Override
-							public void onFailure(Throwable caught) {
-								// TODO Auto-generated method stub
+									@Override
+									public void onFailure(Throwable caught) {
+										// TODO Auto-generated method stub
 
-							}
+									}
 
-							@Override
-							public void onSuccess(List<BasketItem> result) {
-								articles = result;
+									@Override
+									public void onSuccess(
+											List<BasketItem> result) {
+										articles = result;
 
-								userService.getUserByIdAndRevision(
-										billOrder.getIssuerLdapName(),
-										billOrder.getIssuerRevision(),
-										new AsyncCallback<Optional<Person>>() {
+										userService.getUserByIdAndRevision(
+												billOrder.getIssuerLdapName(),
+												billOrder.getIssuerRevision(),
+												new AsyncCallback<Optional<Person>>() {
 
-											@Override
-											public void onFailure(
-													Throwable caught) {
-												// TODO Auto-generated method
-												// stub
+													@Override
+													public void onFailure(
+															Throwable caught) {
+														// TODO Auto-generated
+														// method
+														// stub
 
-											}
+													}
 
-											@Override
-											public void onSuccess(
-													Optional<Person> result) {
-												issue = result.or(new Person());
-												userService
-														.getUserByIdAndRevision(
-																billOrder
-																		.getRecipientLdapName(),
-																billOrder
-																		.getReceipientRevision(),
-																new AsyncCallback<Optional<Person>>() {
+													@Override
+													public void onSuccess(
+															Optional<Person> result) {
+														issue = result
+																.or(new Person());
+														userService
+																.getUserByIdAndRevision(
+																		billOrder
+																				.getRecipientLdapName(),
+																		billOrder
+																				.getReceipientRevision(),
+																		new AsyncCallback<Optional<Person>>() {
 
-																	@Override
-																	public void onFailure(
-																			Throwable caught) {
-																		// TODO
-																		// Auto-generated
-																		// method
-																		// stub
+																			@Override
+																			public void onFailure(
+																					Throwable caught) {
+																				// TODO
+																				// Auto-generated
+																				// method
+																				// stub
 
-																	}
+																			}
 
-																	@Override
-																	public void onSuccess(
-																			Optional<Person> result) {
-																		recp = result
-																				.or(new Person());
-																		printBillOrder();
-																		printArticles();
+																			@Override
+																			public void onSuccess(
+																					Optional<Person> result) {
+																				recp = result
+																						.or(new Person());
+																				printBillOrder();
+																				printArticles();
 
-																	}
-																});
+																			}
+																		});
 
-											}
-										});
+													}
+												});
 
-							}
-						});
+									}
+								});
 
-			}
+					}
 
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
 
-			}
-		});
+					}
+				});
 	}
 
 	private void printBillOrder() {
 		printWidget.addHtml("<br /><br />");
-		printWidget.addHtml("<div class='recipient'><table><tr>"
-				+ "<td><strong>Name: </strong></td>" + "<td>"
-				+ recp.getPrename() + " " + recp.getSurname() + "</td>"
-				+ "</tr><tr><td><strong>Matrikel-Nr.: </strong></td>" + "<td>"
-				+ recp.getMatrNo() + "</td></tr></table>" + "<div>");
+		if (recp.getLdapName().equals("default")) {
+			printWidget.addHtml("<div class='recipient'><table><tr>"
+					+ "<td><strong>BARKUNDE </strong></td><td></td>"
+					+ "</tr><tr><td><strong></strong></td><td>"
+					+ "</td></tr></table>" + "<div>");
+
+		} else {
+			printWidget.addHtml("<div class='recipient'><table><tr>"
+					+ "<td><strong>Name: </strong></td>" + "<td>"
+					+ recp.getPrename() + " " + recp.getSurname() + "</td>"
+					+ "</tr><tr><td><strong>Matrikel-Nr.: </strong></td>"
+					+ "<td>" + recp.getMatrNo() + "</td></tr></table>"
+					+ "<div>");
+
+		}
 		printWidget.addHtml("<div class='billdata'><table class='billtbl'><tr>"
 				+ "<td><strong>Rechnungs-Nr.: </strong></td>"
 				+ "<td class='billdata-right'>"
@@ -221,7 +236,7 @@ public class PrintCustomsActivity extends AbstractActivity {
 		for (BasketItem art : articles) {
 			EuroAmount euroAmount = new EuroAmount((int) Math.round((art
 					.getItemPrice().getCentAmount() * art.getAmount())
-					* ((100.0 - art.getDiscount())/100)));
+					* ((100.0 - art.getDiscount()) / 100)));
 			sum += euroAmount.getCentAmount();
 			strb.append("<tr class='unbreakable'><td>" + art.getAmount()
 					+ "</td><td class='desc'>" + art.getItemName()
@@ -239,7 +254,8 @@ public class PrintCustomsActivity extends AbstractActivity {
 				+ billOrder.getDiscount() + "</td></tr>");
 		strb.append("<tr><td></td><td class='desc'></td><td></td><td></td><td><strong>Endsumme:</strong></td><td>"
 				+ EuroFormatter.format(new EuroAmount((int) Math.round(sum
-						* ((100.0 - billOrder.getDiscount())/100)))) + "</td></tr>");
+						* ((100.0 - billOrder.getDiscount()) / 100))))
+				+ "</td></tr>");
 		strb.append("</table>");
 		printWidget.addHtml(strb.toString());
 		printWidget.addHtml("<br /><br /><br />");
@@ -255,7 +271,47 @@ public class PrintCustomsActivity extends AbstractActivity {
 
 	}
 
-	private void printUSERLIST() {
+	private void printUSERLIST(int id) {
+		if (id != -1) {
+			userService.getUsersByGroup(String.valueOf(id),
+					new UserListCallback());
+		} else {
+			userService.getAllUsers(new UserListCallback());
+		}
+	}
+
+
+	private class UserListCallback implements AsyncCallback<List<Person>> {
+
+		@Override
+		public void onFailure(Throwable caught) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onSuccess(List<Person> result) {
+			StringBuilder strb = new StringBuilder();
+			strb.append("<table class='usertb'><tr class='headlineus'><td>RZ-Login</td><td class>Name</td><td>Vorname</td><td>Mobil</td><td>Festnetz</td><td>E-Mail</td><td>Straße</td><td>Ort</td></tr>");
+			int t = 0;
+			for (Person p : result) {
+				if (t % 2 == 1) {
+					strb.append("<tr class='uneven'><td>"+p.getLdapName()+"</td><td class>"+p.getSurname()+
+							"</td><td>"+p.getPrename()+"</td><td>"+p.getPhoneMobile()+"</td><td>" +
+									p.getPhoneHome()+"</td><td>"+p.getEmail()+"</td><td>" +
+											p.getStreet()+" "+p.getStreetnumber()+"</td><td>"+p.getZipcode()+" "+p.getTown()+"</td></tr>");
+				} else {
+					strb.append("<tr class='even'><td>"+p.getLdapName()+"</td><td class>"+p.getSurname()+
+							"</td><td>"+p.getPrename()+"</td><td>"+p.getPhoneMobile()+"</td><td>" +
+									p.getPhoneHome()+"</td><td>"+p.getEmail()+"</td><td>" +
+											p.getStreet()+" "+p.getStreetnumber()+"</td><td>"+p.getZipcode()+" "+p.getTown()+"</td></tr>");
+				}
+				t++;
+			}
+			strb.append("</table>");
+			printWidget.addHtml(strb.toString());
+
+		}
 
 	}
 }

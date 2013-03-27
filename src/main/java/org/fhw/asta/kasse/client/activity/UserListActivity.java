@@ -2,6 +2,8 @@ package org.fhw.asta.kasse.client.activity;
 
 import java.util.List;
 
+import org.fhw.asta.kasse.client.common.PrintCustomsToken;
+import org.fhw.asta.kasse.client.common.PrintCustomsToken.PrintType;
 import org.fhw.asta.kasse.client.place.UserListPlace;
 import org.fhw.asta.kasse.client.widget.HasTopbar;
 import org.fhw.asta.kasse.client.widget.main.MainWidget;
@@ -19,6 +21,7 @@ import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.view.client.ListDataProvider;
@@ -87,6 +90,7 @@ public class UserListActivity extends AbstractActivity {
 		}
 		
 		userWidget.getAbortButton().addClickHandler(new AbortHandler());
+		userListWidget.getPrintButton().addClickHandler(new PrintHandler());
 	}
 	
 	private class AdjustUserUpdater implements FieldUpdater<Person,String>
@@ -104,6 +108,24 @@ public class UserListActivity extends AbstractActivity {
 		@Override
 		public void onClick(ClickEvent event) {
 			mainWidget.setBasketWidget(null);			
+		}
+		
+	}
+	
+	private class PrintHandler implements ClickHandler {
+
+		@Override
+		public void onClick(ClickEvent event) {
+			if (Strings.isNullOrEmpty(userListPlace.getToken())) {
+				final PrintCustomsToken token = new PrintCustomsToken(PrintType.USERLIST, -1);
+			      Window.open(Window.Location.createUrlBuilder().setHash("PrintCustomsPlace:").buildString() + token.toString(),
+			          "_blank", "");
+			} else {
+				final PrintCustomsToken token = new PrintCustomsToken(PrintType.USERLIST, Integer.valueOf(userListPlace.getToken()));
+			      Window.open(Window.Location.createUrlBuilder().setHash("PrintCustomsPlace:").buildString() + token.toString(),
+			          "_blank", "");
+			}
+					
 		}
 		
 	}

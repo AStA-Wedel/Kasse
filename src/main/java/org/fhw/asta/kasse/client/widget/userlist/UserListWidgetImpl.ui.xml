@@ -3,5 +3,6 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:p1="urn:import:com.google.gwt.user.cellview.client">
 	<g:HTMLPanel>
 		<p1:CellTable ui:field="cellTable" width="100%" height="100%" pageSize="25" />		
+		<g:Button ui:field="printButton" text="Drucken" styleName="btn pull-right"/>
 	 </g:HTMLPanel>
 </ui:UiBinder> 

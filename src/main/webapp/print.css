@@ -15,6 +15,35 @@
 		vertical-align:center;
 	}
 	
+	.headlineus {
+		width: 100%;
+		border-bottom-width:2px;
+		border-bottom-color:black;
+		border-bottom-style: solid;
+		text-align:left;
+		font-weight:bold;
+	}
+	.even {
+		background-color: #E6E8FA;
+	}
+	.uneven {
+				
+	}
+	table.usertb td {
+		border: 1px solid black;
+	}
+	
+	.usertb{
+		width:100%;
+		clear: both;
+		text-align:left;
+		vertical-align:center;
+		border-collapse:collapse;
+	}
+	.usertb td th tr {
+		border: 1px solid black;
+	}
+	
 	.abghe{
 		height:70px;
 		border: 1px dotted black;

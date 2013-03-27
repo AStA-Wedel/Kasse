@@ -6,10 +6,12 @@ import org.fhw.asta.kasse.shared.model.Person;
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.ClickableTextCell;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.HasData;
@@ -17,7 +19,8 @@ import com.google.gwt.view.client.HasData;
 public class UserListWidgetImpl extends Composite implements UserListWidget{
 
 	@UiField(provided=true) CellTable<Person> cellTable;
-
+	@UiField Button printButton;
+	
 	private PrenameColumn prenameColumn;
 	private SurnameColumn surnameColumn;
 	private MatrNrColumn matrNrColumn;
@@ -118,5 +121,10 @@ public class UserListWidgetImpl extends Composite implements UserListWidget{
 			return String.valueOf(object.getMatrNo());
 		}
 		
+	}
+
+	@Override
+	public HasClickHandlers getPrintButton() {
+		return printButton;
 	}
 }

@@ -4,15 +4,20 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 
+import javax.annotation.Nullable;
+
 import org.fhw.asta.kasse.client.common.EuroFormatter;
 import org.fhw.asta.kasse.client.common.PrintCustomsToken;
 import org.fhw.asta.kasse.client.common.PrintCustomsToken.PrintType;
 import org.fhw.asta.kasse.client.widget.basket.BasketWidget;
 import org.fhw.asta.kasse.shared.basket.BasketItem;
+import org.fhw.asta.kasse.shared.common.EuroAmount;
 import org.fhw.asta.kasse.shared.model.Article;
 import org.fhw.asta.kasse.shared.service.checkout.CheckoutServiceAsync;
 
+import com.google.common.base.Function;
 import com.google.common.collect.ComparisonChain;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -104,16 +109,12 @@ public class BasketController {
   private void flush() {
     Collections.sort(this.basketDataProvider.getList(), this.basketComparator);
 
-    int sum = 0;
-
-    final Iterator<BasketItem> basketIterator = this.basketDataProvider.getList().iterator();
-    while (basketIterator.hasNext()) {
-      final BasketItem next = basketIterator.next();
-      sum += Math
-          .round((next.getItemPrice().getCentAmount() * next.getAmount()) * ((100 - next.getDiscount()) / 100.0));
-
+    EuroAmount sum = EuroAmount.ZERO_AMOUNT;
+        
+    for (BasketItem bi : basketDataProvider.getList()) {
+    	sum = sum.plus(bi.getItemPrice().times(bi.getAmount()).withDiscount(bi.getDiscount()));
     }
-
+    
     int discount = 0;
 
     try {
@@ -122,7 +123,7 @@ public class BasketController {
       discount = 0;
     }
 
-    this.basketWidget.getSumLabel().setText(EuroFormatter.format((int) Math.round(sum * ((100 - discount) / 100.0))));
+    this.basketWidget.getSumLabel().setText(EuroFormatter.format(sum.withDiscount(discount)));
   }
 
   private class CheckoutHandler implements ClickHandler {

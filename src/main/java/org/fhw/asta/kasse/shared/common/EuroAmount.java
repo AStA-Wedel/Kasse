@@ -6,8 +6,11 @@ public class EuroAmount implements Serializable
 {
   private static final long serialVersionUID = 1L;
 
+  public static final EuroAmount ZERO_AMOUNT = new EuroAmount(0);
+  
   private int cents;
 
+  
   public EuroAmount()
   {
     this(0);
@@ -41,6 +44,10 @@ public class EuroAmount implements Serializable
   public EuroAmount times(final int factor)
   {
     return new EuroAmount(this.cents * factor);
+  }
+  
+  public EuroAmount withDiscount(int discount) {
+	  return new EuroAmount((int) Math.round(cents * ((double)(100.0 - discount) / 100)));
   }
   
 }

@@ -3,6 +3,7 @@ package org.fhw.asta.kasse.client.activity;
 import java.util.List;
 
 import org.fhw.asta.kasse.client.common.EuroFormatter;
+import org.fhw.asta.kasse.client.common.PrintCustomsToken;
 import org.fhw.asta.kasse.client.place.PrintCustomsPlace;
 import org.fhw.asta.kasse.client.widget.HasTopbar;
 import org.fhw.asta.kasse.client.widget.print.PrintWidget;
@@ -91,7 +92,7 @@ public class PrintCustomsActivity extends AbstractActivity {
 					break;
 
 				case USERLIST:
-					printUSERLIST(printCustomsPlace.getToken().get().getId());
+					printUSERLIST(printCustomsPlace.getToken());
 					break;
 				}
 			}
@@ -230,14 +231,23 @@ public class PrintCustomsActivity extends AbstractActivity {
 
 	private void printArticles() {
 		StringBuilder strb = new StringBuilder();
-		int sum = 0;
+		//int sum = 0;
+		
+		EuroAmount sum = EuroAmount.ZERO_AMOUNT;
+		
 		strb.append("<br/>");
 		strb.append("<table class='regtb'><tr class='headline'><td>Menge</td><td class='desc'>Beschreibung</td><td>Rabatt (&#037;)</td><td>E-Preis</td><td>G-Preis</td><td>Abgehohlt</td></tr>");
 		for (BasketItem art : articles) {
-			EuroAmount euroAmount = new EuroAmount((int) Math.round((art
+
+			EuroAmount euroAmount = art.getItemPrice().times(art.getAmount()).withDiscount(art.getDiscount());
+			
+/*			EuroAmount euroAmount = new EuroAmount((int) Math.round((art
 					.getItemPrice().getCentAmount() * art.getAmount())
-					* ((100.0 - art.getDiscount()) / 100)));
-			sum += euroAmount.getCentAmount();
+					* ((100.0 - art.getDiscount()) / 100)));*/
+			 
+			sum = sum.plus(euroAmount);
+			
+//			sum += euroAmount.getCentAmount();
 			strb.append("<tr class='unbreakable'><td>" + art.getAmount()
 					+ "</td><td class='desc'>" + art.getItemName()
 					+ "</td><td>" + art.getDiscount() + "</td><td>"
@@ -249,12 +259,11 @@ public class PrintCustomsActivity extends AbstractActivity {
 		}
 		strb.append("<tr class='headline'><td></td><td class='desc'></td><td></td><td></td><td></td><td></td></tr>");
 		strb.append("<tr><td></td><td class='desc'></td><td></td><td></td><td><strong>Gesamt:</strong></td><td>"
-				+ EuroFormatter.format(new EuroAmount(sum)) + "</td></tr>");
+				+ EuroFormatter.format(sum) + "</td></tr>");
 		strb.append("<tr><td></td><td class='desc'></td><td></td><td></td><td><strong>Rabatt (&#037;):</strong></td><td>"
 				+ billOrder.getDiscount() + "</td></tr>");
 		strb.append("<tr><td></td><td class='desc'></td><td></td><td></td><td><strong>Endsumme:</strong></td><td>"
-				+ EuroFormatter.format(new EuroAmount((int) Math.round(sum
-						* ((100.0 - billOrder.getDiscount()) / 100))))
+				+ EuroFormatter.format(sum.withDiscount(billOrder.getDiscount()))
 				+ "</td></tr>");
 		strb.append("</table>");
 		printWidget.addHtml(strb.toString());
@@ -271,13 +280,13 @@ public class PrintCustomsActivity extends AbstractActivity {
 
 	}
 
-	private void printUSERLIST(int id) {
-		if (id != -1) {
-			userService.getUsersByGroup(String.valueOf(id),
-					new UserListCallback());
+	private void printUSERLIST(Optional<PrintCustomsToken> maybeToken) {
+		if (maybeToken.isPresent()) {
+			userService.getUsersByGroup(String.valueOf(maybeToken.get().getId()),
+					new UserListCallback());			
 		} else {
-			userService.getAllUsers(new UserListCallback());
-		}
+			userService.getAllUsers(new UserListCallback());			
+		}		
 	}
 
 

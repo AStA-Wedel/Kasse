@@ -304,17 +304,12 @@ public class PrintCustomsActivity extends AbstractActivity {
 			strb.append("<table class='usertb'><tr class='headlineus'><td>RZ-Login</td><td class>Name</td><td>Vorname</td><td>Mobil</td><td>Festnetz</td><td>E-Mail</td><td>Straße</td><td>Ort</td></tr>");
 			int t = 0;
 			for (Person p : result) {
-				if (t % 2 == 1) {
-					strb.append("<tr class='uneven'><td>"+p.getLdapName()+"</td><td class>"+p.getSurname()+
-							"</td><td>"+p.getPrename()+"</td><td>"+p.getPhoneMobile()+"</td><td>" +
-									p.getPhoneHome()+"</td><td>"+p.getEmail()+"</td><td>" +
-											p.getStreet()+" "+p.getStreetnumber()+"</td><td>"+p.getZipcode()+" "+p.getTown()+"</td></tr>");
-				} else {
-					strb.append("<tr class='even'><td>"+p.getLdapName()+"</td><td class>"+p.getSurname()+
-							"</td><td>"+p.getPrename()+"</td><td>"+p.getPhoneMobile()+"</td><td>" +
-									p.getPhoneHome()+"</td><td>"+p.getEmail()+"</td><td>" +
-											p.getStreet()+" "+p.getStreetnumber()+"</td><td>"+p.getZipcode()+" "+p.getTown()+"</td></tr>");
-				}
+				
+				strb.append("<tr class='" + t % 2 == 1 ? "uneven" : "even" + "'><td>"+p.getLdapName()+"</td><td class>"+p.getSurname()+
+						"</td><td>"+p.getPrename()+"</td><td>"+p.getPhoneMobile()+"</td><td>" +
+								p.getPhoneHome()+"</td><td>"+p.getEmail()+"</td><td>" +
+										p.getStreet()+" "+p.getStreetnumber()+"</td><td>"+p.getZipcode()+" "+p.getTown()+"</td></tr>");
+				
 				t++;
 			}
 			strb.append("</table>");

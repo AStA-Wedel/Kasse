@@ -305,7 +305,7 @@ public class PrintCustomsActivity extends AbstractActivity {
 			int t = 0;
 			for (Person p : result) {
 				
-				strb.append("<tr class='" + t % 2 == 1 ? "uneven" : "even" + "'><td>"+p.getLdapName()+"</td><td class>"+p.getSurname()+
+				strb.append("<tr class='" + (t % 2 == 1 ? "uneven" : "even") + "'><td>"+p.getLdapName()+"</td><td class>"+p.getSurname()+
 						"</td><td>"+p.getPrename()+"</td><td>"+p.getPhoneMobile()+"</td><td>" +
 								p.getPhoneHome()+"</td><td>"+p.getEmail()+"</td><td>" +
 										p.getStreet()+" "+p.getStreetnumber()+"</td><td>"+p.getZipcode()+" "+p.getTown()+"</td></tr>");

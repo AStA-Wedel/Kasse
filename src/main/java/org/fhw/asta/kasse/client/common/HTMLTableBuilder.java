@@ -14,8 +14,67 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.thirdparty.guava.common.base.Strings;
 
+
 public class HTMLTableBuilder {
 
+	private final String tableClass;
+
+	private final List<RowBuilder> rows = Lists.newArrayList();
+	
+	public static HTMLTableBuilder mk() {
+		return new HTMLTableBuilder("");
+	}
+
+	public static HTMLTableBuilder mk(String tableClassName) {
+		return new HTMLTableBuilder(tableClassName);
+	}
+
+	
+	public HTMLTableBuilder(String tableClassName) {
+		this.tableClass = tableClassName;
+	}
+
+	public RowBuilder row() {
+		return row(null);
+	}
+
+	public RowBuilder row(String className) {
+		RowBuilder rb = new RowBuilder(className);
+		rows.add(rb);
+		return rb;
+	}
+
+	public SafeHtmlBuilder build() {
+		return build(new SafeHtmlBuilder());
+	}
+
+	public SafeHtmlBuilder build(SafeHtmlBuilder htmlBuilder) {
+
+		htmlBuilder.appendHtmlConstant("<table "
+				+ classAttributeFor(tableClass) + ">");
+
+		for (RowBuilder rb : rows) {
+			htmlBuilder.append(rb.toSafeHTML());
+		}
+
+		htmlBuilder.appendHtmlConstant("</table>");
+
+		return htmlBuilder;
+	}
+
+	public SafeHtml asSafeHtml() {
+		return build().toSafeHtml();
+	}
+
+	public SafeHtml asSafeHtml(SafeHtmlBuilder safeHtmlBuilder) {
+		return build(safeHtmlBuilder).toSafeHtml();
+	}
+	
+	private static String classAttributeFor(String className) {
+		return Strings.isNullOrEmpty(className) ? ""
+				: ("class=\"" + className + "\"");
+	}
+	
 	public static class RowBuilder {
 
 		private final String className;
@@ -58,9 +117,7 @@ public class HTMLTableBuilder {
 
 			SafeHtmlBuilder builder = new SafeHtmlBuilder();
 
-			builder.appendHtmlConstant("<tr "
-					+ (Strings.isNullOrEmpty(className) ? "" : "class=\""
-							+ className + "\"") + ">");
+			builder.appendHtmlConstant("<tr " + classAttributeFor(className) + ">");
 
 			List<SafeHtml> cols = Lists.transform(columns, new ColumnWrapper());
 
@@ -73,62 +130,6 @@ public class HTMLTableBuilder {
 			return builder.toSafeHtml();
 		}
 
-	}
-
-	public HTMLTableBuilder(String tableClassName) {
-		this.tableClass = tableClassName;
-	}
-
-	public static HTMLTableBuilder mk() {
-		return new HTMLTableBuilder("");
-	}
-
-	public static HTMLTableBuilder mk(String tableClassName) {
-		return new HTMLTableBuilder(tableClassName);
-	}
-
-	private final String tableClass;
-
-	private final List<RowBuilder> rows = Lists.newArrayList();
-
-	public RowBuilder row() {
-		return row(null);
-	}
-
-	public RowBuilder row(String className) {
-
-		RowBuilder rb = new RowBuilder(className);
-
-		rows.add(rb);
-
-		return rb;
-	}
-
-	public SafeHtmlBuilder build() {
-		return build(new SafeHtmlBuilder());
-	}
-		
-	public SafeHtmlBuilder build(SafeHtmlBuilder htmlBuilder) {
-
-		htmlBuilder.appendHtmlConstant("<table "
-				+ (Strings.isNullOrEmpty(tableClass) ? "" : "class=\""
-						+ tableClass + "\"") + ">");
-
-		for (RowBuilder rb : rows) {
-			htmlBuilder.append(rb.toSafeHTML());
-		}
-
-		htmlBuilder.appendHtmlConstant("</table>");
-
-		return htmlBuilder;
-	}
-
-	public SafeHtml asSafeHtml() {
-		return build().toSafeHtml();
-	}
-	
-	public SafeHtml asSafeHtml(SafeHtmlBuilder safeHtmlBuilder) {
-		return build(safeHtmlBuilder).toSafeHtml();
 	}
 
 	private static class Tuplelize implements
@@ -152,8 +153,7 @@ public class HTMLTableBuilder {
 			String className = input.snd();
 
 			return SafeHtmlUtils.fromString("<td"
-					+ (Strings.isNullOrEmpty(className) ? "" : "class=\""
-							+ className + "\"") + ">" + content + "</td>");
+					+ classAttributeFor(className) + ">" + content + "</td>");
 		}
 
 	}

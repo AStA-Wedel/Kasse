@@ -1,6 +1,9 @@
 package org.fhw.asta.kasse.client.widget.print;
 
+import org.fhw.asta.kasse.client.common.HTMLTableBuilder;
+
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -23,14 +26,22 @@ public class PrintWidgetImpl extends Composite implements PrintWidget {
 
 	@Override
 	public void clear() {
-		htmlWidget.setHTML("");
-		
+		htmlWidget.setHTML("");		
 	}
 
 	@Override
 	public void addHtml(String html) {
-		htmlWidget.setHTML(htmlWidget.getHTML()+html);
-		
+		htmlWidget.setHTML(htmlWidget.getHTML()+html);		
+	}
+
+	@Override
+	public void addHtml(HTMLTableBuilder htmlTable) {
+		addHtml(htmlTable.toString());
+	}
+
+	@Override
+	public void addHtml(SafeHtml safeHtml) {
+		addHtml(safeHtml.asString());
 	}
 
 }

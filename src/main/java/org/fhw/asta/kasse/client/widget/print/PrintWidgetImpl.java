@@ -35,11 +35,6 @@ public class PrintWidgetImpl extends Composite implements PrintWidget {
 	}
 
 	@Override
-	public void addHtml(HTMLTableBuilder htmlTable) {
-		addHtml(htmlTable.toString());
-	}
-
-	@Override
 	public void addHtml(SafeHtml safeHtml) {
 		addHtml(safeHtml.asString());
 	}

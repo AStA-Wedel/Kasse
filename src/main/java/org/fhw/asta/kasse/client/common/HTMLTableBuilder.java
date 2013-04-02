@@ -92,12 +92,7 @@ public class HTMLTableBuilder {
 	private final List<RowBuilder> rows = Lists.newArrayList();
 
 	public RowBuilder row() {
-
-		RowBuilder rb = new RowBuilder();
-
-		rows.add(rb);
-
-		return rb;
+		return row(null);
 	}
 
 	public RowBuilder row(String className) {
@@ -109,9 +104,11 @@ public class HTMLTableBuilder {
 		return rb;
 	}
 
-	public SafeHtml toSafeHtml() {
-
-		SafeHtmlBuilder htmlBuilder = new SafeHtmlBuilder();
+	public SafeHtmlBuilder build() {
+		return build(new SafeHtmlBuilder());
+	}
+		
+	public SafeHtmlBuilder build(SafeHtmlBuilder htmlBuilder) {
 
 		htmlBuilder.appendHtmlConstant("<table "
 				+ (Strings.isNullOrEmpty(tableClass) ? "" : "class=\""
@@ -123,7 +120,15 @@ public class HTMLTableBuilder {
 
 		htmlBuilder.appendHtmlConstant("</table>");
 
-		return htmlBuilder.toSafeHtml();
+		return htmlBuilder;
+	}
+
+	public SafeHtml asSafeHtml() {
+		return build().toSafeHtml();
+	}
+	
+	public SafeHtml asSafeHtml(SafeHtmlBuilder safeHtmlBuilder) {
+		return build(safeHtmlBuilder).toSafeHtml();
 	}
 
 	private static class Tuplelize implements

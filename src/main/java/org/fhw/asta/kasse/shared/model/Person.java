@@ -98,4 +98,8 @@ public class Person implements Serializable {
     return this.email;
   }
 
+  public boolean isDefaultUser() {
+	  return "default".equals(ldapName);
+  }
+  
 }

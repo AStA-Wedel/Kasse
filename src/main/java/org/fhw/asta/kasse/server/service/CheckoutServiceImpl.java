@@ -11,16 +11,19 @@ import org.fhw.asta.kasse.shared.exception.CheckoutException;
 import org.fhw.asta.kasse.shared.service.checkout.CheckoutService;
 
 import com.google.common.base.Optional;
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import com.google.inject.Singleton;
 
 @Singleton
-public class CheckoutServiceEndpoint extends RemoteServiceServlet implements CheckoutService {
-  private static final long serialVersionUID = 1L;
-  private static final Logger LOGGER = Logger.getLogger(CheckoutServiceEndpoint.class);
+public class CheckoutServiceImpl implements CheckoutService {
+
+  private static final Logger LOGGER = Logger.getLogger(CheckoutServiceImpl.class);
 
   private static final String DEFAULT_RECIPIENT = "default";
+  
+  @Inject
+  private Injector injector;
   
   @Inject
   private UserDao userDao;
@@ -32,7 +35,7 @@ public class CheckoutServiceEndpoint extends RemoteServiceServlet implements Che
   public Integer doCheckout(List<BasketItem> items, int discount, String receipientLdapName, char orderState)
       throws CheckoutException {
 
-    final Optional<String> issuerLdapName = new UserLdapNameProvider(this.getThreadLocalRequest()).get();
+    final Optional<String> issuerLdapName = injector.getInstance(UserLdapNameProvider.class).get();
     
     if (issuerLdapName.isPresent() && this.userDao.exists(issuerLdapName.get())) {
     	

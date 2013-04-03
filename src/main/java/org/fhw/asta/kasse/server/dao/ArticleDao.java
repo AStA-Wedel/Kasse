@@ -14,10 +14,11 @@ import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.StoredProcedure;
 
 import com.google.common.base.Optional;
+import com.google.inject.Inject;
 
 public class ArticleDao extends GenericDao {
 
-  private CreateNewArticleProcedure createNewArticleProcedure = new CreateNewArticleProcedure(this.template);
+  private CreateNewArticleProcedure createNewArticleProcedure;
 
   private static class ArticleRowMapper implements RowMapper<Article> {
     @Override
@@ -52,6 +53,11 @@ public class ArticleDao extends GenericDao {
     }
   }
 
+  @Inject
+  public void init(JdbcTemplate template) {
+	  createNewArticleProcedure = new CreateNewArticleProcedure(template);
+  }
+  
   public List<Article> getAllArticles() {
 
     return this.template.query("SELECT article_id," + "article_revision, name, description, price, tax_category_name,"

@@ -12,6 +12,8 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Strings;
 import com.google.common.base.Supplier;
 import com.google.common.collect.Iterables;
+import com.google.inject.Inject;
+import com.google.inject.servlet.RequestScoped;
 
 /**
  * Returns the email of the current logged in user if present.
@@ -19,12 +21,14 @@ import com.google.common.collect.Iterables;
  * @author alexbiehl
  * 
  */
+@RequestScoped
 public class UserLdapNameProvider implements Supplier<Optional<String>> {
 
 	private static final String COOKIE_NAME = "ldap_name";
 
 	private final HttpServletRequest req;
 
+	@Inject
 	public UserLdapNameProvider(HttpServletRequest req) {
 		this.req = req;
 	}

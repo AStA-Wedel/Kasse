@@ -2,6 +2,8 @@ package org.fhw.asta.kasse.server.service;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import org.fhw.asta.kasse.server.common.User;
 import org.fhw.asta.kasse.server.common.UserLdapNameProvider;
 import org.fhw.asta.kasse.server.component.user.UserComponent;
@@ -12,20 +14,22 @@ import org.fhw.asta.kasse.shared.model.Person;
 import org.fhw.asta.kasse.shared.model.PersonGroup;
 import org.fhw.asta.kasse.shared.service.user.UserService;
 
+import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import com.google.inject.Singleton;
 
 @Singleton
-public class UserServiceEndpoint extends RemoteServiceServlet implements
-		UserService {
-
-	private static final long serialVersionUID = 1L;
+public class UserServiceImpl implements UserService {
 
 	// private static final Logger LOGGER =
 	// LoggerFactory.getLogger(UserServiceEndpoint.class);
 
+	@Inject
+	private Injector injector;
+	
 	@Inject
 	private UserComponent userComponent;
 
@@ -68,12 +72,13 @@ public class UserServiceEndpoint extends RemoteServiceServlet implements
 
 	@Override
 	public Boolean loggedOnUserIsAdmin() {
-		  final Optional<String> ldapName = new UserLdapNameProvider(this.getThreadLocalRequest()).get();
-		  if (ldapName.isPresent()) {
-			  return this.userDao.userIsAdmin(ldapName.get());
-		  } else {
-			  return false;
-		  }
+		final Optional<String> ldapName = injector.getInstance(UserLdapNameProvider.class).get();
+
+		if (ldapName.isPresent()) {
+			return this.userDao.userIsAdmin(ldapName.get());
+		} else {
+			return false;
+		}
 	}
 
 	@Override
@@ -84,6 +89,6 @@ public class UserServiceEndpoint extends RemoteServiceServlet implements
 	@Override
 	public void updateOrCreateUserAndAccount(Person person, Account account) {
 		this.userDao.updateOrCreateUser(person);
-		this.userDao.updateOrCreateAccount(account);		
+		this.userDao.updateOrCreateAccount(account);
 	}
 }

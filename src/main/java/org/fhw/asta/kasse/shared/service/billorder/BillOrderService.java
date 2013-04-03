@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.fhw.asta.kasse.shared.basket.BasketItem;
 import org.fhw.asta.kasse.shared.model.BillOrder;
+import org.fhw.asta.kasse.shared.model.BillOrderData;
 
 import com.google.common.base.Optional;
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -14,4 +15,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 public interface BillOrderService extends RemoteService {
 	Optional<BillOrder> getBillOrder(int id);
 	List<BasketItem> getBillOrderArticles(int id);
+
+	BillOrderData getBillOrderData(int id);
+	
 }
